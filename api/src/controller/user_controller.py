@@ -23,7 +23,7 @@ def create() -> Tuple[str, int]:
         try:
             user = User(uid, email)
             user.save()
-            response = jsonify(message="User created", id=user.id)
+            response = jsonify(message="User created", id=user.id, role=user.role)
             response.headers["location"] = f"user/{user.id}"
             return response, 201
 
@@ -32,7 +32,9 @@ def create() -> Tuple[str, int]:
             return response, 401
 
     else:
-        response = jsonify(message="This user already exists.", id=user.id)
+        response = jsonify(
+            message="This user already exists.", id=user.id, role=user.role
+        )
         return response, 422
 
 

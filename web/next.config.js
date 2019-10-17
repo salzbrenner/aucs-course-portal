@@ -1,7 +1,8 @@
 const { parsed: localEnv } = require('dotenv').config()
 const webpack = require('webpack')
+const withCSS = require('@zeit/next-css')
 
-module.exports = {
+module.exports = withCSS({
   exportPathMap: function() {
     return {
       '/': { page: '/' }
@@ -12,4 +13,5 @@ module.exports = {
 
     return config
   }
-};
+
+});

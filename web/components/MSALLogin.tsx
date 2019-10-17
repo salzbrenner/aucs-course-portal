@@ -21,7 +21,7 @@ const MSALLogin = () => (
       ) {
         //TODO: after some time, the email disappears
         // perhaps on token refresh?
-        console.log(accountInfo);
+        // console.log(accountInfo);
         return (
           <>
             <UserContextLogin accountInfo={accountInfo} />

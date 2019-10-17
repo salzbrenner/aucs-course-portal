@@ -12,7 +12,7 @@ export const protect = async (): Promise<AxiosResponse> => {
 export const createUser = async (
   uid: string,
   email: string
-): Promise<AxiosResponse> => {
+): Promise<AxiosResponse<{ id: number; role: number }>> => {
   return makeAuthRequest(
     'user',
     'post',

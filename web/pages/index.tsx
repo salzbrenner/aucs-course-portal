@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { getCourses } from '../lib/api-public.service';
 import MSALDynamic from '../components/MSALProvider';
+import Link from 'next/link';
 
 /* First we import the consumer */
 type Props = {
@@ -10,7 +11,7 @@ type Props = {
 export default class index extends Component<Props> {
   xxx: any;
   // Async operation with getInitialProps
-  static async getInitialProps() {
+  static async getInitialProps(ctx: any) {
     // res is assigned the response once the axios
     // async get is completed
     const res = await getCourses();
@@ -21,7 +22,7 @@ export default class index extends Component<Props> {
     const { protect } = await import(
       '../lib/api-auth.service'
     );
-    this.xxx = protect;
+    // this.xxx = protect;
   }
 
   async x() {
@@ -32,7 +33,9 @@ export default class index extends Component<Props> {
   render() {
     return (
       <div>
-        <MSALDynamic />
+        <Link href="/admin">
+          <a>Admin</a>
+        </Link>
         <button onClick={() => this.x()}>ddd</button>
         <h1>{this.props.courses[0].name}</h1>
       </div>
