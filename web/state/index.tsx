@@ -5,11 +5,29 @@ import React, {
   useReducer,
 } from 'react';
 
+type StateAction = {
+  type: UserActionType;
+  payload: any;
+};
+
+type UserActionType = 'SIGN_IN' | 'ASSIGN_ROLE';
+
+export const userActions: {
+  [A in UserActionType]: UserActionType;
+} = {
+  SIGN_IN: 'SIGN_IN',
+  ASSIGN_ROLE: 'ASSIGN_ROLE',
+};
+
+// Since MSAL library provides all the functionality for handling
+// the token, don't need to store it here. Can call it directly in
+// API functions
 export interface UserState {
   name: null | string;
   email: null | string;
   uid: null | string;
   courses: null | number[];
+  role: number;
 }
 
 const initialState: UserState = {
@@ -17,19 +35,13 @@ const initialState: UserState = {
   email: null,
   uid: null,
   courses: [],
+  role: 0,
 };
 
-type ActionType = 'SIGN_IN';
-
-type Action = {
-  type: ActionType;
-  payload: any;
-};
-
-const reducer = (state: UserState, action: Action) => {
+const reducer = (state: UserState, action: StateAction) => {
   let newState = state;
   switch (action.type) {
-    case 'SIGN_IN':
+    case userActions.SIGN_IN:
       newState = {
         ...state,
         ...action.payload,
@@ -38,8 +50,7 @@ const reducer = (state: UserState, action: Action) => {
     default:
       break;
   }
-  const UserContext = {};
-  console.log('UserContext', {
+  console.log(UserContext.displayName, {
     prevState: state,
     newState,
   });
@@ -47,7 +58,7 @@ const reducer = (state: UserState, action: Action) => {
 };
 
 export const UserContext = createContext<
-  [UserState, (action: Action) => void]
+  [UserState, (action: StateAction) => void]
 >([initialState, () => {}]);
 
 export const UserProvider = ({
@@ -63,6 +74,6 @@ export const UserProvider = ({
 );
 
 export const useUserState = () =>
-  useContext<[UserState, (action: Action) => void]>(
+  useContext<[UserState, (action: StateAction) => void]>(
     UserContext
   );

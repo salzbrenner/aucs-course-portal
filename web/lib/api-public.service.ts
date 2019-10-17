@@ -12,6 +12,18 @@ export const instance: AxiosInstance = axios.create({
   baseURL: API_URL,
 });
 
+// const UNAUTHORIZED = 401;
+// instance.interceptors.response.use(
+//   response => response,
+//   error => {
+//     const { status } = error.response;
+//     if (status === UNAUTHORIZED) {
+//       // dispatch(userSignOut());
+//     }
+//     return Promise.reject(error);
+//   }
+// );
+
 /**
  * Gets a list of user boards from /boards/<uid>
  *  @return {AxiosPromise}
