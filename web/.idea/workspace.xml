@@ -2,20 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/src/controller/user_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/user_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserContextLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserContextLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-public.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-public.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/state/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/userReducer.ts" beforeDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -134,7 +124,9 @@
       <workItem from="1571173068570" duration="5819000" />
       <workItem from="1571194313223" duration="4063000" />
       <workItem from="1571271854324" duration="8625000" />
-      <workItem from="1571283167557" duration="576000" />
+      <workItem from="1571283167557" duration="1075000" />
+      <workItem from="1571327020925" duration="10000" />
+      <workItem from="1571363529667" duration="5288000" />
     </task>
     <servers />
   </component>
