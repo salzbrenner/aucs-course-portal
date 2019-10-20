@@ -8,48 +8,50 @@ import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
 import {
   convertFromHTML,
-  convertToRaw,
   EditorState,
   ContentState,
 } from 'draft-js';
+import { createCourse } from '../lib/api-auth.service';
+import { CourseProps } from './CourseContainer';
 
-const contentBlocks = convertFromHTML(
-  '<p>Lorem <h1>ipsum</h1> ' +
-    'dolor sit amet, consectetur adipiscing elit. Mauris tortor felis, volutpat sit amet ' +
-    'maximus nec, tempus auctor diam. Nunc odio elit,  ' +
-    'commodo quis dolor in, sagittis scelerisque nibh. ' +
-    'Suspendisse consequat, sapien sit amet pulvinar  ' +
-    'tristique, augue ante dapibus nulla, eget gravida ' +
-    'turpis est sit amet nulla. Vestibulum lacinia mollis  ' +
-    'accumsan. Vivamus porta cursus libero vitae mattis. ' +
-    'In gravida bibendum orci, id faucibus felis molestie ac.  ' +
-    'Etiam vel elit cursus, scelerisque dui quis, auctor risus.</p>'
-);
-const sampleEditorContent = ContentState.createFromBlockArray(
-  contentBlocks as any
-);
+export interface FormCourseOverviewProps
+  extends CourseProps {}
 
-class EditorConvertToHTML extends Component {
+class EditorConvertToHTML extends Component<
+  FormCourseOverviewProps
+> {
   state = {
-    description: EditorState.createWithContent(
-      sampleEditorContent
-    ),
-    name: '',
-    cid: '',
-    instructor: '',
+    description: this.getContent(),
+    name: this.getCourseData().name,
+    cid: this.getCourseData().cid,
+    instructor: this.getCourseData().instructor,
     canSubmit: true,
   };
 
-  constructor(props: any) {
+  constructor(props: CourseProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  onEditorStateChange = (editorState: any) => {
-    const contentState = editorState.getCurrentContent();
-    let html = stateToHTML(contentState);
-    console.log(html);
 
+  getContent() {
+    if (this.getCourseData().description) {
+      const contentState = ContentState.createFromBlockArray(
+        convertFromHTML(
+          this.getCourseData().description!
+        ) as any
+      );
+      return EditorState.createWithContent(contentState);
+    } else {
+      return EditorState.createEmpty();
+    }
+  }
+
+  getCourseData() {
+    return this.props.courseData;
+  }
+
+  onEditorStateChange = (editorState: EditorState) => {
     this.setState({
       description: editorState,
     });
@@ -57,21 +59,31 @@ class EditorConvertToHTML extends Component {
 
   handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
-    console.log(name);
     this.setState({ [name]: value });
   }
 
-  handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+
     this.setState({
       canSubmit: false,
     });
 
-    setTimeout(
-      () => this.setState({ canSubmit: true }),
-      1000
+    const {
+      name,
+      instructor,
+      cid,
+      description,
+    } = this.state;
+
+    const res = await createCourse(
+      name,
+      cid!,
+      instructor,
+      stateToHTML(description.getCurrentContent())
     );
-    // TODO: form response
-    event.preventDefault();
+
+    this.setState({ canSubmit: true });
   }
 
   render() {
@@ -87,40 +99,44 @@ class EditorConvertToHTML extends Component {
       <>
         <div>
           <form onSubmit={this.handleSubmit}>
-            <div>
-              <label htmlFor="name">
-                Name of Class
-                <input
-                  type="text"
-                  name={'name'}
-                  value={name}
-                  required={true}
-                  onChange={this.handleChange}
-                />
-              </label>
-            </div>
+            <label
+              htmlFor="name"
+              className={'form-control-label'}
+            >
+              <span>Name</span>
+              <input
+                type="text"
+                name={'name'}
+                value={name}
+                onChange={this.handleChange}
+              />
+            </label>
 
             <div>
-              <label htmlFor="cid">
-                Course ID
+              <label
+                htmlFor="cid"
+                className={'form-control-label'}
+              >
+                <span>Course ID</span>
                 <input
                   type="number"
                   name={'cid'}
                   value={cid}
-                  required={true}
                   onChange={this.handleChange}
                 />
               </label>
             </div>
 
             <div>
-              <label htmlFor="instructor">
-                Instructor
+              <label
+                htmlFor="instructor"
+                className={'form-control-label'}
+              >
+                <span>Instructor</span>
                 <input
                   type="text"
                   name={'instructor'}
                   value={instructor}
-                  required={true}
                   onChange={this.handleChange}
                 />
               </label>
@@ -130,7 +146,6 @@ class EditorConvertToHTML extends Component {
               toolbarClassName="demo-toolbar-absolute"
               wrapperClassName="demo-wrapper"
               editorClassName="demo-editor"
-              toolbarOnFocus
               defaultEditorState={description}
               onEditorStateChange={this.onEditorStateChange}
               toolbar={{
@@ -142,36 +157,37 @@ class EditorConvertToHTML extends Component {
                     'strikethrough',
                     'monospace',
                   ],
-                  bold: {
-                    className: 'bordered-option-classname',
-                  },
-                  italic: {
-                    className: 'bordered-option-classname',
-                  },
-                  underline: {
-                    className: 'bordered-option-classname',
-                  },
-                  strikethrough: {
-                    className: 'bordered-option-classname',
-                  },
-                  code: {
-                    className: 'bordered-option-classname',
-                  },
+                  // bold: {
+                  //   className: 'bordered-option-classname',
+                  // },
+                  // italic: {
+                  //   className: 'bordered-option-classname',
+                  // },
+                  // underline: {
+                  //   className: 'bordered-option-classname',
+                  // },
+                  // strikethrough: {
+                  //   className: 'bordered-option-classname',
+                  // },
+                  // code: {
+                  //   className: 'bordered-option-classname',
+                  // },
                 },
-                blockType: {
-                  className: 'bordered-option-classname',
-                },
-                fontSize: {
-                  className: 'bordered-option-classname',
-                },
-                fontFamily: {
-                  className: 'bordered-option-classname',
-                },
+                // blockType: {
+                //   className: 'bordered-option-classname',
+                // },
+                // fontSize: {
+                //   className: 'bordered-option-classname',
+                // },
+                // fontFamily: {
+                //   className: 'bordered-option-classname',
+                // },
               }}
             />
             <input
               type="submit"
               value="Submit"
+              className={'button mt-30'}
               disabled={!canSubmit}
             />
           </form>

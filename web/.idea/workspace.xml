@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -126,7 +123,9 @@
       <workItem from="1571271854324" duration="8625000" />
       <workItem from="1571283167557" duration="1075000" />
       <workItem from="1571327020925" duration="10000" />
-      <workItem from="1571363529667" duration="5288000" />
+      <workItem from="1571363529667" duration="5712000" />
+      <workItem from="1571405555983" duration="8000" />
+      <workItem from="1571525366920" duration="17751000" />
     </task>
     <servers />
   </component>
