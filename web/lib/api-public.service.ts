@@ -29,7 +29,17 @@ export const instance: AxiosInstance = axios.create({
  *  @return {AxiosPromise}
  */
 export const getCourses = () => {
-  return makeRequest(`/courses`);
+  return makeRequest(`/course`);
+};
+
+export const getCourse = async (
+  cid: string
+): Promise<AxiosResponse<any>> => {
+  return makeRequest(
+    `course/${cid}`,
+    'get',
+    getDefaultHeaders()
+  );
 };
 
 export const getDefaultHeaders = () => ({

@@ -32,6 +32,34 @@ export const getUser = async (
   );
 };
 
+/**
+ * Courses
+ */
+
+export const createCourse = async (
+  name: string,
+  cid: number,
+  instructor: string,
+  description: string
+  //@ts-ignore
+): Promise<AxiosResponse<any>> => {
+  const bodyFormData = new FormData();
+  bodyFormData.set('cid', `${cid}`);
+  bodyFormData.set('name', name);
+  bodyFormData.set('instructor', instructor);
+  bodyFormData.set('description', description);
+
+  return makeAuthRequest(
+    'course',
+    'post',
+    {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    null,
+    bodyFormData
+  );
+};
+
 const authorizeHeaders = async (headers: any) => {
   try {
     const token = await authProvider.getIdToken();

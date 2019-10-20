@@ -10,7 +10,7 @@ from src.model.course import Course
 courses = Blueprint("course", __name__)
 
 
-@courses.route("/courses", methods=["POST"])
+@courses.route("/course", methods=["POST"])
 def create() -> Tuple[str, int]:
     params = request.form
     name = params.get("name")
@@ -36,7 +36,7 @@ def create() -> Tuple[str, int]:
         return response, 422
 
 
-@courses.route("/courses", methods=["GET"])
+@courses.route("/course", methods=["GET"])
 def get_all() -> Tuple[str, int]:
     """
     Gets all courses
@@ -51,7 +51,7 @@ def get_all() -> Tuple[str, int]:
     return jsonify(results), 200
 
 
-@courses.route("/courses/<int:cid>")
+@courses.route("/course/<int:cid>")
 def get(cid) -> Tuple[str, int]:
     """
     Get a course
@@ -67,7 +67,7 @@ def get(cid) -> Tuple[str, int]:
         return "Course does not exist", 404
 
 
-@courses.route("/courses/<int:cid>", methods=["DELETE"])
+@courses.route("/course/<int:cid>", methods=["DELETE"])
 def delete(cid) -> Tuple[str, int]:
     """
     Delete a course

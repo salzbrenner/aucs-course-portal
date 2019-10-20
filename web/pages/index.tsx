@@ -22,7 +22,6 @@ export default class index extends Component<Props> {
     const { protect } = await import(
       '../lib/api-auth.service'
     );
-    // this.xxx = protect;
   }
 
   async x() {
@@ -37,7 +36,7 @@ export default class index extends Component<Props> {
           <a>Admin</a>
         </Link>
         <button onClick={() => this.x()}>ddd</button>
-        <h1>{this.props.courses[0].name}</h1>
+        <pre>{JSON.stringify(this.props.courses)}</pre>
       </div>
     );
   }
