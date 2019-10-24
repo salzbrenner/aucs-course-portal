@@ -6,6 +6,7 @@ import { getCourses } from '../lib/api-public.service';
 import dynamic from 'next/dist/next-server/lib/dynamic';
 import MaxContainer from '../components/MaxContainer';
 import DynamicFormCourseOverview from '../components/DynamicFormCourseOverview';
+import { createCourse } from '../lib/api-auth.service';
 
 /* First we import the consumer */
 type Props = {};
@@ -20,24 +21,14 @@ class Admin extends Component<Props> {
     console.log(this.props);
   }
 
-  emptyFormProps() {
-    return {
-      name: '',
-      cid: 0,
-      instructor: '',
-      description: '',
-    };
-  }
-
   render() {
     return (
       <MaxContainer>
         <DynamicFormCourseOverview
-          courseData={{
-            name: '',
-            cid: 0,
-            instructor: '',
-          }}
+          cid={0}
+          instructor={''}
+          name={''}
+          submitHandler={createCourse}
         />
       </MaxContainer>
     );

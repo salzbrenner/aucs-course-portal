@@ -5,16 +5,22 @@ import { getCourse } from '../lib/api-public.service';
 import { NextComponentType, NextPageContext } from 'next';
 import Course from '../pages/course/[cid]';
 import * as React from 'react';
-import { useUserState } from '../state';
 
-export type CourseProps = {
-  courseData: {
-    cid: number;
-    name: string;
-    instructor: string;
-    description?: string;
-  };
-};
+// export type CourseProps = {
+//   courseData: {
+//     cid: number;
+//     name: string;
+//     instructor: string;
+//     description?: string;
+//   };
+// };
+
+export interface CourseProps {
+  cid: number;
+  name: string;
+  instructor: string;
+  description?: string;
+}
 
 export const makeCourseCall = (cid: string) =>
   getCourse(cid).catch(err => err);
@@ -30,6 +36,7 @@ const withCourseData = <
 ) => {
   const WrapperComponent = ({ ...props }) => {
     const { courseData } = props;
+
     const [
       currentCourseData,
       setCurrentCourseData,
@@ -44,7 +51,7 @@ const withCourseData = <
 
     return (
       <MaxContainer>
-        <Component {...(props as T)} />
+        <Component {...courseData} />
       </MaxContainer>
     );
   };

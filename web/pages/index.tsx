@@ -2,16 +2,19 @@ import React, { Component } from 'react';
 import { getCourses } from '../lib/api-public.service';
 import MSALDynamic from '../components/MSALProvider';
 import Link from 'next/link';
+import { CourseProps } from '../components/CourseContainer';
+import CourseMenu from '../components/CourseMenu';
+import { NextPageContext } from 'next';
 
 /* First we import the consumer */
 type Props = {
-  courses?: any;
+  courses?: CourseProps[];
 };
 
 export default class index extends Component<Props> {
   xxx: any;
   // Async operation with getInitialProps
-  static async getInitialProps(ctx: any) {
+  static async getInitialProps(ctx: NextPageContext) {
     // res is assigned the response once the axios
     // async get is completed
     const res = await getCourses();
@@ -36,7 +39,6 @@ export default class index extends Component<Props> {
           <a>Admin</a>
         </Link>
         <button onClick={() => this.x()}>ddd</button>
-        <pre>{JSON.stringify(this.props.courses)}</pre>
       </div>
     );
   }

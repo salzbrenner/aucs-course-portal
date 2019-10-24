@@ -67,6 +67,33 @@ def get(cid) -> Tuple[str, int]:
         return "Course does not exist", 404
 
 
+@courses.route("/course/<int:cid>", methods=["PUT"])
+def put(cid) -> Tuple[str, int]:
+    """
+    Update a course
+    :param cid:
+    :return:
+    """
+    params = request.form
+    name = params.get("name")
+    instructor = params.get("instructor")
+    description = params.get("description")
+
+    course = Course.query.filter_by(cid=cid).first()
+
+    if course:
+        try:
+            course.update(name, instructor, description)
+            response = jsonify(message=f"Updated course {name} - {cid}")
+            return response, 204
+
+        except Exception as e:
+            return "Could not process this update", 409
+
+    else:
+        return "Course does not exist", 404
+
+
 @courses.route("/course/<int:cid>", methods=["DELETE"])
 def delete(cid) -> Tuple[str, int]:
     """

@@ -1,6 +1,7 @@
 import dynamic from 'next/dist/next-server/lib/dynamic';
 import React from 'react';
 import { CourseProps } from './CourseContainer';
+import { FormCourseOverviewProps } from './FormCourseOverview';
 
 const FormCourseOverviewDynamic = dynamic(
   () => import('../components/FormCourseOverview'),
@@ -9,8 +10,6 @@ const FormCourseOverviewDynamic = dynamic(
   }
 );
 
-export default (props: CourseProps) => (
-  <FormCourseOverviewDynamic
-    courseData={props.courseData}
-  />
+export default (props: FormCourseOverviewProps) => (
+  <FormCourseOverviewDynamic {...props} />
 );

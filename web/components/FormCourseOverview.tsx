@@ -13,9 +13,17 @@ import {
 } from 'draft-js';
 import { createCourse } from '../lib/api-auth.service';
 import { CourseProps } from './CourseContainer';
+import { AxiosResponse } from 'axios';
 
 export interface FormCourseOverviewProps
-  extends CourseProps {}
+  extends CourseProps {
+  submitHandler: (
+    name: string,
+    instructor: string,
+    description: string,
+    cid: number
+  ) => Promise<AxiosResponse<any>>;
+}
 
 class EditorConvertToHTML extends Component<
   FormCourseOverviewProps
@@ -28,7 +36,7 @@ class EditorConvertToHTML extends Component<
     canSubmit: true,
   };
 
-  constructor(props: CourseProps) {
+  constructor(props: FormCourseOverviewProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -48,7 +56,7 @@ class EditorConvertToHTML extends Component<
   }
 
   getCourseData() {
-    return this.props.courseData;
+    return this.props;
   }
 
   onEditorStateChange = (editorState: EditorState) => {
@@ -76,11 +84,11 @@ class EditorConvertToHTML extends Component<
       description,
     } = this.state;
 
-    const res = await createCourse(
+    const res = await this.props.submitHandler(
       name,
-      cid!,
       instructor,
-      stateToHTML(description.getCurrentContent())
+      stateToHTML(description.getCurrentContent()),
+      cid
     );
 
     this.setState({ canSubmit: true });

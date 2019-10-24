@@ -28,6 +28,7 @@ export interface UserState {
   uid: null | string;
   courses: null | number[];
   role: number;
+  isAdmin: boolean;
 }
 
 const initialState: UserState = {
@@ -36,6 +37,7 @@ const initialState: UserState = {
   uid: null,
   courses: [],
   role: 0,
+  isAdmin: false,
 };
 
 const reducer = (state: UserState, action: StateAction) => {
@@ -45,15 +47,18 @@ const reducer = (state: UserState, action: StateAction) => {
       newState = {
         ...state,
         ...action.payload,
+        isAdmin: action.payload.role > 0,
       };
       break;
     default:
       break;
   }
-  console.log(UserContext.displayName, {
+
+  console.log('USER_STATE', {
     prevState: state,
     newState,
   });
+
   return newState;
 };
 
