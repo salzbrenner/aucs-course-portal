@@ -1,4 +1,4 @@
-import { useUserState } from '../state';
+import { useAppContext } from '../state';
 import React, { useEffect } from 'react';
 import {
   redirectServerToHome,
@@ -12,10 +12,10 @@ const adminGuard = (
   Component: NextComponentType
 ): React.FC => {
   const WrapperComponent = ({ ...props }) => {
-    const [{ role }, dispatch] = useUserState();
+    const [{ user }, dispatch] = useAppContext();
 
     const isAdmin = () => {
-      return role > 0;
+      return user.role > 0;
     };
 
     useEffect(() => {

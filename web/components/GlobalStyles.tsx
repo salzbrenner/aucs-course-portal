@@ -1,10 +1,21 @@
 import * as React from 'react';
+import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 export const colors = {
   primary: '#03244d',
   secondary: `#cc4e0b`,
+  tertiary: `#59130C`,
+  fourth: `#564FB3`,
+  five: `#26FF7C`,
+  six: `#FF7226`,
+  seven: `#020080`,
+  primaryShade1: `#064899`,
+  primaryShade2: `#021833`,
   primaryGradient: `linear-gradient(180deg, rgba(3,36,77,1) 0%, rgba(6,63,134,1) 100%);`,
-  bodyBg: `#ededed`,
+  bodyBg: `#F2F2F2`,
+  bodyColor: `#363940`,
+  black: ``,
+  white: `363940`,
 };
 
 export const breakpoints = {
@@ -19,10 +30,15 @@ export default () => (
         box-sizing: border-box;
       }
 
+      html {
+        // background: ${colors.primaryGradient};
+        height: 100%;
+      }
       body {
         padding-bottom: 100px;
         background: ${colors.bodyBg};
         font-family: 'Ubuntu', sans-serif;
+        color: ${colors.bodyColor};
       }
 
       .color-body-bg {

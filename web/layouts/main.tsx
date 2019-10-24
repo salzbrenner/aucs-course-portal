@@ -6,7 +6,7 @@ import GlobalStyles, {
 } from '../components/GlobalStyles';
 import Sidebar from '../components/Sidebar';
 import CourseMenu from '../components/CourseMenu';
-import { UserProvider } from '../state';
+import { AppProvider } from '../state';
 import { NextComponentType, NextPageContext } from 'next';
 import { CourseProps } from '../components/CourseContainer';
 import MSALDynamic from '../components/MSALProvider';
@@ -78,7 +78,7 @@ const MainPageLayout: NextComponentType<
           .sidebar-toggle {
             position: fixed;
             top: 20px;
-            left: 20px;
+            right: 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -96,16 +96,20 @@ const MainPageLayout: NextComponentType<
             position: fixed;
             top: 0;
             bottom: 0;
-            left: ${sidebarOpen ? '0' : '-100%'};
+            right: ${sidebarOpen ? '0' : '-100%'};
             height: 100%;
             width: 300px;
             background: ${colors.primaryGradient};
-            transition: left 0.2s ease;
+            box-shadow: -14px 0px 28px 0px
+              rgba(0, 0, 0, 0.23);
+
+            // background: #021833;
+            transition: right 0.2s ease;
           }
 
           @media screen and (min-width: ${breakpoints.md}) {
             .sidebar-wrap {
-              left: 0;
+              right: 0;
             }
 
             .sidebar-toggle {
@@ -113,7 +117,7 @@ const MainPageLayout: NextComponentType<
             }
 
             .content {
-              margin-left: 300px;
+              margin-right: 300px;
             }
           }
         `}

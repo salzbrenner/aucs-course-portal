@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
-import { UserContext } from '../state';
 import adminGuard from '../components/adminGuard';
 import { NextComponentType } from 'next';
-import { getCourses } from '../lib/api-public.service';
-import dynamic from 'next/dist/next-server/lib/dynamic';
 import MaxContainer from '../components/MaxContainer';
 import DynamicFormCourseOverview from '../components/DynamicFormCourseOverview';
 import { createCourse } from '../lib/api-auth.service';
 
-/* First we import the consumer */
 type Props = {};
 
 class Admin extends Component<Props> {
-  static async getInitialProps(ctx: any) {
-    const res = await getCourses();
-    return { courses: res.data };
-  }
+  state = {
+    handler: null,
+  };
 
-  componentDidMount(): void {
+  async componentDidMount() {
+    const { createCourse } = await import(
+      '../lib/api-auth.service'
+    );
+    this.setState({
+      handler: createCourse,
+    });
     console.log(this.props);
   }
 
@@ -28,7 +29,7 @@ class Admin extends Component<Props> {
           cid={0}
           instructor={''}
           name={''}
-          submitHandler={createCourse}
+          submitHandler={this.state.handler!}
         />
       </MaxContainer>
     );

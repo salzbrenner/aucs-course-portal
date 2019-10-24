@@ -1,14 +1,14 @@
 import React, { useContext, useEffect } from 'react';
 import { IAccountInfo } from 'react-aad-msal';
-import { userActions, useUserState } from '../state';
+import { userActions, useAppContext } from '../state';
 import { useAsyncEffect } from '../lib/async-use-effect';
 
-const UserContextLogin = ({
+const UserLogin = ({
   accountInfo,
 }: {
   accountInfo: IAccountInfo | null;
 }) => {
-  const [{}, dispatch] = useUserState();
+  const [{}, dispatch] = useAppContext();
 
   const setUserState = (
     name: string,
@@ -61,4 +61,4 @@ const UserContextLogin = ({
   return null;
 };
 
-export default UserContextLogin;
+export default UserLogin;

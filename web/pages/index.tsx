@@ -33,6 +33,7 @@ export default class index extends Component<Props> {
   }
 
   render() {
+    console.log('FUCK');
     return (
       <div>
         <Link href="/admin">

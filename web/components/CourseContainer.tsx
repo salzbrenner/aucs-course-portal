@@ -1,19 +1,8 @@
-import { ReactNode, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useAsyncEffect } from '../lib/async-use-effect';
 import MaxContainer from './MaxContainer';
 import { getCourse } from '../lib/api-public.service';
 import { NextComponentType, NextPageContext } from 'next';
-import Course from '../pages/course/[cid]';
-import * as React from 'react';
-
-// export type CourseProps = {
-//   courseData: {
-//     cid: number;
-//     name: string;
-//     instructor: string;
-//     description?: string;
-//   };
-// };
 
 export interface CourseProps {
   cid: number;
