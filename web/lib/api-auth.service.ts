@@ -69,7 +69,6 @@ export const updateCourse = async (
   bodyFormData.set('name', name);
   bodyFormData.set('instructor', instructor);
   bodyFormData.set('description', description);
-  console.log(cid);
 
   return makeAuthRequest(
     `course/${cid}`,
@@ -79,6 +78,17 @@ export const updateCourse = async (
     },
     null,
     bodyFormData
+  );
+};
+
+export const deleteCourse = async (
+  cid: number
+): Promise<AxiosResponse<any>> => {
+  return makeAuthRequest(
+    `course/${cid}`,
+    'delete',
+    {},
+    null
   );
 };
 
@@ -97,7 +107,7 @@ const authorizeHeaders = async (headers: any) => {
 
 const makeAuthRequest = async (
   url: string,
-  method: 'get' | 'post' | 'put' = 'get',
+  method: 'get' | 'post' | 'put' | 'delete' = 'get',
   headers: any = getDefaultHeaders(),
   params?: any,
   data?: any

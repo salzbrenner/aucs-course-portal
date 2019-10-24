@@ -5,7 +5,7 @@ import {
   AuthenticationState,
   IAzureADFunctionProps,
 } from 'react-aad-msal';
-import UserContextLogin from './UserContextLogin';
+import UserLogin from './UserLogin';
 
 const MSALLogin = () => (
   <AzureAD provider={authProvider}>
@@ -24,7 +24,7 @@ const MSALLogin = () => (
         // console.log(accountInfo);
         return (
           <>
-            <UserContextLogin accountInfo={accountInfo} />
+            <UserLogin accountInfo={accountInfo} />
             <button onClick={logout} className="Button">
               Logout
             </button>

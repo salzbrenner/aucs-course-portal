@@ -4,14 +4,12 @@ import React, {
   FormEvent,
 } from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-import '../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { stateToHTML } from 'draft-js-export-html';
 import {
   convertFromHTML,
   EditorState,
   ContentState,
 } from 'draft-js';
-import { createCourse } from '../lib/api-auth.service';
 import { CourseProps } from './CourseContainer';
 import { AxiosResponse } from 'axios';
 
@@ -151,9 +149,9 @@ class EditorConvertToHTML extends Component<
             </div>
 
             <Editor
-              toolbarClassName="demo-toolbar-absolute"
-              wrapperClassName="demo-wrapper"
-              editorClassName="demo-editor"
+              toolbarClassName=""
+              wrapperClassName=""
+              editorClassName=""
               defaultEditorState={description}
               onEditorStateChange={this.onEditorStateChange}
               toolbar={{

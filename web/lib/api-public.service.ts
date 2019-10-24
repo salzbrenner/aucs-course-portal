@@ -48,7 +48,7 @@ export const getDefaultHeaders = () => ({
 
 export const makeRequest = (
   url: string,
-  method: 'get' | 'post' | 'put' = 'get',
+  method: 'get' | 'post' | 'put' | 'delete' = 'get',
   headers: any = getDefaultHeaders(),
   params?: any,
   data?: any

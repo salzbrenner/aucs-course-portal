@@ -2,16 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/src/controller/course_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/course_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/course.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/CourseContainer.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseContainer.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CourseLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseLink.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/DynamicFormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/DynamicFormCourseOverview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/GlobalStyles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GlobalStyles.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserContextLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/adminGuard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/adminGuard.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/auth-provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth-provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/api-public.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-public.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
@@ -45,6 +45,7 @@
   <component name="PropertiesComponent">
     <property name="NewWatcherDialog.advanced.open" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript JSX" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -142,7 +143,7 @@
       <workItem from="1571405555983" duration="8000" />
       <workItem from="1571525366920" duration="18360000" />
       <workItem from="1571864600084" duration="31000" />
-      <workItem from="1571867710237" duration="14038000" />
+      <workItem from="1571867710237" duration="20947000" />
     </task>
     <servers />
   </component>
