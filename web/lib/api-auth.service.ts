@@ -38,10 +38,9 @@ export const getUser = async (
 
 export const createCourse = async (
   name: string,
-  cid: number,
   instructor: string,
-  description: string
-  //@ts-ignore
+  description: string,
+  cid: number
 ): Promise<AxiosResponse<any>> => {
   const bodyFormData = new FormData();
   bodyFormData.set('cid', `${cid}`);
@@ -52,6 +51,29 @@ export const createCourse = async (
   return makeAuthRequest(
     'course',
     'post',
+    {
+      'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    null,
+    bodyFormData
+  );
+};
+
+export const updateCourse = async (
+  name: string,
+  instructor: string,
+  description: string,
+  cid: number
+): Promise<AxiosResponse<any>> => {
+  const bodyFormData = new FormData();
+  bodyFormData.set('name', name);
+  bodyFormData.set('instructor', instructor);
+  bodyFormData.set('description', description);
+  console.log(cid);
+
+  return makeAuthRequest(
+    `course/${cid}`,
+    'put',
     {
       'Content-Type': 'application/x-www-form-urlencoded',
     },

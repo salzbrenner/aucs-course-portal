@@ -12,7 +12,8 @@ export const authProvider = new MsalAuthProvider(
       clientId: process.env.MSAL_CLIENT_ID as string,
       authority: process.env.MSAL_AUTHORITY,
       validateAuthority: true,
-      // postLogoutRedirectUri: "http://localhost:3000",
+      redirectUri: 'http://localhost:3000',
+      postLogoutRedirectUri: 'http://localhost:3000',
       navigateToLoginRequestUrl: false,
     },
     cache: {

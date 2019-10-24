@@ -1,20 +1,23 @@
 import withCourseData, {CourseProps} from "../../../components/CourseContainer";
 import DynamicFormCourseOverview from "../../../components/DynamicFormCourseOverview";
-import MaxContainer from "../../../components/MaxContainer";
-import React from "react";
+import React, {useEffect, useState} from "react";
+import {useAsyncEffect} from "../../../lib/async-use-effect";
 
+const Course = (props: CourseProps) => {
+  const [handler, setHandler] = useState();
 
-const Course = ({courseData}: CourseProps) => {
-
-  const createMarkup = () => {
-    return {__html: courseData.description};
-  }
+  useAsyncEffect(async () => {
+    const { updateCourse } = await import(
+      '../../../lib/api-auth.service'
+      );
+    setHandler(() => updateCourse)
+  },[]);
 
   return <>
-    <h1>{`${courseData.cid} - ${courseData.name}`}</h1>
+    <h1>{`${props.cid} - ${props.name}`}</h1>
     <div className="row">
       <div className="col-xs-8">
-        <DynamicFormCourseOverview courseData={courseData} />
+        <DynamicFormCourseOverview submitHandler={handler} {...props}  />
       </div>
     </div>
   </>

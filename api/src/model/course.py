@@ -25,6 +25,12 @@ class Course(db.Model):
         self.instructor = instructor
         self.name = name
 
+    def update(self, name, instructor, description):
+        self.name = name
+        self.instructor = instructor
+        self.description = description
+        self.save()
+
     def save(self):
         """
         Save course to database

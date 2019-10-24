@@ -1,8 +1,15 @@
 import * as React from 'react';
 
 export const colors = {
-  primary: `red`,
-  secondary: `blue`,
+  primary: '#03244d',
+  secondary: `#cc4e0b`,
+  primaryGradient: `linear-gradient(180deg, rgba(3,36,77,1) 0%, rgba(6,63,134,1) 100%);`,
+  bodyBg: `#ededed`,
+};
+
+export const breakpoints = {
+  sm: '600px',
+  md: '800px',
 };
 
 export default () => (
@@ -13,9 +20,13 @@ export default () => (
       }
 
       body {
-        padding-top: 30px;
         padding-bottom: 100px;
-        font-family: 'Roboto Mono', monospace;
+        background: ${colors.bodyBg};
+        font-family: 'Ubuntu', sans-serif;
+      }
+
+      .color-body-bg {
+        color: ${colors.bodyBg};
       }
 
       .mt-30 {
@@ -33,12 +44,43 @@ export default () => (
         margin-right: 30px;
       }
 
+      .link {
+        display: inline-block;
+        text-transform: uppercase;
+        text-decoration: none;
+        font-size: 0.8rem;
+        // font-weight: bold;
+        letter-spacing: 1px;
+      }
+
+      .link--sidebar {
+        color: white;
+        opacity: 0.8;
+        padding: 10px;
+        letter-spacing: 2px;
+      }
+
+      .link--underline {
+        position: relative;
+      }
+
+      .link--underline::after {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -5px;
+        height: 3px;
+        background: ${colors.secondary};
+        content: '';
+      }
+
       .button {
+        display: inline-block;
         background: none;
         border: none;
         box-shadow: none;
-        padding: 10px;
-        border: solid 1px ${colors.primary};
+        padding: 0px;
+        outline: none !important;
       }
 
       .button:hover {
