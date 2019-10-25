@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Head from 'next/dist/next-server/lib/head';
 import GlobalStyles, {
   breakpoints,
@@ -6,18 +6,20 @@ import GlobalStyles, {
 } from '../components/GlobalStyles';
 import Sidebar from '../components/Sidebar';
 import CourseMenu from '../components/CourseMenu';
-import { AppProvider } from '../state';
-import { NextComponentType, NextPageContext } from 'next';
-import { CourseProps } from '../components/CourseContainer';
-import MSALDynamic from '../components/MSALProvider';
+import { NextComponentType } from 'next';
+import { CourseProps } from '../hoc/withCourseData';
+import MSALLogin from '../components/MSALLogin';
+import { MsalAuthProvider } from 'react-aad-msal';
 
 const MainPageLayout: NextComponentType<
   {},
   {},
-  { courses: CourseProps[] }
-> = ({ children, courses }) => {
+  {
+    courses: CourseProps[];
+    authProvider: MsalAuthProvider;
+  }
+> = ({ children, courses, authProvider }) => {
   const [sidebarOpen, toggleSidebar] = useState(false);
-
   return (
     <div>
       <Head>
@@ -58,11 +60,13 @@ const MainPageLayout: NextComponentType<
         >
           <Sidebar>
             <p className={'color-body-bg'}>Courses</p>
-            <CourseMenu courses={courses!} />
+            <CourseMenu courses={courses} />
           </Sidebar>
         </div>
         <div className="content">
-          <MSALDynamic />
+          {authProvider && (
+            <MSALLogin authProvider={authProvider} />
+          )}
 
           {children}
         </div>

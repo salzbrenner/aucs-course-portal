@@ -5,6 +5,7 @@ import axios, {
   AxiosResponse,
   Method,
 } from 'axios';
+import { throwError } from 'rxjs';
 
 const API_URL = `http://127.0.0.1:5000/api`;
 
@@ -34,7 +35,7 @@ export const getCourses = () => {
 
 export const getCourse = async (
   cid: string
-): Promise<AxiosResponse<any>> => {
+): Promise<AxiosResponse> => {
   return makeRequest(
     `course/${cid}`,
     'get',
@@ -52,7 +53,7 @@ export const makeRequest = (
   headers: any = getDefaultHeaders(),
   params?: any,
   data?: any
-): Promise<AxiosResponse> => {
+): Promise<any> => {
   const req: AxiosRequestConfig = {
     url,
     method,
@@ -61,4 +62,10 @@ export const makeRequest = (
     data,
   };
   return instance.request(req);
+  // .then(response => {
+  //   return response;
+  // })
+  // .catch(error => {
+  //   return error;
+  // });
 };

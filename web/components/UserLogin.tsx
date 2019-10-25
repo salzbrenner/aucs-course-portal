@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import { IAccountInfo } from 'react-aad-msal';
-import { userActions, useAppContext } from '../state';
+import { useAppContext } from '../state';
 import { useAsyncEffect } from '../lib/async-use-effect';
+import { userActions } from '../state/reducers/userReducer';
 
 const UserLogin = ({
   accountInfo,

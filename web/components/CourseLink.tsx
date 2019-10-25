@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import * as React from 'react';
-import { CourseProps } from './CourseContainer';
+import { CourseProps } from '../hoc/withCourseData';
 
 const CourseLink = (props: CourseProps) => (
   <Link href={`/course/[cid]`} as={`/course/${props.cid}`}>

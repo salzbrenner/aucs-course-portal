@@ -1,13 +1,24 @@
 import React from 'react';
-import { authProvider } from '../lib/auth-provider';
 import {
   AzureAD,
   AuthenticationState,
   IAzureADFunctionProps,
+  MsalAuthProvider,
 } from 'react-aad-msal';
 import UserLogin from './UserLogin';
 
-const MSALLogin = () => (
+/**
+ * This component has to be rendered dynamically if auth provider
+ * is removed from props
+ *
+ * @param authProvider
+ * @constructor
+ */
+const MSALLogin = ({
+  authProvider,
+}: {
+  authProvider: MsalAuthProvider;
+}) => (
   <AzureAD provider={authProvider}>
     {({
       login,

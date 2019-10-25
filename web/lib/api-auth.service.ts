@@ -5,11 +5,36 @@ import {
   makeRequest,
 } from './api-public.service';
 
-export const protect = async (): Promise<AxiosResponse> => {
+export interface ApiAuthInterface {
+  protect: () => Promise<AxiosResponse>;
+  createUser: (
+    uid: string,
+    email: string
+  ) => Promise<AxiosResponse<{ id: number; role: number }>>;
+  createCourse: (
+    name: string,
+    instructor: string,
+    description: string,
+    cid: number
+  ) => Promise<AxiosResponse<any>>;
+  updateCourse: (
+    name: string,
+    instructor: string,
+    description: string,
+    cid: number
+  ) => Promise<AxiosResponse<any>>;
+  deleteCourse: (
+    cid: number
+  ) => Promise<AxiosResponse<any>>;
+}
+
+export const protect: ApiAuthInterface['protect'] = async (): Promise<
+  AxiosResponse
+> => {
   return makeAuthRequest(`/protected`, 'get');
 };
 
-export const createUser = async (
+export const createUser: ApiAuthInterface['createUser'] = async (
   uid: string,
   email: string
 ): Promise<AxiosResponse<{ id: number; role: number }>> => {
@@ -36,7 +61,7 @@ export const getUser = async (
  * Courses
  */
 
-export const createCourse = async (
+export const createCourse: ApiAuthInterface['createCourse'] = async (
   name: string,
   instructor: string,
   description: string,
@@ -59,7 +84,7 @@ export const createCourse = async (
   );
 };
 
-export const updateCourse = async (
+export const updateCourse: ApiAuthInterface['updateCourse'] = async (
   name: string,
   instructor: string,
   description: string,
@@ -81,7 +106,7 @@ export const updateCourse = async (
   );
 };
 
-export const deleteCourse = async (
+export const deleteCourse: ApiAuthInterface['deleteCourse'] = async (
   cid: number
 ): Promise<AxiosResponse<any>> => {
   return makeAuthRequest(

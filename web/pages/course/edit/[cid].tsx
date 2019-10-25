@@ -1,28 +1,34 @@
 import withCourseData, {
-  CourseProps,
-} from '../../../components/CourseContainer';
-import DynamicFormCourseOverview from '../../../components/DynamicFormCourseOverview';
-import React, { useEffect, useState } from 'react';
-import { useAsyncEffect } from '../../../lib/async-use-effect';
+  CourseContainerProps,
+} from '../../../hoc/withCourseData';
+import DynamicFormCourseOverview from '../../../dynamic-components/DynamicFormCourseOverview';
+import React, {  useState } from 'react';
+import {redirectToHome} from "../../../lib/redirect-service";
+import {useAppContext} from "../../../state";
+import {coursesActions} from "../../../state/reducers/coursesReducesr";
 
-const Course = (props: CourseProps) => {
-  const [handler, setHandler] = useState();
+const Course = (props: CourseContainerProps) => {
   const [showDelete, setDeleteVisibility] = useState(false);
+  const [{}, dispatch] = useAppContext()
+  const { apiAuth, cid, name } = props;
 
-  useAsyncEffect(async () => {
-    const { updateCourse } = await import(
-      '../../../lib/api-auth.service'
-      );
-    setHandler(() => updateCourse);
-  }, []);
+  const deleteCourse = async () => {
+    const res = await apiAuth.deleteCourse(cid);
+    dispatch({
+      type: coursesActions.DELETE_COURSE,
+      payload: cid
+    });
+    await redirectToHome();
+  };
 
   return (
     <>
-      <h1>{`${props.cid} - ${props.name}`}</h1>
+      <h1>{`${cid} - ${name}`}</h1>
       <div className="row">
         <div className="col-xs-8">
           <DynamicFormCourseOverview
-            submitHandler={handler}
+            submitHandler={apiAuth && apiAuth.updateCourse}
+            submitActionType={coursesActions.UPDATE_COURSE}
             {...props}
           />
 
@@ -39,7 +45,7 @@ const Course = (props: CourseProps) => {
               <div>
                 Are you sure you want to delete this course?
               </div>
-              <button>yes</button>
+              <button onClick={() => deleteCourse()}>yes</button>
               <button
                 onClick={() => setDeleteVisibility(false)}
               >
