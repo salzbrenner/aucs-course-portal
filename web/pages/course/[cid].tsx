@@ -1,21 +1,20 @@
-import {CourseProps} from "../../components/CourseContainer";
-import withCourseData from "../../components/CourseContainer";
+import {CourseContainerProps} from "../../hoc/withCourseData";
+import withCourseData from "../../hoc/withCourseData";
 import {useAppContext} from "../../state";
 import Link from "next/link";
 import * as React from "react";
 
 
 
-const Course = ({description, cid, name}: CourseProps) => {
+const Course = ({description, cid, name}: CourseContainerProps) => {
   const [{ user }] = useAppContext();
-
 
   const createMarkup = () => {
     if (!description) {
       return  {__html: ''}
     }
     return {__html: description};
-  }
+  };
 
   return <>
     <h1>{`${cid} - ${name}`}</h1>

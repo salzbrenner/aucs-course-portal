@@ -10,8 +10,11 @@ import {
   EditorState,
   ContentState,
 } from 'draft-js';
-import { CourseProps } from './CourseContainer';
+import { CourseProps } from '../hoc/withCourseData';
 import { AxiosResponse } from 'axios';
+import { AppActionType } from '../state/context.interfaces';
+import { AppContext } from '../state';
+import { coursesActions } from '../state/reducers/coursesReducesr';
 
 export interface FormCourseOverviewProps
   extends CourseProps {
@@ -21,16 +24,20 @@ export interface FormCourseOverviewProps
     description: string,
     cid: number
   ) => Promise<AxiosResponse<any>>;
+  submitActionType?: AppActionType;
+  emptyCid?: '';
 }
 
 class EditorConvertToHTML extends Component<
   FormCourseOverviewProps
 > {
+  static contextType = AppContext;
   state = {
     description: this.getContent(),
     name: this.getCourseData().name,
     cid: this.getCourseData().cid,
     instructor: this.getCourseData().instructor,
+    emptyCid: this.props.emptyCid,
     canSubmit: true,
   };
 
@@ -42,12 +49,16 @@ class EditorConvertToHTML extends Component<
 
   getContent() {
     if (this.getCourseData().description) {
-      const contentState = ContentState.createFromBlockArray(
-        convertFromHTML(
-          this.getCourseData().description!
-        ) as any
-      );
-      return EditorState.createWithContent(contentState);
+      try {
+        const contentState = ContentState.createFromBlockArray(
+          convertFromHTML(
+            this.getCourseData().description!
+          ) as any
+        );
+        return EditorState.createWithContent(contentState);
+      } catch (e) {
+        return EditorState.createEmpty();
+      }
     } else {
       return EditorState.createEmpty();
     }
@@ -88,8 +99,30 @@ class EditorConvertToHTML extends Component<
       stateToHTML(description.getCurrentContent()),
       cid
     );
+    const { submitActionType } = this.props;
 
-    this.setState({ canSubmit: true });
+    if (submitActionType) {
+      const [{}, dispatch] = this.context;
+
+      dispatch({
+        type: submitActionType,
+        payload: { name, instructor, cid, description },
+      });
+
+      if (submitActionType === coursesActions.ADD_COURSE) {
+        this.setState({
+          description: '',
+          name: '',
+          cid: '',
+          instructor: '',
+          canSubmit: true,
+        });
+      } else if (
+        submitActionType === coursesActions.UPDATE_COURSE
+      ) {
+        this.setState({ canSubmit: true });
+      }
+    }
   }
 
   render() {
