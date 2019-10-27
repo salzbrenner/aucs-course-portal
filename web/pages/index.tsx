@@ -3,6 +3,7 @@ import { getCourses } from '../lib/api-public.service';
 import Link from 'next/link';
 import { CourseProps } from '../hoc/withCourseData';
 import { NextPageContext } from 'next';
+import Graph from '../components/Graph';
 
 type Props = {
   courses?: CourseProps[];
@@ -16,18 +17,24 @@ export default class index extends Component<Props> {
 
   render() {
     return (
-      <div>
+      <div className={`graph-container`}>
         <Link href="/admin">
           <a>Admin</a>
         </Link>
-        <h1>
-          Lorem ipsum dolor sit amet, consectetur
-          adipisicing elit. At commodi culpa explicabo fugit
-          itaque officia officiis tempora! Aperiam
-          asperiores atque, cupiditate dolore, dolorum
-          eligendi necessitatibus quos ratione velit
-          voluptatibus voluptatum.
-        </h1>
+        <div className={`graph-container`}>
+          <Graph />
+
+          <style jsx>{`
+            .graph-container {
+              position: fixed;
+              right: 0;
+              top: 0;
+              bottom: 0;
+              left: 0;
+              padding: 0 20px;
+            }
+          `}</style>
+        </div>
       </div>
     );
   }

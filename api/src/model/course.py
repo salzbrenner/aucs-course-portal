@@ -11,6 +11,7 @@ class Course(db.Model):
     __tablename__ = "course"
 
     cid = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
+    prereqs = db.relationship("Prereq", backref="course", lazy=True)
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(), nullable=True)
     instructor = db.Column(db.String(256), nullable=False)

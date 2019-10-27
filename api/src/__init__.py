@@ -27,8 +27,10 @@ def create_app(config_name):
 
     from src.controller.course_controller import courses
     from src.controller.user_controller import users
+    from src.controller.prereq_controller import prereqs
 
     app.register_blueprint(courses, url_prefix="/api")
     app.register_blueprint(users, url_prefix="/api")
+    app.register_blueprint(prereqs, url_prefix="/api")
 
     return app
