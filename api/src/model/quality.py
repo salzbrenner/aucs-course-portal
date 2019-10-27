@@ -9,7 +9,7 @@ class Quality(db.Model):
     __tablename__ = "quality"
 
     id = db.Column(db.Integer, primary_key=True)
-    course_id = db.Column(db.Integer, db.ForeignKey("course.id"))
+    course_id = db.Column(db.Integer, db.ForeignKey("course.cid"))
     poor = db.Column(db.Integer)
     fair = db.Column(db.Integer)
     average = db.Column(db.Integer)
