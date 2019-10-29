@@ -10,15 +10,17 @@ import { NextComponentType } from 'next';
 import { CourseProps } from '../hoc/withCourseData';
 import MSALLogin from '../components/MSALLogin';
 import { MsalAuthProvider } from 'react-aad-msal';
+import { ApiAuthInterface } from '../lib/api-auth.service';
 
 const MainPageLayout: NextComponentType<
   {},
   {},
   {
     courses: CourseProps[];
+    apiAuth: ApiAuthInterface;
     authProvider: MsalAuthProvider;
   }
-> = ({ children, courses, authProvider }) => {
+> = ({ children, courses, authProvider, apiAuth }) => {
   const [sidebarOpen, toggleSidebar] = useState(false);
   return (
     <div>
@@ -65,7 +67,10 @@ const MainPageLayout: NextComponentType<
         </div>
         <div className="content">
           {authProvider && (
-            <MSALLogin authProvider={authProvider} />
+            <MSALLogin
+              authProvider={authProvider}
+              apiAuth={apiAuth}
+            />
           )}
 
           {children}

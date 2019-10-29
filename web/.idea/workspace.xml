@@ -3,11 +3,27 @@
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../api/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/src/controller/course_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/course_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/src/controller/prereq_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/prereq_controller.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/src/jwksutils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/jwksutils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/course.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/src/model/prereq.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/prereq.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/quality.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/quality.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/src/model/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/user.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/conftest.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/test_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/test_course.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/tests/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/test_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoc/withCourseData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hoc/withCourseData.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/api-public.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-public.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -136,7 +152,8 @@
       <workItem from="1571864600084" duration="31000" />
       <workItem from="1571867710237" duration="21126000" />
       <workItem from="1571968778695" duration="18528000" />
-      <workItem from="1572144791040" duration="18348000" />
+      <workItem from="1572144791040" duration="18433000" />
+      <workItem from="1572304468695" duration="9463000" />
     </task>
     <servers />
   </component>

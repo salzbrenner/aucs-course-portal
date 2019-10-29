@@ -3,13 +3,11 @@ import adminGuard from '../hoc/adminGuard';
 import { NextComponentType } from 'next';
 import MaxContainer from '../components/MaxContainer';
 import DynamicFormCourseOverview from '../dynamic-components/DynamicFormCourseOverview';
-import { createCourse } from '../lib/api-auth.service';
 import { AppContext } from '../state';
 import { coursesActions } from '../state/reducers/coursesReducesr';
+import { AppPageProps } from './_app';
 
-type Props = {};
-
-class Admin extends Component<Props> {
+class Admin extends Component<AppPageProps> {
   static contextType = AppContext;
 
   state = {
@@ -17,9 +15,7 @@ class Admin extends Component<Props> {
   };
 
   async componentDidMount() {
-    const { createCourse } = await import(
-      '../lib/api-auth.service'
-    );
+    const { createCourse } = this.props.apiAuth;
     this.setState({
       handler: createCourse,
     });
@@ -40,5 +36,4 @@ class Admin extends Component<Props> {
   }
 }
 
-export default adminGuard(Admin as NextComponentType);
-// export default Admin as NextComponentType;
+export default adminGuard(Admin as any);

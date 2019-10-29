@@ -4,8 +4,6 @@ import {useAppContext} from "../../state";
 import Link from "next/link";
 import * as React from "react";
 
-
-
 const Course = ({description, cid, name}: CourseContainerProps) => {
   const [{ user }] = useAppContext();
 

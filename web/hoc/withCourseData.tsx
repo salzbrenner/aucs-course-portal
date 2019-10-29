@@ -3,8 +3,7 @@ import { useAsyncEffect } from '../lib/async-use-effect';
 import MaxContainer from '../components/MaxContainer';
 import { getCourse } from '../lib/api-public.service';
 import { NextComponentType } from 'next';
-import { AppPageCtx } from '../pages/_app';
-import { ApiAuthInterface } from '../lib/api-auth.service';
+import { AppPageCtx, AppPageProps } from '../pages/_app';
 import {
   redirectServerToHome,
   redirectToHome,
@@ -17,10 +16,9 @@ export interface CourseProps {
   description?: string;
 }
 
-export interface CourseContainerProps extends CourseProps {
-  apiPublic: any;
-  apiAuth: ApiAuthInterface;
-}
+export interface CourseContainerProps
+  extends AppPageProps,
+    CourseProps {}
 
 const withCourseData = <
   T extends CourseContainerProps = CourseContainerProps
