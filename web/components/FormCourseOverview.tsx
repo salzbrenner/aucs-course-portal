@@ -32,18 +32,22 @@ class EditorConvertToHTML extends Component<
   FormCourseOverviewProps
 > {
   static contextType = AppContext;
-  state = {
+  state: any = {
     description: this.getContent(),
     name: this.getCourseData().name,
     cid: this.getCourseData().cid,
     instructor: this.getCourseData().instructor,
     emptyCid: this.props.emptyCid,
     canSubmit: true,
+    prereqs: { 1: '' },
   };
 
   constructor(props: FormCourseOverviewProps) {
     super(props);
     this.handleChange = this.handleChange.bind(this);
+    this.handlePrereqChange = this.handlePrereqChange.bind(
+      this
+    );
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -77,6 +81,37 @@ class EditorConvertToHTML extends Component<
   handleChange(event: ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target;
     this.setState({ [name]: value });
+  }
+
+  handlePrereqChange(
+    event: ChangeEvent<HTMLInputElement>,
+    key: string
+  ) {
+    const { name, value } = event.target;
+    this.setState({
+      prereqs: {
+        ...this.state.prereqs,
+        [key]: value,
+      },
+    });
+  }
+
+  addPreReqGroup() {
+    this.setState({
+      prereqs: {
+        ...this.state.prereqs,
+        [Object.keys(this.state.prereqs).length + 1]: '',
+      },
+    });
+  }
+
+  deletePreReqGroup(key: string) {
+    const { [key]: toDelete, ...rest } = this.state.prereqs;
+    this.setState({
+      prereqs: {
+        ...rest,
+      },
+    });
   }
 
   async handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -132,6 +167,7 @@ class EditorConvertToHTML extends Component<
       cid,
       canSubmit,
       instructor,
+      prereqs,
     } = this.state;
 
     return (
@@ -182,9 +218,6 @@ class EditorConvertToHTML extends Component<
             </div>
 
             <Editor
-              toolbarClassName=""
-              wrapperClassName=""
-              editorClassName=""
               defaultEditorState={description}
               onEditorStateChange={this.onEditorStateChange}
               toolbar={{
@@ -196,33 +229,38 @@ class EditorConvertToHTML extends Component<
                     'strikethrough',
                     'monospace',
                   ],
-                  // bold: {
-                  //   className: 'bordered-option-classname',
-                  // },
-                  // italic: {
-                  //   className: 'bordered-option-classname',
-                  // },
-                  // underline: {
-                  //   className: 'bordered-option-classname',
-                  // },
-                  // strikethrough: {
-                  //   className: 'bordered-option-classname',
-                  // },
-                  // code: {
-                  //   className: 'bordered-option-classname',
-                  // },
                 },
-                // blockType: {
-                //   className: 'bordered-option-classname',
-                // },
-                // fontSize: {
-                //   className: 'bordered-option-classname',
-                // },
-                // fontFamily: {
-                //   className: 'bordered-option-classname',
-                // },
               }}
             />
+
+            {Object.keys(prereqs).map(key => (
+              <div key={key}>
+                <label className={'form-control-label'}>
+                  <span>Prereqs group</span>
+                  <input
+                    type="text"
+                    name={`prereq-group-${key}`}
+                    value={prereqs[key]}
+                    onChange={e =>
+                      this.handlePrereqChange(e, key)
+                    }
+                  />
+                </label>
+
+                <button
+                  onClick={() =>
+                    this.deletePreReqGroup(key)
+                  }
+                >
+                  delete group
+                </button>
+              </div>
+            ))}
+
+            <button onClick={() => this.addPreReqGroup()}>
+              add group
+            </button>
+
             <input
               type="submit"
               value="Submit"

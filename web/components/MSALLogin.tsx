@@ -16,8 +16,10 @@ import UserLogin from './UserLogin';
  */
 const MSALLogin = ({
   authProvider,
+  apiAuth,
 }: {
   authProvider: MsalAuthProvider;
+  apiAuth: any;
 }) => (
   <AzureAD provider={authProvider}>
     {({
@@ -35,7 +37,10 @@ const MSALLogin = ({
         // console.log(accountInfo);
         return (
           <>
-            <UserLogin accountInfo={accountInfo} />
+            <UserLogin
+              accountInfo={accountInfo}
+              apiAuth={apiAuth}
+            />
             <button onClick={logout} className="Button">
               Logout
             </button>

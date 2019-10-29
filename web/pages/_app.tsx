@@ -6,14 +6,17 @@ import MainPageLayout from '../layouts/main';
 import { authProvider } from '../lib/auth-provider';
 import * as apiPublic from '../lib/api-public.service';
 import { NextPageContext } from 'next';
+import { ApiAuthInterface } from '../lib/api-auth.service';
 
 export interface AppPageCtx extends NextPageContext {
   apiPublic: any;
+  apiAuth: ApiAuthInterface;
 }
 
 export interface AppPageProps {
-  courses: any;
   apiPublic: any;
+  apiAuth: ApiAuthInterface;
+  authProvider: any;
 }
 
 export default class MyApp extends App {
@@ -43,8 +46,10 @@ export default class MyApp extends App {
     );
 
     const apiAuth = await import('../lib/api-auth.service');
-
-    this.setState({ authProvider, apiAuth });
+    this.setState({
+      authProvider,
+      apiAuth: new apiAuth.default(),
+    });
   }
 
   render() {
@@ -55,6 +60,7 @@ export default class MyApp extends App {
         <AppProvider>
           <MainPageLayout
             courses={courses}
+            apiAuth={this.state.apiAuth!}
             authProvider={this.state.authProvider!}
           >
             <Component {...pageProps} {...this.state} />

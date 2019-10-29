@@ -4,12 +4,13 @@ import Link from 'next/link';
 import { CourseProps } from '../hoc/withCourseData';
 import { NextPageContext } from 'next';
 import Graph from '../components/Graph';
+import { AppPageProps } from './_app';
 
 type Props = {
   courses?: CourseProps[];
 };
 
-export default class index extends Component<Props> {
+export default class index extends Component<AppPageProps> {
   static async getInitialProps(ctx: NextPageContext) {
     const res = await getCourses();
     return { courses: res.data };
@@ -27,6 +28,7 @@ export default class index extends Component<Props> {
           <style jsx>{`
             .graph-container {
               position: fixed;
+              z-index: -1;
               right: 0;
               top: 0;
               bottom: 0;

@@ -6,7 +6,6 @@ import {
 } from './api-public.service';
 
 export interface ApiAuthInterface {
-  protect: () => Promise<AxiosResponse>;
   createUser: (
     uid: string,
     email: string
@@ -26,123 +25,120 @@ export interface ApiAuthInterface {
   deleteCourse: (
     cid: number
   ) => Promise<AxiosResponse<any>>;
+  userRole: number;
 }
 
-export const protect: ApiAuthInterface['protect'] = async (): Promise<
-  AxiosResponse
-> => {
-  return makeAuthRequest(`/protected`, 'get');
-};
+class apiAuth implements ApiAuthInterface {
+  private _userRole = 0;
 
-export const createUser: ApiAuthInterface['createUser'] = async (
-  uid: string,
-  email: string
-): Promise<AxiosResponse<{ id: number; role: number }>> => {
-  return makeAuthRequest(
-    'user',
-    'post',
-    getDefaultHeaders(),
-    null,
-    { uid, email }
-  );
-};
-
-export const getUser = async (
-  uid: string
-): Promise<AxiosResponse> => {
-  return makeAuthRequest(
-    `user/${uid}`,
-    'get',
-    getDefaultHeaders()
-  );
-};
-
-/**
- * Courses
- */
-
-export const createCourse: ApiAuthInterface['createCourse'] = async (
-  name: string,
-  instructor: string,
-  description: string,
-  cid: number
-): Promise<AxiosResponse<any>> => {
-  const bodyFormData = new FormData();
-  bodyFormData.set('cid', `${cid}`);
-  bodyFormData.set('name', name);
-  bodyFormData.set('instructor', instructor);
-  bodyFormData.set('description', description);
-
-  return makeAuthRequest(
-    'course',
-    'post',
-    {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    null,
-    bodyFormData
-  );
-};
-
-export const updateCourse: ApiAuthInterface['updateCourse'] = async (
-  name: string,
-  instructor: string,
-  description: string,
-  cid: number
-): Promise<AxiosResponse<any>> => {
-  const bodyFormData = new FormData();
-  bodyFormData.set('name', name);
-  bodyFormData.set('instructor', instructor);
-  bodyFormData.set('description', description);
-
-  return makeAuthRequest(
-    `course/${cid}`,
-    'put',
-    {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-    null,
-    bodyFormData
-  );
-};
-
-export const deleteCourse: ApiAuthInterface['deleteCourse'] = async (
-  cid: number
-): Promise<AxiosResponse<any>> => {
-  return makeAuthRequest(
-    `course/${cid}`,
-    'delete',
-    {},
-    null
-  );
-};
-
-const authorizeHeaders = async (headers: any) => {
-  try {
-    const token = await authProvider.getIdToken();
-    const idToken = token.idToken.rawIdToken;
-    return {
-      ...headers,
-      Authorization: `Bearer ${idToken}`,
-    };
-  } catch (e) {
-    alert('You need to log in first');
+  set userRole(role: number) {
+    this._userRole = role;
   }
-};
 
-const makeAuthRequest = async (
-  url: string,
-  method: 'get' | 'post' | 'put' | 'delete' = 'get',
-  headers: any = getDefaultHeaders(),
-  params?: any,
-  data?: any
-) => {
-  const authHeaders = await authorizeHeaders(headers);
-  return makeRequest(
-    url,
-    method,
-    authHeaders,
-    params,
-    data
-  );
-};
+  createUser = async (
+    uid: string,
+    email: string
+  ): Promise<
+    AxiosResponse<{ id: number; role: number }>
+  > => {
+    return this.makeAuthRequest(
+      'user',
+      'post',
+      getDefaultHeaders(),
+      null,
+      { uid, email }
+    );
+  };
+
+  createCourse = async (
+    name: string,
+    instructor: string,
+    description: string,
+    cid: number
+  ): Promise<AxiosResponse<any>> => {
+    const bodyFormData = new FormData();
+    bodyFormData.set('cid', `${cid}`);
+    bodyFormData.set('name', name);
+    bodyFormData.set('instructor', instructor);
+    bodyFormData.set('description', description);
+
+    return this.makeAuthRequest(
+      'course',
+      'post',
+      {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'x-app-admin': 0,
+      },
+      null,
+      bodyFormData
+    );
+  };
+
+  deleteCourse: ApiAuthInterface['deleteCourse'] = async (
+    cid: number
+  ): Promise<AxiosResponse<any>> => {
+    return this.makeAuthRequest(
+      `course/${cid}`,
+      'delete',
+      {},
+      null
+    );
+  };
+
+  updateCourse = async (
+    name: string,
+    instructor: string,
+    description: string,
+    cid: number
+  ): Promise<AxiosResponse<any>> => {
+    const bodyFormData = new FormData();
+    bodyFormData.set('name', name);
+    bodyFormData.set('instructor', instructor);
+    bodyFormData.set('description', description);
+
+    return this.makeAuthRequest(
+      `course/${cid}`,
+      'put',
+      {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      null,
+      bodyFormData
+    );
+  };
+
+  authorizeHeaders = async (headers: any) => {
+    try {
+      const token = await authProvider.getIdToken();
+      const idToken = token.idToken.rawIdToken;
+      return {
+        ...headers,
+        Authorization: `Bearer ${idToken}`,
+        'x-app-admin': this._userRole,
+      };
+    } catch (e) {
+      alert('You need to log in first');
+    }
+  };
+
+  makeAuthRequest = async (
+    url: string,
+    method: 'get' | 'post' | 'put' | 'delete' = 'get',
+    headers: any = getDefaultHeaders(),
+    params?: any,
+    data?: any
+  ) => {
+    const authHeaders = await this.authorizeHeaders(
+      headers
+    );
+    return makeRequest(
+      url,
+      method,
+      authHeaders,
+      params,
+      data
+    );
+  };
+}
+
+export default apiAuth;

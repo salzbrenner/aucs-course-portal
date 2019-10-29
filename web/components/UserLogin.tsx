@@ -3,12 +3,17 @@ import { IAccountInfo } from 'react-aad-msal';
 import { useAppContext } from '../state';
 import { useAsyncEffect } from '../lib/async-use-effect';
 import { userActions } from '../state/reducers/userReducer';
+import { ApiAuthInterface } from '../lib/api-auth.service';
+
+interface LoginProps {
+  accountInfo: IAccountInfo | null;
+  apiAuth: ApiAuthInterface;
+}
 
 const UserLogin = ({
   accountInfo,
-}: {
-  accountInfo: IAccountInfo | null;
-}) => {
+  apiAuth,
+}: LoginProps) => {
   const [{}, dispatch] = useAppContext();
 
   const setUserState = (
@@ -30,10 +35,7 @@ const UserLogin = ({
   };
 
   useAsyncEffect(async () => {
-    const { createUser } = await import(
-      '../lib/api-auth.service'
-    );
-
+    const { createUser } = apiAuth;
     const {
       name,
       email,
@@ -53,6 +55,8 @@ const UserLogin = ({
 
     if (createdRes.data) {
       const { id, role } = createdRes.data;
+      apiAuth.userRole = id;
+
       setUserState(name, email, id, role);
       // TODO: maybe grab courses as well, and then update state again
       // await getUser(id).catch(err => console.log("No user with that ID", err.response))
