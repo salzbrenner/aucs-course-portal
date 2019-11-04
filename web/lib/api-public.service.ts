@@ -18,7 +18,7 @@ export const getCourses = () => {
 };
 
 export const getCourse = async (
-  cid: string
+  cid: string | number
 ): Promise<AxiosResponse> => {
   return makeRequest(
     `course/${cid}`,

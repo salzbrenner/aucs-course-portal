@@ -10,6 +10,9 @@ valid_audiences = ["c022a64b-aeb7-4b48-992c-a00b9956813b"]
 issuer = "https://login.microsoftonline.com/ccb6deed-bd29-4b38-8979-d72780f62d3b/v2.0"
 
 
+INVALID_JWT_MESSAGE = "invalid jwt"  # don't change this unless updating client too
+
+
 class InvalidAuthorizationToken(Exception):
     def __init__(self, details):
         super().__init__("Invalid authorization token: " + details)
@@ -63,14 +66,31 @@ def authorize(f):
             if os.getenv("TEST_TOKEN") == token:
                 return f(*args, **kwargs)
             else:
-                return "Invalid jwt", 401
+                # don't change message from
+                return INVALID_JWT_MESSAGE, 401
 
         try:
             validate_jwt(token)
 
         except:
-            return "Invalid jwt", 401
+            return INVALID_JWT_MESSAGE, 401
 
         return f(*args, **kwargs)
 
     return decorated_function
+
+
+def admin_authorize(f):
+    @wraps(f)
+    def admin_check(*args, **kwargs):
+        if not "x-app-admin" in request.headers:
+            abort(401)
+
+        role = request.headers["x-app-admin"]
+
+        if int(role) == 0:
+            return "Not an Admin", 401
+
+        return f(*args, **kwargs)
+
+    return admin_check

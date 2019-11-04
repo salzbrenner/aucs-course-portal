@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAsyncEffect } from '../lib/async-use-effect';
 import MaxContainer from '../components/MaxContainer';
 import { getCourse } from '../lib/api-public.service';
@@ -8,12 +8,23 @@ import {
   redirectServerToHome,
   redirectToHome,
 } from '../lib/redirect-service';
+import { useAppContext } from '../state';
+
+export interface CourseMetricInterface {
+  total: number;
+  occurrences: { [k: number]: number };
+  percentages: { [k: number]: number };
+}
 
 export interface CourseProps {
   cid: number;
   name: string;
   instructor: string;
   description?: string;
+  prereq: { [k: number]: string };
+  qualities?: CourseMetricInterface;
+  difficulties?: CourseMetricInterface;
+  times?: CourseMetricInterface;
 }
 
 export interface CourseContainerProps
@@ -31,22 +42,29 @@ const withCourseData = <
 ) => {
   const WrapperComponent = ({ ...props }) => {
     const { courseData, apiPublic, apiAuth } = props;
+    const [coursesState, setCoursesState] = useState(
+      courseData
+    );
+    const [{ courses }] = useAppContext();
     // const [
     //   currentCourseData,
     //   setCurrentCourseData,
     // ] = useState(courseData);
 
-    useAsyncEffect(async () => {
-      const res = await apiPublic
-        .getCourse(`${courseData.cid}`)
-        .catch((err: any) => err);
-      const data = await res.data;
+    useEffect(() => {
+      // const res = await apiPublic
+      //   .getCourse(`${courseData.cid}`)
+      // .catch((err: any) => err);
+      // const data = await res.data;
       // setCurrentCourseData(data)
-    }, []);
+      if (courses[courseData.cid]) {
+        setCoursesState(courses[courseData.cid]);
+      }
+    }, [courses]);
 
     return (
       <MaxContainer>
-        <Component {...courseData} apiAuth={apiAuth} />
+        <Component {...coursesState} apiAuth={apiAuth} />
       </MaxContainer>
     );
   };

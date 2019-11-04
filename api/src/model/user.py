@@ -10,24 +10,26 @@ class User(db.Model):
 
     __tablename__ = "user"
 
-    # Define the columns of the users table, starting with the primary key
-    id = db.Column(db.Integer, primary_key=True)
-    uid = db.Column(db.String(256), nullable=False, unique=True)
+    # internal_id = db.Column(db.Integer, primary_key=True)
+    # sub from id.token claims from azure - used to identify user, and passed to client
+    id = db.Column(db.String(256), primary_key=True, unique=True)
     email = db.Column(db.String(256), unique=True)
     created_at = db.Column(db.DateTime, nullable=False)
     # 1 is admin, 2 is super admin
     role = db.Column(db.Integer, nullable=True)
+    qualities = db.relationship("Quality", backref="user", lazy=True)
 
     def __str__(self):
-        return {"id": self.id, "uid": self.uid, "email": self.email, "role": self.role}
+        votes = {}
+        for q in self.qualities:
+            votes[q.cid] = {"quality": q.rating}
 
-    def __init__(self, uid: str, email: str):
+        return {"id": self.id, "email": self.email, "role": self.role, "votes": votes}
+
+    def __init__(self, id: str, email: str):
         """
-        Initialize the user with an email and password
-        :param email: string
-        :param password: string
         """
-        self.uid = uid
+        self.id = id
         self.email = email
         self.created_at = datetime.now()
         self.role = 0
@@ -49,14 +51,14 @@ class User(db.Model):
         db.session.commit()
 
     @staticmethod
-    def save_user_session_id(uid):
+    def save_user_session_id(id):
         """
         Sets the 'current_user' session id
-        :param uid: string
+        :param id: string
         :return:
         """
         try:
-            session["current_user"] = uid
+            session["current_user"] = id
             session.permanent = True
         except Exception as e:
             return e

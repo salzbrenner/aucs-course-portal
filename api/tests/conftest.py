@@ -1,3 +1,5 @@
+from typing import Dict
+
 import pytest
 import instance.config
 import os
@@ -30,5 +32,21 @@ def auth_client():
         db.drop_all()
 
 
+def bearer_header(token) -> {}:
+    return {"Authorization": "Bearer " + token}
+
+
 def auth_headers(token):
-    return {"Authorization": "Bearer " + token, "content-type": "application/json"}
+    return {**bearer_header(token), "content-type": "application/json"}
+
+
+def auth_headers_for_forms(token):
+    return {**bearer_header(token), "content-type": "application/x-www-form-urlencoded"}
+
+
+def auth_headers_for_admin(token):
+    return {**auth_headers_for_forms(token), "x-app-admin": 1}
+
+
+def default_user() -> Dict:
+    return {"id": "sodifjosijdf", "email": "dude@test.com"}

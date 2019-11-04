@@ -29,13 +29,13 @@ const customStyles = {
 };
 
 const Course = ({
-                  description,
-                  cid,
-                  name,
-                  prereq,
-                  qualities,
-                  apiAuth,
-                }: CourseContainerProps) => {
+  description,
+  cid,
+  name,
+  prereq,
+  qualities,
+  apiAuth,
+}: CourseContainerProps) => {
   const [{ user }] = useAppContext();
   const [modalIsOpen, setModalState] = useState(false);
 
@@ -90,8 +90,8 @@ const Course = ({
             <div key={cids}>
               {cids.split(' ').join(', ')}
               {Object.keys(prereq).length > 0 &&
-              index < Object.keys(prereq).length - 1 &&
-              ' or'}
+                index < Object.keys(prereq).length - 1 &&
+                ' or'}
             </div>
           );
         })}
@@ -118,7 +118,7 @@ const Course = ({
                 <p>Have you taken this course?</p>
               )}
               {hasProvidedFeedback(user) &&
-              getFeedback(user.votes[cid])}
+                getFeedback(user.votes[cid])}
               <button onClick={() => openModal()}>
                 {hasProvidedFeedback(user)
                   ? 'Change Feedback'
@@ -136,10 +136,8 @@ const Course = ({
               style={customStyles}
             >
               <FormVote
-                votes={user.votes[cid]}
                 apiAuth={apiAuth}
                 cid={cid}
-                closeModalHandler={closeModal}
                 uid={user.id}
               />
             </Modal>

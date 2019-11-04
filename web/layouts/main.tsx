@@ -92,7 +92,7 @@ const MainPageLayout: NextComponentType<
             flex-direction: column;
             justify-content: space-between;
             height: 20px;
-            z-index: 1;
+            z-index: 11;
           }
 
           .sidebar-toggle span {
@@ -103,6 +103,7 @@ const MainPageLayout: NextComponentType<
 
           .sidebar-wrap {
             position: fixed;
+            z-index: 10;
             top: 0;
             bottom: 0;
             right: ${sidebarOpen ? '0' : '-100%'};

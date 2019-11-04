@@ -1,23 +1,17 @@
-from tests.conftest import auth_headers
+from tests.conftest import auth_headers, default_user
 
 
 class TestUser(object):
-    @staticmethod
-    def get_user_data():
-        return {"uid": "1", "email": "dude@test.com"}
-
     def test_user_creation(self, auth_client):
         """
         Test a new user is created
         :return:
         """
         res = auth_client.post(
-            "/api/user",
-            json=self.get_user_data(),
-            headers=auth_headers(auth_client.token),
+            "/api/user", json=default_user(), headers=auth_headers(auth_client.token)
         )
-        assert "User created" in res.json.get("message")
         assert res.status_code == 201
+        assert "User created" in res.json.get("message")
 
     def test_same_user_creation(self, auth_client):
         """
@@ -25,9 +19,7 @@ class TestUser(object):
         :return:
         """
         res = auth_client.post(
-            "/api/user",
-            json=self.get_user_data(),
-            headers=auth_headers(auth_client.token),
+            "/api/user", json=default_user(), headers=auth_headers(auth_client.token)
         )
         assert "already exists" in res.json.get("message")
         assert res.status_code == 422
@@ -39,7 +31,7 @@ class TestUser(object):
         :return:
         """
         res = auth_client.get(
-            f"/api/user/{self.get_user_data().get('uid')}",
+            f"/api/user/{default_user().get('id')}",
             headers=auth_headers(auth_client.token),
         )
         assert res.status_code == 200
@@ -51,13 +43,13 @@ class TestUser(object):
         :return:
         """
         res = auth_client.delete(
-            f"/api/user/{self.get_user_data().get('uid')}",
+            f"/api/user/{default_user().get('id')}",
             headers=auth_headers(auth_client.token),
         )
-        assert res.status_code == 204
+        assert res.status_code == 200
 
         res2 = auth_client.get(
-            f"/api/user/{self.get_user_data().get('uid')}",
+            f"/api/user/{default_user().get('id')}",
             headers=auth_headers(auth_client.token),
         )
         assert res2.status_code == 404

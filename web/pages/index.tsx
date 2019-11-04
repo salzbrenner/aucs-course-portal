@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { getCourses } from '../lib/api-public.service';
 import Link from 'next/link';
-import { CourseProps } from '../hoc/withCourseData';
 import { NextPageContext } from 'next';
 import Graph from '../components/Graph';
 import { AppPageProps } from './_app';
-
-type Props = {
-  courses?: CourseProps[];
-};
+import { AppContext } from '../state';
 
 export default class index extends Component<AppPageProps> {
+  static contextType = AppContext;
   static async getInitialProps(ctx: NextPageContext) {
     const res = await getCourses();
     return { courses: res.data };
   }
 
+  componentDidMount(): void {}
+
   render() {
     return (
       <div className={`graph-container`}>
+        HI {this.context[0].user.name}
         <Link href="/admin">
           <a>Admin</a>
         </Link>
