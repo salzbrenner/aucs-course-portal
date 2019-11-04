@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import { ReactDOM } from 'react';
 import * as React from 'react';
 import {
+  Simulation,
   SimulationLinkDatum,
   SimulationNodeDatum,
 } from 'd3';
@@ -145,10 +146,15 @@ class Link extends React.Component<any> {
 class Graph extends React.Component {
   wrapper: any;
   d3Graph: any;
+  simulation: Simulation<
+    NodeDatum,
+    SimulationLinkDatum<NodeDatum>
+  > | null = null;
 
   state = {
     width: 0,
     height: 0,
+    simulation: null,
   };
 
   constructor(props: any) {
@@ -160,18 +166,18 @@ class Graph extends React.Component {
   componentDidMount() {
     this.d3Graph = d3.select(this.wrapper.current);
 
-    const simulation = d3
+    this.simulation = d3
       .forceSimulation(data)
-      .force('charge', d3.forceManyBody().strength(-50))
+      .force('charge', d3.forceManyBody().strength(-10))
       .force(
         'link',
         d3
           .forceLink(links)
-          .strength(2)
+          .strength(0.5)
           .id(function(d: any) {
             return d.id;
           })
-          .distance(150)
+          .distance(50)
       )
       .force(
         'center',
@@ -180,26 +186,26 @@ class Graph extends React.Component {
           this.state.height / 2
         )
       )
-      .force('collide', d3.forceCollide(60).iterations(10));
+      .force('collide', d3.forceCollide(70).iterations(10));
 
-    simulation.alpha(0.3).restart();
-    function dragStarted(d: any) {
+    this.simulation.alpha(0.3).restart();
+    const dragStarted = (d: any) => {
       if (!d3.event.active)
-        simulation.alphaTarget(0.3).restart();
+        this.simulation!.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
-    }
+    };
 
     function dragging(d: any) {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     }
 
-    function dragEnded(d: any) {
-      if (!d3.event.active) simulation.alphaTarget(0);
+    const dragEnded = (d: any) => {
+      if (!d3.event.active) this.simulation!.alphaTarget(0);
       d.fx = null;
       d.fy = null;
-    }
+    };
 
     const node = d3.selectAll('g.node').call(
       d3
@@ -209,14 +215,22 @@ class Graph extends React.Component {
         .on('end', dragEnded)
     );
 
-    simulation.on('tick', () => {
+    this.simulation.on('tick', () => {
       this.d3Graph.call(updateGraph);
     });
 
-    this.setDimensions(simulation);
-    window.addEventListener('resize', () => {
-      this.setDimensions(simulation);
-    });
+    // this.setState({
+    //   simulation
+    // });
+    this.setDimensions();
+    window.addEventListener('resize', this.setDimensions);
+  }
+
+  componentWillUnmount(): void {
+    window.removeEventListener(
+      'resize',
+      this.setDimensions
+    );
   }
 
   setDimensions(simulation?: any): void {
@@ -227,8 +241,10 @@ class Graph extends React.Component {
         height: containerEl.height,
       },
       () => {
-        if (simulation) {
-          simulation
+        // const { simulation } = this.state;
+
+        if (this.simulation) {
+          this.simulation
             .force(
               'center',
               d3.forceCenter(

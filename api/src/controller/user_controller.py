@@ -1,5 +1,7 @@
 from typing import Tuple
 from flask import Blueprint, request, jsonify
+from sqlalchemy.exc import DataError, SQLAlchemyError
+
 from src.jwksutils.auth import authorize
 from src.model.user import User
 
@@ -11,19 +13,19 @@ users = Blueprint("users", __name__)
 def create() -> Tuple[str, int]:
     """
     create user
-    :return: uid if created, or already exists, for client
+    :return:
     """
     data = request.json
-    uid = data.get("uid")
+    id = data.get("id")
     email = data.get("email")
 
-    user = User.query.filter_by(uid=uid).first()
+    user = User.query.filter_by(id=id).first()
 
     if not user:
         try:
-            user = User(uid, email)
+            user = User(id, email)
             user.save()
-            response = jsonify(message="User created", id=user.id, role=user.role)
+            response = jsonify(message="User created")
             response.headers["location"] = f"user/{user.id}"
             return response, 201
 
@@ -32,38 +34,43 @@ def create() -> Tuple[str, int]:
             return response, 401
 
     else:
-        response = jsonify(
-            message="This user already exists.", id=user.id, role=user.role
-        )
+        response = jsonify(message="This user already exists.")
         return response, 422
 
 
-@users.route("/user/<int:uid>", methods=["GET"])
+@users.route("/user/<string:id>", methods=["GET"])
 @authorize
-def get(uid) -> Tuple[str, int]:
+def get(id) -> Tuple[str, int]:
     """
     get user by id
-    :param uid:
+    :param id:
     :return:
     """
-    user = User.query.filter_by(id=uid).first()
+    user = User.query.filter_by(id=id).first()
+
     if user:
-        return jsonify(user.__str__()), 200
+        try:
+            user = User.query.filter_by(id=id).first()
+            return jsonify(user.__str__()), 200
+
+        except SQLAlchemyError as e:
+            response = jsonify(message=str(e))
+            return response, 401
     else:
-        return "User not found", 404
+        return "This user does not exist", 404
 
 
-@users.route("/user/<int:uid>", methods=["DELETE"])
+@users.route("/user/<string:id>", methods=["DELETE"])
 @authorize
-def delete(uid) -> Tuple[str, int]:
+def delete(id) -> Tuple[str, int]:
     """
     Delete a user
-    :param uid:
+    :param id:
     :return:
     """
-    user = User.query.filter_by(id=uid).first()
+    user = User.query.filter_by(id=id).first()
     if user:
         user.delete()
-        return "", 204
+        return "Deleted user", 200
     else:
         return "User not found", 404

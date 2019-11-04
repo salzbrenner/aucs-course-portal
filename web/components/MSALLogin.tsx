@@ -40,6 +40,7 @@ const MSALLogin = ({
             <UserLogin
               accountInfo={accountInfo}
               apiAuth={apiAuth}
+              logoutHandler={logout}
             />
             <button onClick={logout} className="Button">
               Logout

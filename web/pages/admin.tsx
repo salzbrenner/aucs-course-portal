@@ -26,6 +26,7 @@ class Admin extends Component<AppPageProps> {
       <MaxContainer>
         <DynamicFormCourseOverview
           cid={999999999}
+          prereq={{ 0: '' }}
           instructor={''}
           name={''}
           submitHandler={this.state.handler!}

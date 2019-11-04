@@ -4,28 +4,39 @@ import {
   getDefaultHeaders,
   makeRequest,
 } from './api-public.service';
+import { CourseMetricInterface } from '../hoc/withCourseData';
+import { VotingCategoriesInterface } from '../components/FormVote';
 
 export interface ApiAuthInterface {
   createUser: (
-    uid: string,
+    id: string,
     email: string
   ) => Promise<AxiosResponse<{ id: number; role: number }>>;
   createCourse: (
     name: string,
     instructor: string,
     description: string,
-    cid: number
+    cid: number,
+    prereqs: { [key: number]: string }
   ) => Promise<AxiosResponse<any>>;
   updateCourse: (
     name: string,
     instructor: string,
     description: string,
-    cid: number
+    cid: number,
+    prereqs: { [key: number]: string }
   ) => Promise<AxiosResponse<any>>;
   deleteCourse: (
     cid: number
   ) => Promise<AxiosResponse<any>>;
   userRole: number;
+  getUser: (id: string) => Promise<AxiosResponse<any>>;
+  voteForCourse: (
+    cid: number,
+    uid: string,
+    categories: VotingCategoriesInterface,
+    type: 'post' | 'put'
+  ) => Promise<AxiosResponse<any>>;
 }
 
 class apiAuth implements ApiAuthInterface {
@@ -35,8 +46,18 @@ class apiAuth implements ApiAuthInterface {
     this._userRole = role;
   }
 
-  createUser = async (
-    uid: string,
+  getUser: ApiAuthInterface['getUser'] = async (
+    id: string
+  ): Promise<AxiosResponse> => {
+    return this.makeAuthRequest(
+      `user/${id}`,
+      'get',
+      getDefaultHeaders()
+    );
+  };
+
+  createUser: ApiAuthInterface['createUser'] = async (
+    id: string,
     email: string
   ): Promise<
     AxiosResponse<{ id: number; role: number }>
@@ -46,21 +67,23 @@ class apiAuth implements ApiAuthInterface {
       'post',
       getDefaultHeaders(),
       null,
-      { uid, email }
+      { id, email }
     );
   };
 
-  createCourse = async (
-    name: string,
-    instructor: string,
-    description: string,
-    cid: number
-  ): Promise<AxiosResponse<any>> => {
+  createCourse: ApiAuthInterface['createCourse'] = async (
+    name,
+    instructor,
+    description,
+    cid,
+    prereqs
+  ) => {
     const bodyFormData = new FormData();
     bodyFormData.set('cid', `${cid}`);
     bodyFormData.set('name', name);
     bodyFormData.set('instructor', instructor);
     bodyFormData.set('description', description);
+    bodyFormData.set('prereqs', JSON.stringify(prereqs));
 
     return this.makeAuthRequest(
       'course',
@@ -85,20 +108,44 @@ class apiAuth implements ApiAuthInterface {
     );
   };
 
-  updateCourse = async (
+  updateCourse: ApiAuthInterface['updateCourse'] = async (
     name: string,
     instructor: string,
     description: string,
-    cid: number
+    cid: number,
+    prereqs
   ): Promise<AxiosResponse<any>> => {
     const bodyFormData = new FormData();
     bodyFormData.set('name', name);
     bodyFormData.set('instructor', instructor);
     bodyFormData.set('description', description);
+    bodyFormData.set('prereqs', JSON.stringify(prereqs));
 
     return this.makeAuthRequest(
       `course/${cid}`,
       'put',
+      {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      null,
+      bodyFormData
+    );
+  };
+
+  // VOTING
+  voteForCourse: ApiAuthInterface['voteForCourse'] = async (
+    cid,
+    uid,
+    categories,
+    type
+  ): Promise<AxiosResponse<any>> => {
+    const { quality } = categories;
+    const bodyFormData = new FormData();
+    bodyFormData.set('quality', `${quality}`);
+
+    return this.makeAuthRequest(
+      `course/${cid}/${uid}`,
+      type,
       {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
@@ -117,7 +164,7 @@ class apiAuth implements ApiAuthInterface {
         'x-app-admin': this._userRole,
       };
     } catch (e) {
-      alert('You need to log in first');
+      console.log('Authorization header error ', e);
     }
   };
 

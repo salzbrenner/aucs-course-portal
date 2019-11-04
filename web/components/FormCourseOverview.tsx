@@ -11,19 +11,16 @@ import {
   ContentState,
 } from 'draft-js';
 import { CourseProps } from '../hoc/withCourseData';
-import { AxiosResponse } from 'axios';
 import { AppActionType } from '../state/context.interfaces';
 import { AppContext } from '../state';
 import { coursesActions } from '../state/reducers/coursesReducesr';
+import { ApiAuthInterface } from '../lib/api-auth.service';
 
 export interface FormCourseOverviewProps
   extends CourseProps {
-  submitHandler: (
-    name: string,
-    instructor: string,
-    description: string,
-    cid: number
-  ) => Promise<AxiosResponse<any>>;
+  submitHandler:
+    | ApiAuthInterface['createCourse']
+    | ApiAuthInterface['updateCourse'];
   submitActionType?: AppActionType;
   emptyCid?: '';
 }
@@ -34,12 +31,12 @@ class EditorConvertToHTML extends Component<
   static contextType = AppContext;
   state: any = {
     description: this.getContent(),
-    name: this.getCourseData().name,
-    cid: this.getCourseData().cid,
-    instructor: this.getCourseData().instructor,
+    name: this.props.name,
+    cid: this.props.cid,
+    instructor: this.props.instructor,
     emptyCid: this.props.emptyCid,
     canSubmit: true,
-    prereqs: { 1: '' },
+    prereq: this.props.prereq,
   };
 
   constructor(props: FormCourseOverviewProps) {
@@ -49,15 +46,14 @@ class EditorConvertToHTML extends Component<
       this
     );
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.addPreReqGroup = this.addPreReqGroup.bind(this);
   }
 
   getContent() {
-    if (this.getCourseData().description) {
+    if (this.props.description) {
       try {
         const contentState = ContentState.createFromBlockArray(
-          convertFromHTML(
-            this.getCourseData().description!
-          ) as any
+          convertFromHTML(this.props.description!) as any
         );
         return EditorState.createWithContent(contentState);
       } catch (e) {
@@ -66,10 +62,6 @@ class EditorConvertToHTML extends Component<
     } else {
       return EditorState.createEmpty();
     }
-  }
-
-  getCourseData() {
-    return this.props;
   }
 
   onEditorStateChange = (editorState: EditorState) => {
@@ -87,10 +79,10 @@ class EditorConvertToHTML extends Component<
     event: ChangeEvent<HTMLInputElement>,
     key: string
   ) {
-    const { name, value } = event.target;
+    const { value } = event.target;
     this.setState({
-      prereqs: {
-        ...this.state.prereqs,
+      prereq: {
+        ...this.state.prereq,
         [key]: value,
       },
     });
@@ -98,59 +90,93 @@ class EditorConvertToHTML extends Component<
 
   addPreReqGroup() {
     this.setState({
-      prereqs: {
-        ...this.state.prereqs,
-        [Object.keys(this.state.prereqs).length + 1]: '',
+      prereq: {
+        ...this.state.prereq,
+        [Object.keys(this.state.prereq).length]: '',
       },
     });
   }
 
   deletePreReqGroup(key: string) {
-    const { [key]: toDelete, ...rest } = this.state.prereqs;
+    const { [key]: toDelete, ...rest } = this.state.prereq;
     this.setState({
-      prereqs: {
+      prereq: {
         ...rest,
       },
     });
   }
 
+  prereqAreValid(prereq: any): boolean {
+    let valid = true;
+    Object.keys(prereq).forEach(key => {
+      const numbers = prereq[key].trim().split(' ');
+      if (numbers[0] !== '') {
+        numbers.forEach((courseNumber: string) => {
+          if (courseNumber.search(/^\d+$/)) {
+            valid = false;
+          }
+        });
+      }
+    });
+
+    return valid;
+  }
+
   async handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    this.setState({
-      canSubmit: false,
-    });
 
     const {
       name,
       instructor,
       cid,
       description,
+      prereq,
     } = this.state;
 
+    if (!this.prereqAreValid(prereq)) {
+      alert(
+        'Make sure prereq are space separated numbers only'
+      );
+      return;
+    }
+
+    this.setState({
+      canSubmit: false,
+    });
+
+    // post to api
     const res = await this.props.submitHandler(
       name,
       instructor,
       stateToHTML(description.getCurrentContent()),
-      cid
+      cid,
+      prereq
     );
-    const { submitActionType } = this.props;
 
+    // update state/context
+    const { submitActionType } = this.props;
     if (submitActionType) {
       const [{}, dispatch] = this.context;
 
       dispatch({
         type: submitActionType,
-        payload: { name, instructor, cid, description },
+        payload: {
+          name,
+          instructor,
+          cid,
+          description,
+          prereq,
+        },
       });
 
       if (submitActionType === coursesActions.ADD_COURSE) {
         this.setState({
-          description: '',
+          description: EditorState.createEmpty(),
           name: '',
           cid: '',
           instructor: '',
           canSubmit: true,
+          prereq: { 0: '' },
         });
       } else if (
         submitActionType === coursesActions.UPDATE_COURSE
@@ -167,7 +193,7 @@ class EditorConvertToHTML extends Component<
       cid,
       canSubmit,
       instructor,
-      prereqs,
+      prereq,
     } = this.state;
 
     return (
@@ -183,6 +209,7 @@ class EditorConvertToHTML extends Component<
                 type="text"
                 name={'name'}
                 value={name}
+                required={true}
                 onChange={this.handleChange}
               />
             </label>
@@ -197,6 +224,7 @@ class EditorConvertToHTML extends Component<
                   type="number"
                   name={'cid'}
                   value={cid}
+                  required={true}
                   onChange={this.handleChange}
                 />
               </label>
@@ -212,6 +240,7 @@ class EditorConvertToHTML extends Component<
                   type="text"
                   name={'instructor'}
                   value={instructor}
+                  required={true}
                   onChange={this.handleChange}
                 />
               </label>
@@ -233,19 +262,22 @@ class EditorConvertToHTML extends Component<
               }}
             />
 
-            {Object.keys(prereqs).map(key => (
+            {Object.keys(prereq).map(key => (
               <div key={key}>
                 <label className={'form-control-label'}>
                   <span>Prereqs group</span>
                   <input
                     type="text"
                     name={`prereq-group-${key}`}
-                    value={prereqs[key]}
+                    value={prereq[key]}
                     onChange={e =>
                       this.handlePrereqChange(e, key)
                     }
                   />
                 </label>
+                <div>
+                  Enter course numbers, separated by space
+                </div>
 
                 <button
                   onClick={() =>
@@ -257,9 +289,14 @@ class EditorConvertToHTML extends Component<
               </div>
             ))}
 
-            <button onClick={() => this.addPreReqGroup()}>
-              add group
-            </button>
+            <div className={'mt-30'}>
+              <button
+                onClick={this.addPreReqGroup}
+                type={'button'}
+              >
+                add group
+              </button>
+            </div>
 
             <input
               type="submit"

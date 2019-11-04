@@ -7,6 +7,7 @@ import { authProvider } from '../lib/auth-provider';
 import * as apiPublic from '../lib/api-public.service';
 import { NextPageContext } from 'next';
 import { ApiAuthInterface } from '../lib/api-auth.service';
+import Modal from 'react-modal';
 
 export interface AppPageCtx extends NextPageContext {
   apiPublic: any;
@@ -26,7 +27,7 @@ export default class MyApp extends App {
     apiPublic: apiPublic,
   };
 
-  static contextType = AppContext;
+  // static contextType = AppContext;
 
   static async getInitialProps({ Component, ctx }: any) {
     let pageProps = {};
@@ -70,3 +71,6 @@ export default class MyApp extends App {
     );
   }
 }
+
+
+Modal.setAppElement('#__next');

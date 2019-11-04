@@ -11,14 +11,15 @@ class Course(db.Model):
     __tablename__ = "course"
 
     cid = db.Column(db.Integer, primary_key=True, nullable=False, unique=True)
-    prereqs = db.relationship("Prereq", backref="course", lazy=True)
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(), nullable=True)
     instructor = db.Column(db.String(256), nullable=False)
 
+    quality = db.relationship("Quality", backref="course", lazy=True)
+    prereqs = db.relationship("Prereq", backref="course", lazy=True)
+
     # time = db.relationship("TimeCommitment", backref="course", lazy=True)
     # difficulty = db.relationship("Difficulty", backref="course", lazy=True)
-    # quality = db.relationship("Quality", backref="course", lazy=True)
 
     def __init__(self, cid, name, instructor, description=""):
         self.cid = cid
@@ -45,5 +46,11 @@ class Course(db.Model):
         Delete a course from db
         :return:
         """
+        for p in self.prereqs:
+            p.delete()
+
+        for q in self.quality:
+            q.delete()
+
         db.session.delete(self)
         db.session.commit()

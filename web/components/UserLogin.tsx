@@ -1,41 +1,51 @@
 import React, { useContext, useEffect } from 'react';
-import { IAccountInfo } from 'react-aad-msal';
+import {
+  IAccountInfo,
+  IAzureADFunctionProps,
+} from 'react-aad-msal';
 import { useAppContext } from '../state';
 import { useAsyncEffect } from '../lib/async-use-effect';
 import { userActions } from '../state/reducers/userReducer';
 import { ApiAuthInterface } from '../lib/api-auth.service';
+import { VotingCategoriesInterface } from './FormVote';
 
 interface LoginProps {
   accountInfo: IAccountInfo | null;
   apiAuth: ApiAuthInterface;
+  logoutHandler: IAzureADFunctionProps['logout'];
 }
 
 const UserLogin = ({
   accountInfo,
   apiAuth,
+  logoutHandler,
 }: LoginProps) => {
   const [{}, dispatch] = useAppContext();
 
   const setUserState = (
     name: string,
     email: string,
-    uid: string,
-    role: number
+    id: string,
+    role: number,
+    votes: {
+      [courseId: number]: VotingCategoriesInterface;
+    }
   ) => {
     dispatch({
       type: userActions.SIGN_IN,
       payload: {
         name,
         email,
-        uid,
+        id,
         role,
+        votes,
         // token: accountInfo!.jwtIdToken,
       },
     });
   };
 
   useAsyncEffect(async () => {
-    const { createUser } = apiAuth;
+    const { createUser, getUser } = apiAuth;
     const {
       name,
       email,
@@ -43,23 +53,36 @@ const UserLogin = ({
       // tid,
     } = accountInfo!.account.idTokenClaims;
 
-    let uid: string;
-
-    // API returns same response.data whether user was
-    // created or not <id, role>
-    const createdRes = await createUser(sub, email).catch(
-      err => {
-        return err.response;
-      }
+    const user = await getUser(sub).catch(
+      err => err.response
     );
-
-    if (createdRes.data) {
-      const { id, role } = createdRes.data;
-      apiAuth.userRole = id;
-
-      setUserState(name, email, id, role);
-      // TODO: maybe grab courses as well, and then update state again
-      // await getUser(id).catch(err => console.log("No user with that ID", err.response))
+    // failed JWT auth - they don't belong to Auburn
+    if (
+      user.statusText.toLowerCase() === 'unauthorized' &&
+      user.data.toLowerCase() === 'invalid jwt'
+    ) {
+      alert(
+        'Logging in with Microsoft is limited to Auburn University members'
+      );
+      logoutHandler();
+    }
+    // doesn't exist, need to create
+    else if (user.status === 404) {
+      const newUser = await createUser(sub, email).catch(
+        err => err.response
+      );
+      if (newUser.status === 201) {
+        const user = await getUser(sub);
+        const { id, role, votes } = user.data;
+        apiAuth.userRole = role;
+        setUserState(name, email, id, role, votes);
+      }
+    }
+    // passed auth and already created
+    else {
+      const { id, role, votes } = user.data;
+      apiAuth.userRole = role;
+      setUserState(name, email, id, role, votes);
     }
   }, []);
 

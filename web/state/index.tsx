@@ -29,10 +29,10 @@ const initialState: AppContextState = {
   user: {
     name: null,
     email: null,
-    uid: null,
-    courses: [],
+    id: null,
     role: 0,
     isAdmin: false,
+    votes: {},
   },
   courses: {},
   // api: null,

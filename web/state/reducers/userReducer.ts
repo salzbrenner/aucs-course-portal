@@ -5,23 +5,30 @@ import {
   AppAction,
   AppActionType,
 } from '../context.interfaces';
+import { VotingCategoriesInterface } from '../../components/FormVote';
 
 export interface UserState {
   name: null | string;
   email: null | string;
-  uid: null | string;
-  courses: null | number[];
+  id: null | string;
   role: number;
   isAdmin: boolean;
+  votes: {
+    [courseId: number]: VotingCategoriesInterface;
+  };
 }
 
-export type UserActionTypes = 'SIGN_IN' | 'ASSIGN_ROLE';
+export type UserActionTypes =
+  | 'SIGN_IN'
+  | 'ASSIGN_ROLE'
+  | 'UPDATE_VOTE';
 
 export const userActions: {
   [A in UserActionTypes]: UserActionTypes;
 } = {
   SIGN_IN: 'SIGN_IN',
   ASSIGN_ROLE: 'ASSIGN_ROLE',
+  UPDATE_VOTE: 'UPDATE_VOTE',
 };
 
 export const userReducer = (
@@ -35,6 +42,20 @@ export const userReducer = (
         ...state,
         ...action.payload,
         isAdmin: action.payload.role > 0,
+      };
+      break;
+
+    case userActions.UPDATE_VOTE:
+      const { cid, quality } = action.payload;
+      newState = {
+        ...state,
+        votes: {
+          ...state.votes,
+          [cid]: {
+            ...state.votes[cid],
+            quality,
+          },
+        },
       };
       break;
     default:
