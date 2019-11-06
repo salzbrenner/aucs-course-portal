@@ -4,9 +4,9 @@ from src import db
 from src.model.rating import RatingBase
 
 
-class Quality(RatingBase):
+class Difficulty(RatingBase):
     """
-    This class defines the quality table
+    This class defines the difficulty table
     """
 
     __table_args__ = {"extend_existing": True}

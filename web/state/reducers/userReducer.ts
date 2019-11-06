@@ -46,7 +46,12 @@ export const userReducer = (
       break;
 
     case userActions.UPDATE_VOTE:
-      const { cid, quality } = action.payload;
+      const {
+        cid,
+        quality,
+        time,
+        difficulty,
+      } = action.payload;
       newState = {
         ...state,
         votes: {
@@ -54,6 +59,8 @@ export const userReducer = (
           [cid]: {
             ...state.votes[cid],
             quality,
+            time,
+            difficulty,
           },
         },
       };

@@ -18,10 +18,6 @@ export default class index extends Component<AppPageProps> {
   render() {
     return (
       <div className={`graph-container`}>
-        HI {this.context[0].user.name}
-        <Link href="/admin">
-          <a>Admin</a>
-        </Link>
         <div className={`graph-container`}>
           <Graph />
 

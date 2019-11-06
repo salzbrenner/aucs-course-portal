@@ -248,6 +248,7 @@ class EditorConvertToHTML extends Component<
 
             <Editor
               defaultEditorState={description}
+              editorClassName={'editor'}
               onEditorStateChange={this.onEditorStateChange}
               toolbar={{
                 inline: {
@@ -305,6 +306,14 @@ class EditorConvertToHTML extends Component<
               disabled={!canSubmit}
             />
           </form>
+
+          <style jsx global>{`
+            .editor {
+              padding: 10px;
+              min-height: 500px;
+              background: white;
+            }
+          `}</style>
         </div>
       </>
     );

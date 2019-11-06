@@ -5,7 +5,11 @@ import Link from 'next/link';
 import * as React from 'react';
 import PieChart from '../../components/PieChart';
 import CardWithShadow from '../../components/CardWithShadow';
-import { getQualitiesLabels } from '../../lib/process-response.utils';
+import {
+  difficultyLabels,
+  qualityLabels,
+  timeChartLabels,
+} from '../../lib/process-response.utils';
 import FormVote, {
   VotingCategoriesInterface,
 } from '../../components/FormVote';
@@ -29,14 +33,38 @@ const customStyles = {
 };
 
 const Course = ({
-  description,
-  cid,
-  name,
-  prereq,
-  qualities,
+  courseData,
   apiAuth,
 }: CourseContainerProps) => {
+  const {
+    description,
+    cid,
+    name,
+    prereq,
+    qualities,
+    difficulties,
+    time,
+  } = courseData;
+  const graphs = [
+    {
+      data: qualities,
+      labels: qualityLabels,
+      title: `quality`,
+    },
+    {
+      data: difficulties,
+      labels: difficultyLabels,
+      title: `difficulty`,
+    },
+    {
+      data: time,
+      labels: timeChartLabels,
+      title: `time commitment`,
+    },
+  ];
+
   const [{ user }] = useAppContext();
+
   const [modalIsOpen, setModalState] = useState(false);
 
   const createMarkup = () => {
@@ -83,19 +111,6 @@ const Course = ({
 
   return (
     <>
-      <h1>{`${cid} - ${name}`}</h1>
-      <div>
-        {prereqMap.map((cids, index) => {
-          return (
-            <div key={cids}>
-              {cids.split(' ').join(', ')}
-              {Object.keys(prereq).length > 0 &&
-                index < Object.keys(prereq).length - 1 &&
-                ' or'}
-            </div>
-          );
-        })}
-      </div>
       {user.isAdmin && (
         <Link
           href={`/course/edit/[cid]`}
@@ -105,28 +120,82 @@ const Course = ({
         </Link>
       )}
 
-      <div className="row">
-        <div className="col-xs-12 col-sm-6">
-          <div dangerouslySetInnerHTML={createMarkup()} />;
-        </div>
-        <div className="col-xs-12 col-sm-6">
-          {user && user.id && (
-            <>
-              {hasProvidedFeedback(user) ? (
-                <p>You've already rated this course.</p>
-              ) : (
-                <p>Have you taken this course?</p>
-              )}
-              {hasProvidedFeedback(user) &&
-                getFeedback(user.votes[cid])}
-              <button onClick={() => openModal()}>
-                {hasProvidedFeedback(user)
-                  ? 'Change Feedback'
-                  : 'Rate this course'}
-              </button>
-            </>
-          )}
+      <h1>{`${cid} - ${name}`}</h1>
+      <div className={'meta'}>
+        {prereqMap.map((cids, index) => {
+          return (
+            <div key={cid}>
+              <p>
+                Prerequisites:&nbsp;
+                <span>
+                  {cids.split(' ').join(', ')}
+                  {Object.keys(prereq).length > 0 &&
+                    index <
+                      Object.keys(prereq).length - 1 &&
+                    ' or'}
+                </span>
+              </p>
+            </div>
+          );
+        })}
 
+        {user && user.id && (
+          <div className={'text-align-right'}>
+            <div>
+              {hasProvidedFeedback(user)
+                ? `You've rated this course`
+                : `Have you taken this course?`}
+            </div>
+
+            {/*{hasProvidedFeedback(user) &&*/}
+            {/*getFeedback(user.votes[cid])}*/}
+            <button
+              className={'link link--border'}
+              onClick={() => openModal()}
+            >
+              {hasProvidedFeedback(user)
+                ? 'Change Feedback'
+                : 'Rate this course'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="row">
+        {graphs.map(element => {
+          if (element) {
+            return (
+              <div
+                className={'col-xs-12 col-sm-4'}
+                key={element.title}
+              >
+                {element.data && element.data.total > 0 ? (
+                  <>
+                    <h2>{element.title}</h2>
+                    <PieChart
+                      type={element.title}
+                      data={element.data}
+                      labels={element.labels}
+                    />
+                  </>
+                ) : (
+                  <div className={'no-data'}>
+                    <p>No data for {element.title}</p>
+                  </div>
+                )}
+              </div>
+            );
+          }
+        })}
+      </div>
+
+      <div className="row">
+        <div className="col-xs-12 col-sm-8">
+          <div
+            className={'course-inner-html'}
+            dangerouslySetInnerHTML={createMarkup()}
+          />
+          ;
           {user && user.id && apiAuth && (
             <Modal
               isOpen={modalIsOpen}
@@ -136,23 +205,35 @@ const Course = ({
               style={customStyles}
             >
               <FormVote
+                votes={user.votes[cid]}
                 apiAuth={apiAuth}
                 cid={cid}
+                closeModalHandler={closeModal}
                 uid={user.id}
               />
             </Modal>
           )}
-
-          <CardWithShadow>
-            {qualities && (
-              <PieChart
-                data={qualities}
-                labels={getQualitiesLabels}
-              />
-            )}
-          </CardWithShadow>
         </div>
       </div>
+
+      <style jsx global>{`
+        .course-inner-html {
+          font-size: 18px;
+        }
+
+        .meta {
+          display: flex;
+          justify-content: space-between;
+        }
+
+        .course-inner-html p {
+          line-height: 1.4;
+        }
+
+        .no-data {
+          height: 200px;
+        }
+      `}</style>
     </>
   );
 };

@@ -10,7 +10,8 @@ import {coursesActions} from "../../../state/reducers/coursesReducesr";
 const Course = (props: CourseContainerProps) => {
   const [showDelete, setDeleteVisibility] = useState(false);
   const [{}, dispatch] = useAppContext()
-  const { apiAuth, cid, name } = props;
+  const { apiAuth, courseData } = props;
+  const {cid, name} = courseData;
 
   const deleteCourse = async () => {
     const res = await apiAuth.deleteCourse(cid);
@@ -29,7 +30,7 @@ const Course = (props: CourseContainerProps) => {
           <DynamicFormCourseOverview
             submitHandler={apiAuth && apiAuth.updateCourse}
             submitActionType={coursesActions.UPDATE_COURSE}
-            {...props}
+            {...courseData}
           />
 
           {!showDelete && (

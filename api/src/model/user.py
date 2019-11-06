@@ -18,11 +18,23 @@ class User(db.Model):
     # 1 is admin, 2 is super admin
     role = db.Column(db.Integer, nullable=True)
     qualities = db.relationship("Quality", backref="user", lazy=True)
+    difficulties = db.relationship("Difficulty", backref="user", lazy=True)
+    time_spent = db.relationship("TimeSpent", backref="user", lazy=True)
 
     def __str__(self):
         votes = {}
-        for q in self.qualities:
-            votes[q.cid] = {"quality": q.rating}
+        relationships = [
+            {"label": "quality", "rel": self.qualities},
+            {"label": "difficulty", "rel": self.difficulties},
+            {"label": "time", "rel": self.time_spent},
+        ]
+        for r in relationships:
+            for x in r.get("rel"):
+                if votes.get(x.cid):
+                    votes[x.cid] = {**votes[x.cid], r.get("label"): x.rating}
+                else:
+                    votes[x.cid] = {r.get("label"): x.rating}
+                # votes[q.cid] = {"quality": q.rating}
 
         return {"id": self.id, "email": self.email, "role": self.role, "votes": votes}
 

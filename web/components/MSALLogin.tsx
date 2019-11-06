@@ -42,7 +42,10 @@ const MSALLogin = ({
               apiAuth={apiAuth}
               logoutHandler={logout}
             />
-            <button onClick={logout} className="Button">
+            <button
+              onClick={logout}
+              className="link link--border"
+            >
               Logout
             </button>
           </>
@@ -52,7 +55,10 @@ const MSALLogin = ({
         AuthenticationState.Unauthenticated
       ) {
         return (
-          <button className="Button" onClick={login}>
+          <button
+            className="link link--border"
+            onClick={login}
+          >
             Login
           </button>
         );

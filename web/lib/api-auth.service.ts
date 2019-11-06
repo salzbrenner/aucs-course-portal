@@ -139,9 +139,11 @@ class apiAuth implements ApiAuthInterface {
     categories,
     type
   ): Promise<AxiosResponse<any>> => {
-    const { quality } = categories;
+    const { quality, time, difficulty } = categories;
     const bodyFormData = new FormData();
     bodyFormData.set('quality', `${quality}`);
+    bodyFormData.set('time_spent', `${time}`);
+    bodyFormData.set('difficulty', `${difficulty}`);
 
     return this.makeAuthRequest(
       `course/${cid}/${uid}`,

@@ -78,12 +78,20 @@ export const coursesReducer = (
     }
 
     case coursesActions.UPDATE_FEEDBACK:
-      const { qualities, cid } = action.payload;
+      const {
+        qualities,
+        cid,
+        time,
+        difficulties,
+      } = action.payload;
+      console.log('THIS IS PAYLOAD', action.payload);
       newState = {
         ...state,
         [cid]: {
           ...state[cid],
           qualities,
+          time,
+          difficulties,
         },
       };
       break;

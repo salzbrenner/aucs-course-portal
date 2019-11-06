@@ -22,15 +22,15 @@ class TestCourse(object):
 
     @staticmethod
     def get_course_metrics():
-        return {"quality": 3}
+        return {"quality": 3, "time_spent": 0, "difficulty": 2}
 
     @staticmethod
     def get_updated_course_metrics():
-        return {"quality": 4}
+        return {"quality": 4, "time_spent": 1, "difficulty": 3}
 
     def test_setup(self, auth_client):
         # create a user
-        #  so they can vote
+        #  so they can rating
         res = auth_client.post(
             "/api/user", json=default_user(), headers=auth_headers(auth_client.token)
         )
@@ -81,7 +81,7 @@ class TestCourse(object):
         res = auth_client.get("/api/course/666")
         assert res.status_code == 200
 
-    def test_vote_course(self, auth_client):
+    def test_rating_course(self, auth_client):
         res = auth_client.post(
             f"api/course/666/{default_user().get('id')}",
             data=self.get_course_metrics(),
@@ -89,7 +89,15 @@ class TestCourse(object):
         )
         assert res.status_code == 201
 
-    def test_vote_update(self, auth_client):
+        # try to duplicate
+        res2 = auth_client.post(
+            f"api/course/666/{default_user().get('id')}",
+            data=self.get_course_metrics(),
+            headers=auth_headers_for_forms(auth_client.token),
+        )
+        assert res2.status_code == 422
+
+    def test_rating_update(self, auth_client):
         res = auth_client.put(
             f"api/course/666/{default_user().get('id')}",
             data=self.get_updated_course_metrics(),
@@ -97,7 +105,7 @@ class TestCourse(object):
         )
         assert res.status_code == 200
 
-    def test_vote_delete(self, auth_client):
+    def test_rating_delete(self, auth_client):
         res = auth_client.delete(
             f"api/course/666/{default_user().get('id')}",
             headers=auth_headers(auth_client.token),

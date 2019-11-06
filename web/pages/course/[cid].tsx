@@ -5,7 +5,11 @@ import Link from 'next/link';
 import * as React from 'react';
 import PieChart from '../../components/PieChart';
 import CardWithShadow from '../../components/CardWithShadow';
-import { getQualitiesLabels } from '../../lib/process-response.utils';
+import {
+  difficultyLabels,
+  qualityLabels,
+  timeChartLabels,
+} from '../../lib/process-response.utils';
 import FormVote, {
   VotingCategoriesInterface,
 } from '../../components/FormVote';
@@ -29,14 +33,38 @@ const customStyles = {
 };
 
 const Course = ({
-                  description,
-                  cid,
-                  name,
-                  prereq,
-                  qualities,
+                  courseData,
                   apiAuth,
                 }: CourseContainerProps) => {
+  const {
+    description,
+    cid,
+    name,
+    prereq,
+    qualities,
+    difficulties,
+    time,
+  } = courseData;
+  const charts = [
+    {
+      data: qualities,
+      labels: qualityLabels,
+      title: `quality`,
+    },
+    {
+      data: difficulties,
+      labels: difficultyLabels,
+      title: `difficulty`,
+    },
+    {
+      data: time,
+      labels: timeChartLabels,
+      title: `time commitment`,
+    },
+  ];
+
   const [{ user }] = useAppContext();
+
   const [modalIsOpen, setModalState] = useState(false);
 
   const createMarkup = () => {
@@ -83,50 +111,92 @@ const Course = ({
 
   return (
     <>
+
+
       <h1>{`${cid} - ${name}`}</h1>
-      <div>
-        {prereqMap.map((cids, index) => {
-          return (
-            <div key={cids}>
-              {cids.split(' ').join(', ')}
-              {Object.keys(prereq).length > 0 &&
-              index < Object.keys(prereq).length - 1 &&
-              ' or'}
+      <div className={'meta'}>
+        <div>
+          {prereqMap.map((cids, index) => {
+            return (
+              <div key={cid}>
+                <p>
+                  Prerequisites:&nbsp;
+                  <span>
+                  {cids.split(' ').join(', ')}
+                    {Object.keys(prereq).length > 0 &&
+                    index <
+                    Object.keys(prereq).length - 1 &&
+                    ' or'}
+                </span>
+                </p>
+              </div>
+            );
+          })}
+        </div>
+
+
+        {user && user.id && (
+          <div className={'text-align-right'}>
+            <div className={'feedback-text'}>
+              {hasProvidedFeedback(user)
+                ? `You've rated this course`
+                : `Have you taken this course?`}
             </div>
-          );
+
+            {/*{hasProvidedFeedback(user) &&*/}
+            {/*getFeedback(user.votes[cid])}*/}
+            <button
+              className={'link link--border link--smaller-font'}
+              onClick={() => openModal()}
+            >
+              {hasProvidedFeedback(user)
+                ? 'Change Feedback'
+                : 'Rate this course'}
+            </button>
+          </div>
+        )}
+      </div>
+
+      <div className="row charts">
+        {charts.map(element => {
+          if (element) {
+            return (
+              <div
+                className={'col-xs-12 col-sm-4'}
+                key={element.title}
+              >
+                {element.data && element.data.total > 0 ? (
+                  <div  className={'chart-col'}>
+                    <h2 className={'chart-title'}>{element.title}&nbsp;
+                      {element.title === 'time commitment' && <span className={'title-sub'}>(hrs/week)</span>}
+
+                    </h2>
+                    <div className="chart">
+                      <PieChart
+                        type={element.title}
+                        data={element.data}
+                        labels={element.labels}
+                      />
+                    </div>
+
+                  </div>
+                ) : (
+                  <div className={'no-data'}>
+                    <p>No data for {element.title}</p>
+                  </div>
+                )}
+              </div>
+            );
+          }
         })}
       </div>
-      {user.isAdmin && (
-        <Link
-          href={`/course/edit/[cid]`}
-          as={`/course/edit/${cid}`}
-        >
-          <a className={'link link--underline'}>Edit</a>
-        </Link>
-      )}
 
       <div className="row">
-        <div className="col-xs-12 col-sm-6">
-          <div dangerouslySetInnerHTML={createMarkup()} />;
-        </div>
-        <div className="col-xs-12 col-sm-6">
-          {user && user.id && (
-            <>
-              {hasProvidedFeedback(user) ? (
-                <p>You've already rated this course.</p>
-              ) : (
-                <p>Have you taken this course?</p>
-              )}
-              {hasProvidedFeedback(user) &&
-              getFeedback(user.votes[cid])}
-              <button onClick={() => openModal()}>
-                {hasProvidedFeedback(user)
-                  ? 'Change Feedback'
-                  : 'Rate this course'}
-              </button>
-            </>
-          )}
-
+        <div className="col-xs-12 col-sm-8">
+          <div
+            className={'course-inner-html'}
+            dangerouslySetInnerHTML={createMarkup()}
+          />
           {user && user.id && apiAuth && (
             <Modal
               isOpen={modalIsOpen}
@@ -144,17 +214,76 @@ const Course = ({
               />
             </Modal>
           )}
-
-          <CardWithShadow>
-            {qualities && (
-              <PieChart
-                data={qualities}
-                labels={getQualitiesLabels}
-              />
-            )}
-          </CardWithShadow>
         </div>
+
       </div>
+
+      {user.isAdmin && (
+        <Link
+          href={`/course/edit/[cid]`}
+          as={`/course/edit/${cid}`}
+        >
+          <a className={'link link--underline'}>Edit</a>
+        </Link>
+      )}
+      <style jsx global>{`
+        
+        
+        .charts {
+          margin-top: 10px;
+          margin-bottom: 40px;
+        }
+        
+        .chart-col {
+          display: flex;
+          flex-direction: column;
+           justify-content: space-between;
+           height: 100%;
+        }
+        
+        .feedback-text {
+          margin-bottom: 8px;
+        }
+        
+        
+        .chart-title {
+          text-transform: capitalize;
+          font-size: 1.7rem;
+          line-height: 2rem;
+          margin-bottom: 20px;
+        }
+        
+        .title-sub {
+          font-size: 1rem;
+          line-height: 1;
+        }
+
+        .meta {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 40px;
+          font-size: 0.9rem !important;
+        }
+
+        .course-inner-html {
+          font-size: 18px;
+        }
+        .course-inner-html p,
+        .course-inner-html li {
+          line-height: 1.4;
+        }
+        
+        .course-inner-html ul {
+          margin-bottom: 30px;
+        }
+        .course-inner-html li {
+          margin-bottom: 10px;
+        }
+
+        .no-data {
+          height: 200px;
+        }
+      `}</style>
     </>
   );
 };
