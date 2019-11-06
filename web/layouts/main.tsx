@@ -11,6 +11,7 @@ import { CourseProps } from '../hoc/withCourseData';
 import MSALLogin from '../components/MSALLogin';
 import { MsalAuthProvider } from 'react-aad-msal';
 import { ApiAuthInterface } from '../lib/api-auth.service';
+import Header from '../components/Header';
 
 const MainPageLayout: NextComponentType<
   {},
@@ -32,6 +33,14 @@ const MainPageLayout: NextComponentType<
         <meta charSet="utf-8" />
         <link
           href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap"
+          rel="stylesheet"
+        />
+        <link
+          href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap"
           rel="stylesheet"
         />
         <link
@@ -66,14 +75,11 @@ const MainPageLayout: NextComponentType<
           </Sidebar>
         </div>
         <div className="content">
-          {authProvider && (
-            <MSALLogin
-              authProvider={authProvider}
-              apiAuth={apiAuth}
-            />
-          )}
-
-          {children}
+          <Header
+            authProvider={authProvider}
+            apiAuth={apiAuth}
+          />
+          <main className={'main'}>{children}</main>
         </div>
       </div>
 
@@ -109,12 +115,16 @@ const MainPageLayout: NextComponentType<
             right: ${sidebarOpen ? '0' : '-100%'};
             height: 100%;
             width: 300px;
-            background: ${colors.primaryGradient};
-            box-shadow: -14px 0px 28px 0px
-              rgba(0, 0, 0, 0.23);
+            background: ${colors.primary};
+            // box-shadow: -14px 0px 28px 0px
+            //   rgba(0, 0, 0, 0.23);
 
             // background: #021833;
             transition: right 0.2s ease;
+          }
+
+          .main {
+            padding-top: 50px;
           }
 
           @media screen and (min-width: ${breakpoints.md}) {

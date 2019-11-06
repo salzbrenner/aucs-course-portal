@@ -27,8 +27,6 @@ export default class MyApp extends App {
     apiPublic: apiPublic,
   };
 
-  // static contextType = AppContext;
-
   static async getInitialProps({ Component, ctx }: any) {
     let pageProps = {};
     const res = await getCourses();
@@ -71,6 +69,5 @@ export default class MyApp extends App {
     );
   }
 }
-
 
 Modal.setAppElement('#__next');

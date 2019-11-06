@@ -16,6 +16,8 @@ class Course(db.Model):
     instructor = db.Column(db.String(256), nullable=False)
 
     quality = db.relationship("Quality", backref="course", lazy=True)
+    difficulties = db.relationship("Difficulty", backref="course", lazy=True)
+    time_spent = db.relationship("TimeSpent", backref="course", lazy=True)
     prereqs = db.relationship("Prereq", backref="course", lazy=True)
 
     # time = db.relationship("TimeCommitment", backref="course", lazy=True)
@@ -46,11 +48,10 @@ class Course(db.Model):
         Delete a course from db
         :return:
         """
-        for p in self.prereqs:
-            p.delete()
-
-        for q in self.quality:
-            q.delete()
+        relationships = [self.prereqs, self.quality, self.difficulties, self.time_spent]
+        for rel in relationships:
+            for i in rel:
+                i.delete()
 
         db.session.delete(self)
         db.session.commit()

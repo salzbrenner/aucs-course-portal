@@ -73,16 +73,25 @@ class FormVote extends React.Component<
 
       if (course.data) {
         const [{}, dispatch] = this.context;
-        const { qualities } = course.data;
+        const {
+          qualities,
+          time: courseTimes,
+          difficulties,
+        } = course.data;
 
         dispatch({
           type: coursesActions.UPDATE_FEEDBACK,
-          payload: { cid, qualities },
+          payload: {
+            cid,
+            qualities,
+            time: courseTimes,
+            difficulties,
+          },
         });
 
         dispatch({
           type: userActions.UPDATE_VOTE,
-          payload: { cid, quality },
+          payload: { cid, quality, difficulty, time },
         });
       }
 

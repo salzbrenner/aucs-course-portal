@@ -24,12 +24,12 @@ export interface CourseProps {
   prereq: { [k: number]: string };
   qualities?: CourseMetricInterface;
   difficulties?: CourseMetricInterface;
-  times?: CourseMetricInterface;
+  time?: CourseMetricInterface;
 }
 
-export interface CourseContainerProps
-  extends AppPageProps,
-    CourseProps {}
+export interface CourseContainerProps extends AppPageProps {
+  courseData: CourseProps;
+}
 
 const withCourseData = <
   T extends CourseContainerProps = CourseContainerProps
@@ -40,31 +40,22 @@ const withCourseData = <
     CourseContainerProps
   >
 ) => {
-  const WrapperComponent = ({ ...props }) => {
-    const { courseData, apiPublic, apiAuth } = props;
-    const [coursesState, setCoursesState] = useState(
-      courseData
-    );
+  const WrapperComponent = (
+    props: CourseContainerProps
+  ) => {
+    const { courseData, ...rest } = props;
     const [{ courses }] = useAppContext();
-    // const [
-    //   currentCourseData,
-    //   setCurrentCourseData,
-    // ] = useState(courseData);
+    const courseContext: CourseProps =
+      courses[courseData.cid];
 
-    useEffect(() => {
-      // const res = await apiPublic
-      //   .getCourse(`${courseData.cid}`)
-      // .catch((err: any) => err);
-      // const data = await res.data;
-      // setCurrentCourseData(data)
-      if (courses[courseData.cid]) {
-        setCoursesState(courses[courseData.cid]);
-      }
-    }, [courses]);
+    let latestData: CourseProps = courseData;
+    if (courseContext) {
+      latestData = courseContext;
+    }
 
     return (
       <MaxContainer>
-        <Component {...coursesState} apiAuth={apiAuth} />
+        <Component courseData={latestData} {...rest} />
       </MaxContainer>
     );
   };

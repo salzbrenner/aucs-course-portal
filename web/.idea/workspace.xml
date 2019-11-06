@@ -2,45 +2,37 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/components/FormVote.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/migrations/README" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/migrations/alembic.ini" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/migrations/env.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/migrations/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/24b22ab4772a_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/2c997df46be1_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/5e744c87b9a7_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/74b0bc81c6cf_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/af32aa021d67_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/fb6c9760932a_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/7062c47ffeba_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/7ab7b47bbcdf_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/ac6f7fddbbe5_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/cabecda8158f_.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/dea678a08b12_.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/controller/course_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/course_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/controller/prereq_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/prereq_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/controller/user_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/user_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/jwksutils/auth.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/jwksutils/auth.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/prereq.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/prereq.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/quality.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/quality.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/tests/conftest.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/conftest.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/tests/test_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/test_course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/tests/test_user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/test_user.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CourseLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseLink.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CourseMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseMenu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Graph.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Graph.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/FormVote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormVote.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/GlobalStyles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GlobalStyles.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/UserLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/PieChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/PieChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/spare.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/spare.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hoc/withCourseData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hoc/withCourseData.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-public.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-public.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/process-response.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/process-response.utils.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/course/edit/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/edit/[cid].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/state/index.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/state/reducers/coursesReducesr.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/coursesReducesr.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/state/reducers/userReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/userReducer.ts" afterDir="false" />
     </list>
@@ -84,7 +76,7 @@
   <component name="PropertiesComponent">
     <property name="NewWatcherDialog.advanced.open" value="true" />
     <property name="WebServerToolWindowFactoryState" value="true" />
-    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="TypeScript JSX&#10;JSX Harmony" />
+    <property name="com.intellij.ide.scratch.LRUPopupBuilder$1/New Scratch File" value="JSX Harmony&#10;TypeScript JSX" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
@@ -102,16 +94,16 @@
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/components" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/public" />
       <recent name="$PROJECT_DIR$/dynamic-components" />
       <recent name="$PROJECT_DIR$/hoc" />
       <recent name="$PROJECT_DIR$/pages" />
       <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/prototypes" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$" />
-      <recent name="$PROJECT_DIR$/components" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -198,7 +190,10 @@
       <workItem from="1572709675254" duration="1677000" />
       <workItem from="1572738191304" duration="516000" />
       <workItem from="1572738756885" duration="4733000" />
-      <workItem from="1572821319728" duration="6361000" />
+      <workItem from="1572821319728" duration="6821000" />
+      <workItem from="1572907468224" duration="21126000" />
+      <workItem from="1572980669536" duration="1792000" />
+      <workItem from="1572993643661" duration="7994000" />
     </task>
     <servers />
   </component>
@@ -209,6 +204,7 @@
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_7.jsx" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_8.jsx" />
         <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_9.jsx" />
+        <option value="$APPLICATION_CONFIG_DIR$/scratches/scratch_10.jsx" />
       </list>
     </option>
   </component>

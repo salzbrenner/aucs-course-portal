@@ -10,6 +10,8 @@ from src.jwksutils.auth import authorize, admin_authorize
 from src.model.course import Course
 from src.model.prereq import Prereq
 from src.model.quality import Quality
+from src.model.difficulty import Difficulty
+from src.model.time_spent import TimeSpent
 
 courses = Blueprint("course", __name__)
 
@@ -131,31 +133,52 @@ def delete(cid) -> Tuple[str, int]:
         return "Course does not exist", 404
 
 
+def xxx(model, cid, uid, rating):
+    try:
+        type = model(cid, uid, rating)
+        type.save()
+        response = jsonify(message=f"Successful vote for {model.__name__}")
+        return response, 201
+
+    except SQLAlchemyError as e:
+        return jsonify(message=str(e)), 401
+
+
 @courses.route("/course/<int:cid>/<string:uid>", methods=["POST"])
 @authorize
-def vote_create(cid, uid) -> Tuple[str, int]:
+def rating_create(cid, uid) -> Tuple[str, int]:
     """
     Creates rows in various metric tables
     :return:
     """
     params = request.form
     quality = params.get("quality")
-    print(cid, uid, quality)
+    difficulty = params.get("difficulty")
+    time_spent = params.get("time_spent")
 
-    try:
-        quality = Quality(cid, uid, quality)
-        quality.save()
-        response = jsonify(message="Successful vote")
-        return response, 201
+    models = [Quality, Difficulty, TimeSpent]
+    results = [m.query.filter_by(cid=cid, user_id=uid).first() for m in models]
+    ratings = [quality, difficulty, time_spent]
 
-    except Exception as e:
-        print(e)
-        return jsonify(message=str(e)), 400
+    if results.count(None) == len(results):
+        try:
+            for i in range(len(models)):
+                new_row = models[i](cid, uid, ratings[i])
+                new_row.save()
+
+            response = jsonify(message=f"Successful rating logged")
+            return response, 201
+
+        except SQLAlchemyError as e:
+            return jsonify(message=str(e)), 401
+
+    else:
+        return f"This rating by user {uid} already exists", 422
 
 
 @courses.route("/course/<int:cid>/<string:uid>", methods=["PUT"])
 @authorize
-def vote_update(cid, uid) -> Tuple[str, int]:
+def rating_update(cid, uid) -> Tuple[str, int]:
     """
     Updates user's vote
     :param cid:
@@ -164,26 +187,31 @@ def vote_update(cid, uid) -> Tuple[str, int]:
     """
     params = request.form
     quality = params.get("quality")
+    difficulty = params.get("difficulty")
+    time_spent = params.get("time_spent")
 
-    quality_row = Quality.query.filter_by(cid=cid, user_id=uid).first()
+    models = [Quality, Difficulty, TimeSpent]
+    results = [m.query.filter_by(cid=cid, user_id=uid).first() for m in models]
+    ratings = [quality, difficulty, time_spent]
 
-    if quality_row:
+    if results.count(None) == 0:
         try:
-            quality_row.update(quality)
+            for i in range(len(results)):
+                results[i].update(ratings[i])
 
-        except Exception as e:
-            return jsonify(message=str(e)), 400
+        except SQLAlchemyError as e:
+            return jsonify(message=str(e)), 401
 
     else:
         return "Cannot process this vote", 400
 
-    response = jsonify(message="Successfully updated vote")
+    response = jsonify(message="Successfully updated rating")
     return response, 200
 
 
 @courses.route("/course/<int:cid>/<string:uid>", methods=["DELETE"])
 @authorize
-def vote_delete(cid, uid) -> Tuple[str, int]:
+def rating_delete(cid, uid) -> Tuple[str, int]:
     """
     Updates user's vote
     :param cid:
@@ -191,16 +219,17 @@ def vote_delete(cid, uid) -> Tuple[str, int]:
     :return:
     """
 
-    quality_row = Quality.query.filter_by(cid=cid, user_id=uid).first()
+    models = [Quality, Difficulty, TimeSpent]
+    results = [m.query.filter_by(cid=cid, user_id=uid).first() for m in models]
 
-    if quality_row:
+    for r in results:
         try:
-            quality_row.delete()
+            r.delete()
 
         except Exception as e:
             return jsonify(message=str(e)), 400
 
-    return "Deleted vote", 200
+    return "Deleted rating", 200
 
 
 def set_course_json(course: Course) -> Dict[str, Any]:
@@ -215,6 +244,8 @@ def set_course_json(course: Course) -> Dict[str, Any]:
             prereq_list[p.req_group] = f"{p.req_id}"
 
     qualities = get_quality_metrics(course)
+    time = get_time_metrics(course)
+    difficulty = get_difficulty_metrics(course)
 
     return {
         "cid": course.cid,
@@ -223,21 +254,57 @@ def set_course_json(course: Course) -> Dict[str, Any]:
         "instructor": course.instructor,
         "prereq": prereq_list,
         "qualities": qualities,
+        "difficulties": difficulty,
+        "time": time,
     }
 
 
 def get_quality_metrics(course: Course) -> Dict:
 
     total = 0
-    occurences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+    occurrences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
 
     q: Quality
     for q in course.quality:
         total += 1
-        occurences[q.rating] += 1
+        occurrences[q.rating] += 1
 
     percentages = {}
     if total:
-        percentages = {k: v / total for k, v in occurences.items()}
+        percentages = {k: v / total for k, v in occurrences.items()}
 
-    return {"total": total, "occurences": occurences, "percentages": percentages}
+    return {"total": total, "occurrences": occurrences, "percentages": percentages}
+
+
+def get_time_metrics(course: Course) -> Dict:
+
+    total = 0
+    occurrences = {0: 0, 1: 0, 2: 0, 3: 0}
+
+    t: TimeSpent
+    for t in course.time_spent:
+        total += 1
+        occurrences[t.rating] += 1
+
+    percentages = {}
+    if total:
+        percentages = {k: v / total for k, v in occurrences.items()}
+
+    return {"total": total, "occurrences": occurrences, "percentages": percentages}
+
+
+def get_difficulty_metrics(course: Course) -> Dict:
+
+    total = 0
+    occurrences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+
+    d: Difficulty
+    for d in course.difficulties:
+        total += 1
+        occurrences[d.rating] += 1
+
+    percentages = {}
+    if total:
+        percentages = {k: v / total for k, v in occurrences.items()}
+
+    return {"total": total, "occurrences": occurrences, "percentages": percentages}
