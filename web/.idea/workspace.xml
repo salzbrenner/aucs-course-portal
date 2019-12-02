@@ -2,39 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/migrations/README" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/alembic.ini" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/env.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/script.py.mako" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/7062c47ffeba_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/7ab7b47bbcdf_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/ac6f7fddbbe5_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/cabecda8158f_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/dea678a08b12_.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/controller/course_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/course_controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../api/src/model/course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/quality.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/quality.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/tests/test_course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/tests/test_course.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/CardWithShadow.tsx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/components/CourseLink.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseLink.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/CourseMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseMenu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/FormCourseOverview.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormCourseOverview.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/FormVote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormVote.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/GlobalStyles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GlobalStyles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Graph.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Header.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/PieChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/PieChart.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/Sidebar.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Sidebar.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserLogin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/spare.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/spare.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dynamic-components/MSALDynamic.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hoc/adminGuard.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hoc/adminGuard.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hoc/withCourseData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hoc/withCourseData.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/interfaces.ts" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/process-response.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/process-response.utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/utils.service.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/admin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/admin.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/course/edit/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/edit/[cid].tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/coursesReducesr.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/coursesReducesr.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/userReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/userReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/context.interfaces.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/context.interfaces.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/state/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/state/reducers/coursesReducesr.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/coursesReducer.ts" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -90,7 +87,7 @@
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="prettierjs.PrettierConfiguration.Package" value="$PROJECT_DIR$/node_modules/prettier" />
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="watcher.settings" />
     <property name="ts.external.directory.path" value="$PROJECT_DIR$/node_modules/typescript/lib" />
   </component>
   <component name="RecentsManager">
@@ -193,7 +190,11 @@
       <workItem from="1572821319728" duration="6821000" />
       <workItem from="1572907468224" duration="21126000" />
       <workItem from="1572980669536" duration="1792000" />
-      <workItem from="1572993643661" duration="7994000" />
+      <workItem from="1572993643661" duration="32297000" />
+      <workItem from="1573133709255" duration="11609000" />
+      <workItem from="1573250594028" duration="449000" />
+      <workItem from="1573257871850" duration="3282000" />
+      <workItem from="1575151479229" duration="29867000" />
     </task>
     <servers />
   </component>

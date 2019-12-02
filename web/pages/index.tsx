@@ -1,35 +1,95 @@
 import React, { Component } from 'react';
 import { getCourses } from '../lib/api-public.service';
-import Link from 'next/link';
 import { NextPageContext } from 'next';
-import Graph from '../components/Graph';
 import { AppPageProps } from './_app';
 import { AppContext } from '../state';
+import Graph2 from '../components/Graph2';
+import { breakpoints } from '../components/GlobalStyles';
 
-export default class index extends Component<AppPageProps> {
+interface IndexProps extends AppPageProps {
+  courses: any;
+}
+
+export default class index extends Component<IndexProps> {
   static contextType = AppContext;
   static async getInitialProps(ctx: NextPageContext) {
     const res = await getCourses();
     return { courses: res.data };
   }
 
-  componentDidMount(): void {}
+  state = {
+    courses: this.processForGraph(this.props.courses),
+    paths: this.processPaths(this.props.courses),
+  };
+
+  componentDidMount(): void {
+    // without this, graph path colors don't update
+    this.setState({
+      paths: this.processPaths(this.props.courses),
+    });
+  }
+
+  processForGraph(courses: any) {
+    return courses
+      .map((course: any) => {
+        return {
+          id: course.cid,
+          name: course.name,
+          position: course.position,
+        };
+      })
+      .sort((a: any, b: any) => a.id - b.id);
+  }
+
+  // each prereq is source
+  // each cid is target
+  processPaths(courses: any) {
+    return courses
+      .map((course: any) => {
+        const prereqGroups = course.prereq;
+        return Object.keys(prereqGroups)
+          .map((group: any) => {
+            const prereqIds = prereqGroups[group]
+              .split(' ')
+              .map((id: string) => +id);
+
+            return prereqIds.map((id: number) => {
+              return {
+                source: id,
+                target: course.cid,
+              };
+            });
+          })
+          .reduce((a: any, b: any) => {
+            return a.concat(b);
+          }, []);
+      })
+      .reduce((a: any, b: any) => {
+        return a.concat(b);
+      }, []);
+  }
 
   render() {
+    const { paths, courses } = this.state;
+
     return (
       <div className={`graph-container`}>
         <div className={`graph-container`}>
-          <Graph />
+          <Graph2 paths={paths} data={courses} />
 
           <style jsx>{`
             .graph-container {
               position: fixed;
-              z-index: -1;
               right: 0;
-              top: 0;
+              top: 47px;
               bottom: 0;
               left: 0;
-              padding: 0 20px;
+            }
+
+            @media screen and (min-width: ${breakpoints.md}) {
+              .graph-container {
+                right: 300px;
+              }
             }
           `}</style>
         </div>

@@ -17,7 +17,7 @@ export const timeChartLabels = [
 ];
 
 export const difficultyLabels = [
-  `A Joke`,
+  `Very Easy`,
   `Easy`,
   `Average`,
   `Difficult`,
@@ -28,15 +28,11 @@ export const processMetric = (
   data: CourseMetricInterface,
   labels: string[]
 ): { x: string; y: number }[] => {
-  const { occurrences, percentages, total } = data;
-  return (
-    Object.keys(percentages)
-      // .filter(key => percentages[+key] > 0)
-      .map((key, index) => {
-        return {
-          x: labels[+key],
-          y: percentages[+key],
-        };
-      })
-  );
+  const { percentages } = data;
+  return Object.keys(percentages).map((key, index) => {
+    return {
+      x: labels[+key],
+      y: percentages[+key],
+    };
+  });
 };

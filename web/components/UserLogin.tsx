@@ -39,7 +39,6 @@ const UserLogin = ({
         id,
         role,
         votes,
-        // token: accountInfo!.jwtIdToken,
       },
     });
   };
@@ -50,7 +49,6 @@ const UserLogin = ({
       name,
       email,
       sub,
-      // tid,
     } = accountInfo!.account.idTokenClaims;
 
     const user = await getUser(sub).catch(

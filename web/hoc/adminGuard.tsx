@@ -20,7 +20,7 @@ const adminGuard = (
 
     useEffect(() => {
       if (!isAdmin()) {
-        // redirectToHome();
+        redirectToHome();
       }
     }, []);
 
@@ -31,7 +31,7 @@ const adminGuard = (
     ctx: NextPageContext
   ) => {
     if (ctx.res) {
-      // redirectServerToHome(ctx.res);
+      redirectServerToHome(ctx.res);
     }
 
     if (Component.getInitialProps) {

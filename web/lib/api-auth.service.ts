@@ -4,7 +4,6 @@ import {
   getDefaultHeaders,
   makeRequest,
 } from './api-public.service';
-import { CourseMetricInterface } from '../hoc/withCourseData';
 import { VotingCategoriesInterface } from '../components/FormVote';
 
 export interface ApiAuthInterface {
@@ -17,14 +16,16 @@ export interface ApiAuthInterface {
     instructor: string,
     description: string,
     cid: number,
-    prereqs: { [key: number]: string }
+    prereqs: { [key: number]: string },
+    position: number
   ) => Promise<AxiosResponse<any>>;
   updateCourse: (
     name: string,
     instructor: string,
     description: string,
     cid: number,
-    prereqs: { [key: number]: string }
+    prereqs: { [key: number]: string },
+    position: number
   ) => Promise<AxiosResponse<any>>;
   deleteCourse: (
     cid: number
@@ -76,7 +77,8 @@ class apiAuth implements ApiAuthInterface {
     instructor,
     description,
     cid,
-    prereqs
+    prereqs,
+    position
   ) => {
     const bodyFormData = new FormData();
     bodyFormData.set('cid', `${cid}`);
@@ -84,6 +86,7 @@ class apiAuth implements ApiAuthInterface {
     bodyFormData.set('instructor', instructor);
     bodyFormData.set('description', description);
     bodyFormData.set('prereqs', JSON.stringify(prereqs));
+    bodyFormData.set('position', `${position}`);
 
     return this.makeAuthRequest(
       'course',
@@ -113,13 +116,15 @@ class apiAuth implements ApiAuthInterface {
     instructor: string,
     description: string,
     cid: number,
-    prereqs
+    prereqs,
+    position
   ): Promise<AxiosResponse<any>> => {
     const bodyFormData = new FormData();
     bodyFormData.set('name', name);
     bodyFormData.set('instructor', instructor);
     bodyFormData.set('description', description);
     bodyFormData.set('prereqs', JSON.stringify(prereqs));
+    bodyFormData.set('position', `${position}`);
 
     return this.makeAuthRequest(
       `course/${cid}`,

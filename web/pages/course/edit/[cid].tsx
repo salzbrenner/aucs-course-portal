@@ -5,7 +5,7 @@ import DynamicFormCourseOverview from '../../../dynamic-components/DynamicFormCo
 import React, {  useState } from 'react';
 import {redirectToHome} from "../../../lib/redirect-service";
 import {useAppContext} from "../../../state";
-import {coursesActions} from "../../../state/reducers/coursesReducesr";
+import {coursesActions} from "../../../state/reducers/coursesReducer";
 
 const Course = (props: CourseContainerProps) => {
   const [showDelete, setDeleteVisibility] = useState(false);

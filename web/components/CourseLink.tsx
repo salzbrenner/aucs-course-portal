@@ -2,11 +2,8 @@ import Link from 'next/link';
 import * as React from 'react';
 import { CourseProps } from '../hoc/withCourseData';
 import { withRouter } from 'next/router';
-import { NextComponentType } from 'next';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { colors } from './GlobalStyles';
-
-interface Interface extends CourseProps, WithRouterProps {}
 
 const CourseLink = (
   props: CourseProps & WithRouterProps
@@ -35,7 +32,7 @@ const CourseLink = (
         }
         .course-menu__dot {
           border-radius: 50%;
-          width: 10px;
+          min-width: 10px;
           height: 10px;
           border: solid 1px ${colors.secondary};
           transition: background 0.2s ease;

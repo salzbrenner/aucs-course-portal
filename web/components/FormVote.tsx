@@ -2,7 +2,7 @@ import React, { ChangeEvent, FormEvent } from 'react';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import { getCourse } from '../lib/api-public.service';
 import { AppContext } from '../state';
-import { coursesActions } from '../state/reducers/coursesReducesr';
+import { coursesActions } from '../state/reducers/coursesReducer';
 import { userActions } from '../state/reducers/userReducer';
 
 export interface VotingCategoriesInterface {

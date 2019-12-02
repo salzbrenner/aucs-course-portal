@@ -4,7 +4,7 @@ import { NextComponentType } from 'next';
 import MaxContainer from '../components/MaxContainer';
 import DynamicFormCourseOverview from '../dynamic-components/DynamicFormCourseOverview';
 import { AppContext } from '../state';
-import { coursesActions } from '../state/reducers/coursesReducesr';
+import { coursesActions } from '../state/reducers/coursesReducer';
 import { AppPageProps } from './_app';
 
 class Admin extends Component<AppPageProps> {
@@ -26,6 +26,7 @@ class Admin extends Component<AppPageProps> {
       <MaxContainer>
         <DynamicFormCourseOverview
           cid={999999999}
+          position={0}
           prereq={{ 0: '' }}
           instructor={''}
           name={''}

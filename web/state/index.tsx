@@ -17,11 +17,16 @@ import {
 import {
   coursesReducer,
   CoursesState,
-} from './reducers/coursesReducesr';
+} from './reducers/coursesReducer';
+import {
+  coursePopupReducer,
+  CoursePopupState,
+} from './reducers/coursePopupReducer';
 
 export interface AppContextState {
   user: UserState;
   courses: CoursesState;
+  coursePopup: CoursePopupState;
   // api: any;
 }
 
@@ -35,15 +40,17 @@ const initialState: AppContextState = {
     votes: {},
   },
   courses: {},
+  coursePopup: { id: null, x: 0, y: 0 },
   // api: null,
 };
 
 const mainReducer: Reducer<AppContextState, AppAction> = (
-  { user, courses },
+  { user, courses, coursePopup },
   action
 ) => ({
   user: userReducer(user, action),
   courses: coursesReducer(courses, action),
+  coursePopup: coursePopupReducer(coursePopup, action),
   // api: apiReducer(api, action),
 });
 

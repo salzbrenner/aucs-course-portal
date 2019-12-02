@@ -22,6 +22,7 @@ export interface CourseProps {
   instructor: string;
   description?: string;
   prereq: { [k: number]: string };
+  position: number;
   qualities?: CourseMetricInterface;
   difficulties?: CourseMetricInterface;
   time?: CourseMetricInterface;

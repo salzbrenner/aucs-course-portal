@@ -13,7 +13,7 @@ import {
 import { CourseProps } from '../hoc/withCourseData';
 import { AppActionType } from '../state/context.interfaces';
 import { AppContext } from '../state';
-import { coursesActions } from '../state/reducers/coursesReducesr';
+import { coursesActions } from '../state/reducers/coursesReducer';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 
 export interface FormCourseOverviewProps
@@ -31,6 +31,7 @@ class EditorConvertToHTML extends Component<
   static contextType = AppContext;
   state: any = {
     description: this.getContent(),
+    position: this.props.position,
     name: this.props.name,
     cid: this.props.cid,
     instructor: this.props.instructor,
@@ -41,6 +42,7 @@ class EditorConvertToHTML extends Component<
 
   constructor(props: FormCourseOverviewProps) {
     super(props);
+    console.log(props);
     this.handleChange = this.handleChange.bind(this);
     this.handlePrereqChange = this.handlePrereqChange.bind(
       this
@@ -131,6 +133,7 @@ class EditorConvertToHTML extends Component<
       cid,
       description,
       prereq,
+      position,
     } = this.state;
 
     if (!this.prereqAreValid(prereq)) {
@@ -150,7 +153,8 @@ class EditorConvertToHTML extends Component<
       instructor,
       stateToHTML(description.getCurrentContent()),
       cid,
-      prereq
+      prereq,
+      position
     );
 
     // update state/context
@@ -166,6 +170,7 @@ class EditorConvertToHTML extends Component<
           cid,
           description,
           prereq,
+          position,
         },
       });
 
@@ -177,6 +182,7 @@ class EditorConvertToHTML extends Component<
           instructor: '',
           canSubmit: true,
           prereq: { 0: '' },
+          position: 0,
         });
       } else if (
         submitActionType === coursesActions.UPDATE_COURSE
@@ -194,6 +200,7 @@ class EditorConvertToHTML extends Component<
       canSubmit,
       instructor,
       prereq,
+      position,
     } = this.state;
 
     return (
@@ -224,6 +231,22 @@ class EditorConvertToHTML extends Component<
                   type="number"
                   name={'cid'}
                   value={cid}
+                  required={true}
+                  onChange={this.handleChange}
+                />
+              </label>
+            </div>
+
+            <div>
+              <label
+                htmlFor="position"
+                className={'form-control-label'}
+              >
+                <span>Position (graph)</span>
+                <input
+                  type="number"
+                  name={'position'}
+                  value={position}
                   required={true}
                   onChange={this.handleChange}
                 />
