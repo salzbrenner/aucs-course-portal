@@ -45,7 +45,7 @@ const Course = ({
     difficulties,
     time,
   } = courseData;
-  const graphs = [
+  const charts = [
     {
       data: qualities,
       labels: qualityLabels,
@@ -111,37 +111,30 @@ const Course = ({
 
   return (
     <>
-      {user.isAdmin && (
-        <Link
-          href={`/course/edit/[cid]`}
-          as={`/course/edit/${cid}`}
-        >
-          <a className={'link link--underline'}>Edit</a>
-        </Link>
-      )}
-
       <h1>{`${cid} - ${name}`}</h1>
       <div className={'meta'}>
-        {prereqMap.map((cids, index) => {
-          return (
-            <div key={cid}>
-              <p>
-                Prerequisites:&nbsp;
-                <span>
-                  {cids.split(' ').join(', ')}
-                  {Object.keys(prereq).length > 0 &&
-                    index <
-                      Object.keys(prereq).length - 1 &&
-                    ' or'}
-                </span>
-              </p>
-            </div>
-          );
-        })}
+        <div>
+          {prereqMap.map((cids, index) => {
+            return (
+              <div key={cid}>
+                <p>
+                  Prerequisites:&nbsp;
+                  <span>
+                    {cids.split(' ').join(', ')}
+                    {Object.keys(prereq).length > 0 &&
+                      index <
+                        Object.keys(prereq).length - 1 &&
+                      ' or'}
+                  </span>
+                </p>
+              </div>
+            );
+          })}
+        </div>
 
         {user && user.id && (
           <div className={'text-align-right'}>
-            <div>
+            <div className={'feedback-text'}>
               {hasProvidedFeedback(user)
                 ? `You've rated this course`
                 : `Have you taken this course?`}
@@ -150,7 +143,9 @@ const Course = ({
             {/*{hasProvidedFeedback(user) &&*/}
             {/*getFeedback(user.votes[cid])}*/}
             <button
-              className={'link link--border'}
+              className={
+                'link link--border link--smaller-font'
+              }
               onClick={() => openModal()}
             >
               {hasProvidedFeedback(user)
@@ -161,8 +156,8 @@ const Course = ({
         )}
       </div>
 
-      <div className="row">
-        {graphs.map(element => {
+      <div className="row charts">
+        {charts.map(element => {
           if (element) {
             return (
               <div
@@ -170,14 +165,24 @@ const Course = ({
                 key={element.title}
               >
                 {element.data && element.data.total > 0 ? (
-                  <>
-                    <h2>{element.title}</h2>
-                    <PieChart
-                      type={element.title}
-                      data={element.data}
-                      labels={element.labels}
-                    />
-                  </>
+                  <div className={'chart-col'}>
+                    <h2 className={'chart-title'}>
+                      {element.title}&nbsp;
+                      {element.title ===
+                        'time commitment' && (
+                        <span className={'title-sub'}>
+                          (hrs/week)
+                        </span>
+                      )}
+                    </h2>
+                    <div className="chart">
+                      <PieChart
+                        type={element.title}
+                        data={element.data}
+                        labels={element.labels}
+                      />
+                    </div>
+                  </div>
                 ) : (
                   <div className={'no-data'}>
                     <p>No data for {element.title}</p>
@@ -195,7 +200,6 @@ const Course = ({
             className={'course-inner-html'}
             dangerouslySetInnerHTML={createMarkup()}
           />
-          ;
           {user && user.id && apiAuth && (
             <Modal
               isOpen={modalIsOpen}
@@ -216,18 +220,63 @@ const Course = ({
         </div>
       </div>
 
+      {user.isAdmin && (
+        <Link
+          href={`/course/edit/[cid]`}
+          as={`/course/edit/${cid}`}
+        >
+          <a className={'link link--underline'}>Edit</a>
+        </Link>
+      )}
       <style jsx global>{`
-        .course-inner-html {
-          font-size: 18px;
+        .charts {
+          margin-top: 10px;
+          margin-bottom: 40px;
+        }
+
+        .chart-col {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          height: 100%;
+        }
+
+        .feedback-text {
+          margin-bottom: 8px;
+        }
+
+        .chart-title {
+          text-transform: capitalize;
+          font-size: 1.7rem;
+          line-height: 2rem;
+          margin-bottom: 20px;
+        }
+
+        .title-sub {
+          font-size: 1rem;
+          line-height: 1;
         }
 
         .meta {
           display: flex;
           justify-content: space-between;
+          margin-bottom: 40px;
+          font-size: 0.9rem !important;
         }
 
-        .course-inner-html p {
+        .course-inner-html {
+          font-size: 18px;
+        }
+        .course-inner-html p,
+        .course-inner-html li {
           line-height: 1.4;
+        }
+
+        .course-inner-html ul {
+          margin-bottom: 30px;
+        }
+        .course-inner-html li {
+          margin-bottom: 10px;
         }
 
         .no-data {

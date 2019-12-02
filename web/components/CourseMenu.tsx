@@ -5,7 +5,7 @@ import CourseLink from './CourseLink';
 import { colors } from './GlobalStyles';
 import { useAppContext } from '../state';
 import { useEffect, useState } from 'react';
-import { coursesActions } from '../state/reducers/coursesReducesr';
+import { coursesActions } from '../state/reducers/coursesReducer';
 
 export interface CourseMenuProps {
   courses: CourseProps[];

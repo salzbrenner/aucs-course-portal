@@ -4,7 +4,6 @@ import { useAppContext } from '../../state';
 import Link from 'next/link';
 import * as React from 'react';
 import PieChart from '../../components/PieChart';
-import CardWithShadow from '../../components/CardWithShadow';
 import {
   difficultyLabels,
   qualityLabels,
@@ -32,8 +31,7 @@ const customStyles = {
   },
 };
 
-const Course = ({
-                  courseData,
+const Course = ({courseData,
                   apiAuth,
                 }: CourseContainerProps) => {
   const {
@@ -45,6 +43,7 @@ const Course = ({
     difficulties,
     time,
   } = courseData;
+
   const charts = [
     {
       data: qualities,
@@ -111,9 +110,8 @@ const Course = ({
 
   return (
     <>
+      <h1 className={'course-title'}>{`${cid} - ${name}`}</h1>
 
-
-      <h1>{`${cid} - ${name}`}</h1>
       <div className={'meta'}>
         <div>
           {prereqMap.map((cids, index) => {
@@ -122,18 +120,17 @@ const Course = ({
                 <p>
                   Prerequisites:&nbsp;
                   <span>
-                  {cids.split(' ').join(', ')}
+                    {cids.split(' ').join(', ')}
                     {Object.keys(prereq).length > 0 &&
                     index <
                     Object.keys(prereq).length - 1 &&
                     ' or'}
-                </span>
+                  </span>
                 </p>
               </div>
             );
           })}
         </div>
-
 
         {user && user.id && (
           <div className={'text-align-right'}>
@@ -146,7 +143,9 @@ const Course = ({
             {/*{hasProvidedFeedback(user) &&*/}
             {/*getFeedback(user.votes[cid])}*/}
             <button
-              className={'link link--border link--smaller-font'}
+              className={
+                'link link--border link--smaller-font'
+              }
               onClick={() => openModal()}
             >
               {hasProvidedFeedback(user)
@@ -166,10 +165,15 @@ const Course = ({
                 key={element.title}
               >
                 {element.data && element.data.total > 0 ? (
-                  <div  className={'chart-col'}>
-                    <h2 className={'chart-title'}>{element.title}&nbsp;
-                      {element.title === 'time commitment' && <span className={'title-sub'}>(hrs/week)</span>}
-
+                  <div className={'chart-col'}>
+                    <h2 className={'chart-title'}>
+                      {element.title}&nbsp;
+                      {element.title ===
+                      'time commitment' && (
+                        <span className={'title-sub'}>
+                          (hrs/week)
+                        </span>
+                      )}
                     </h2>
                     <div className="chart">
                       <PieChart
@@ -178,7 +182,6 @@ const Course = ({
                         labels={element.labels}
                       />
                     </div>
-
                   </div>
                 ) : (
                   <div className={'no-data'}>
@@ -215,7 +218,6 @@ const Course = ({
             </Modal>
           )}
         </div>
-
       </div>
 
       {user.isAdmin && (
@@ -227,32 +229,34 @@ const Course = ({
         </Link>
       )}
       <style jsx global>{`
-        
-        
+        .course-title {
+          max-width: 800px;
+          margin-bottom: 20px;
+        }
+      
         .charts {
           margin-top: 10px;
           margin-bottom: 40px;
         }
-        
+
         .chart-col {
           display: flex;
           flex-direction: column;
-           justify-content: space-between;
-           height: 100%;
+          justify-content: space-between;
+          height: 100%;
         }
-        
+
         .feedback-text {
           margin-bottom: 8px;
         }
-        
-        
+
         .chart-title {
           text-transform: capitalize;
           font-size: 1.7rem;
           line-height: 2rem;
           margin-bottom: 20px;
         }
-        
+
         .title-sub {
           font-size: 1rem;
           line-height: 1;
@@ -272,7 +276,7 @@ const Course = ({
         .course-inner-html li {
           line-height: 1.4;
         }
-        
+
         .course-inner-html ul {
           margin-bottom: 30px;
         }
@@ -280,9 +284,6 @@ const Course = ({
           margin-bottom: 10px;
         }
 
-        .no-data {
-          height: 200px;
-        }
       `}</style>
     </>
   );

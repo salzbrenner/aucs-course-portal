@@ -1,14 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import {
-  VictoryContainer,
-  VictoryLegend,
-  VictoryPie,
-} from 'victory';
+import React, { useState } from 'react';
+import { VictoryLegend, VictoryPie } from 'victory';
 import { CourseMetricInterface } from '../hoc/withCourseData';
-import {
-  qualityLabels,
-  processMetric,
-} from '../lib/process-response.utils';
+import { processMetric } from '../lib/process-response.utils';
 import { colors, fonts } from './GlobalStyles';
 
 const PieChart = ({
@@ -55,7 +48,6 @@ const PieChart = ({
           itemsPerRow={legendData.length % 2 === 0 ? 2 : 3}
           symbolSpacer={10}
           style={{
-            //@ts-ignore
             labels: {
               fontFamily: fonts.mono,
               fontSize: 18,
@@ -129,7 +121,6 @@ const PieChart = ({
               strokeWidth: 4,
             },
             labels: {
-              fill: colors.black,
               fontFamily: fonts.mono,
               fontSize: 12,
               fontWeight: 'bold',

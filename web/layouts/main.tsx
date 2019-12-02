@@ -8,7 +8,6 @@ import Sidebar from '../components/Sidebar';
 import CourseMenu from '../components/CourseMenu';
 import { NextComponentType } from 'next';
 import { CourseProps } from '../hoc/withCourseData';
-import MSALLogin from '../components/MSALLogin';
 import { MsalAuthProvider } from 'react-aad-msal';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import Header from '../components/Header';
@@ -31,16 +30,9 @@ const MainPageLayout: NextComponentType<
           content="width=device-width, initial-scale=1"
         />
         <meta charSet="utf-8" />
+
         <link
-          href="https://fonts.googleapis.com/css?family=Ubuntu:400,700&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=Ubuntu+Mono&display=swap"
-          rel="stylesheet"
-        />
-        <link
-          href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono&display=swap"
+          href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700&display=swap"
           rel="stylesheet"
         />
         <link
@@ -64,6 +56,17 @@ const MainPageLayout: NextComponentType<
           <span />
           <span />
         </button>
+        <div className="header-wrap">
+          <Header
+            authProvider={authProvider}
+            apiAuth={apiAuth}
+          />
+        </div>
+        <div className="content">
+          <div className="header-spacer" />
+          <main className={'main'}>{children}</main>
+        </div>
+
         <div
           className={`sidebar-wrap ${
             sidebarOpen ? 'sidebar-open' : ''
@@ -74,20 +77,23 @@ const MainPageLayout: NextComponentType<
             <CourseMenu courses={courses} />
           </Sidebar>
         </div>
-        <div className="content">
-          <Header
-            authProvider={authProvider}
-            apiAuth={apiAuth}
-          />
-          <main className={'main'}>{children}</main>
-        </div>
       </div>
 
       <style jsx>
         {`
           .layout {
-            // display: flex;
-            // height: 100vh;
+            display: flex;
+          }
+
+          .header-spacer {
+            height: 47px;
+          }
+          .header-wrap {
+            position: fixed;
+            left: 0;
+            right: 0;
+            width: 100%;
+            z-index: 1;
           }
 
           .sidebar-toggle {
@@ -113,13 +119,10 @@ const MainPageLayout: NextComponentType<
             top: 0;
             bottom: 0;
             right: ${sidebarOpen ? '0' : '-100%'};
-            height: 100%;
             width: 300px;
+            min-width: 300px;
             background: ${colors.primary};
-            // box-shadow: -14px 0px 28px 0px
-            //   rgba(0, 0, 0, 0.23);
-
-            // background: #021833;
+            overflow: auto;
             transition: right 0.2s ease;
           }
 
@@ -129,6 +132,7 @@ const MainPageLayout: NextComponentType<
 
           @media screen and (min-width: ${breakpoints.md}) {
             .sidebar-wrap {
+              position: relative;
               right: 0;
             }
 
@@ -137,7 +141,7 @@ const MainPageLayout: NextComponentType<
             }
 
             .content {
-              margin-right: 300px;
+              min-width: calc(100% - 300px);
             }
           }
         `}

@@ -57,7 +57,6 @@ const Header = ({
           display: flex;
           align-items: center;
           padding: 10px 20px;
-          // background: ${colors.gray1};
           background: white;
           border-bottom: solid 1px ${colors.gray1};
         }
