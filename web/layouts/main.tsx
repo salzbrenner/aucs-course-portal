@@ -11,6 +11,13 @@ import { CourseProps } from '../hoc/withCourseData';
 import { MsalAuthProvider } from 'react-aad-msal';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import Header from '../components/Header';
+import { useAppContext } from '../state';
+import { coursesActions } from '../state/reducers/coursesReducer';
+import {
+  default as apiPublic,
+  getCourses,
+} from '../lib/api-public.service';
+import { useAsyncEffect } from '../lib/async-use-effect';
 
 const MainPageLayout: NextComponentType<
   {},
@@ -20,8 +27,25 @@ const MainPageLayout: NextComponentType<
     apiAuth: ApiAuthInterface;
     authProvider: MsalAuthProvider;
   }
-> = ({ children, courses, authProvider, apiAuth }) => {
+> = ({ children, authProvider, apiAuth, courses }) => {
+  const [{}, dispatch] = useAppContext();
   const [sidebarOpen, toggleSidebar] = useState(false);
+
+  useAsyncEffect(async () => {
+    // initial static population
+    dispatch({
+      type: coursesActions.POPULATE_COURSES,
+      payload: courses,
+    });
+
+    // updated dynamic population
+    const res = await getCourses();
+    dispatch({
+      type: coursesActions.POPULATE_COURSES,
+      payload: res.data,
+    });
+  }, []);
+
   return (
     <div>
       <Head>
@@ -119,6 +143,7 @@ const MainPageLayout: NextComponentType<
             top: 0;
             bottom: 0;
             right: ${sidebarOpen ? '0' : '-100%'};
+            min-height: 100vh;
             width: 300px;
             min-width: 300px;
             background: ${colors.primary};

@@ -1,28 +1,14 @@
-import Link from 'next/link';
 import * as React from 'react';
 import { CourseProps } from '../hoc/withCourseData';
 import CourseLink from './CourseLink';
-import { colors } from './GlobalStyles';
 import { useAppContext } from '../state';
-import { useEffect, useState } from 'react';
-import { coursesActions } from '../state/reducers/coursesReducer';
 
 export interface CourseMenuProps {
   courses: CourseProps[];
 }
 
 const CourseMenu = ({ courses }: CourseMenuProps) => {
-  const [
-    { courses: coursesState },
-    dispatch,
-  ] = useAppContext();
-
-  useEffect(() => {
-    dispatch({
-      type: coursesActions.POPULATE_COURSES,
-      payload: courses,
-    });
-  }, []);
+  const [{ courses: coursesState }] = useAppContext();
 
   // for ssr
   const currentCourses =

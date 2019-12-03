@@ -9,6 +9,7 @@ import {
   redirectToHome,
 } from '../lib/redirect-service';
 import { useAppContext } from '../state';
+import unfetch from 'isomorphic-unfetch';
 
 export interface CourseMetricInterface {
   total: number;
@@ -44,19 +45,26 @@ const withCourseData = <
   const WrapperComponent = (
     props: CourseContainerProps
   ) => {
+    // initial static server data
     const { courseData, ...rest } = props;
+    // dynamic updated data (i.e. votes)
     const [{ courses }] = useAppContext();
-    const courseContext: CourseProps =
-      courses[courseData.cid];
 
-    let latestData: CourseProps = courseData;
-    if (courseContext) {
-      latestData = courseContext;
-    }
+    const [dynamicCourse, setDynamicCourse] = useState(
+      courseData
+    );
+
+    useEffect(() => {
+      const courseContext: CourseProps =
+        courses[courseData.cid];
+      setDynamicCourse(courseContext);
+    }, [courses]);
 
     return (
       <MaxContainer>
-        <Component courseData={latestData} {...rest} />
+        {dynamicCourse && (
+          <Component courseData={dynamicCourse} {...rest} />
+        )}
       </MaxContainer>
     );
   };

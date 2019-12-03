@@ -42,6 +42,7 @@ export const coursesReducer = (
         },
         {}
       );
+
       newState = {
         ...state,
         ...mappedCourses,
