@@ -14,6 +14,7 @@ class Course(db.Model):
     name = db.Column(db.String(256), nullable=False)
     description = db.Column(db.Text(), nullable=True)
     instructor = db.Column(db.String(256), nullable=False)
+    position = db.Column(db.Integer)
 
     quality = db.relationship("Quality", backref="course", lazy=True)
     difficulties = db.relationship("Difficulty", backref="course", lazy=True)
@@ -23,16 +24,18 @@ class Course(db.Model):
     # time = db.relationship("TimeCommitment", backref="course", lazy=True)
     # difficulty = db.relationship("Difficulty", backref="course", lazy=True)
 
-    def __init__(self, cid, name, instructor, description=""):
+    def __init__(self, cid, name, instructor, position, description=""):
         self.cid = cid
         self.description = description
         self.instructor = instructor
         self.name = name
+        self.position = position
 
-    def update(self, name, instructor, description):
+    def update(self, name, instructor, position, description):
         self.name = name
         self.instructor = instructor
         self.description = description
+        self.position = position
         self.save()
 
     def save(self):

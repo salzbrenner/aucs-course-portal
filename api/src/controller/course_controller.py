@@ -25,13 +25,14 @@ def create() -> Tuple[str, int]:
     cid = params.get("cid")
     instructor = params.get("instructor")
     description = params.get("description")
+    position = params.get("position")
     prereqs = json.loads(params.get("prereqs"))
 
     course = Course.query.filter_by(cid=cid).first()
 
     if not course:
         try:
-            course = Course(cid, name, instructor, description)
+            course = Course(cid, name, instructor, position, description)
             course.save()
 
             add_prereq(prereqs, cid)
@@ -93,6 +94,7 @@ def put(cid) -> Tuple[str, int]:
     instructor = params.get("instructor")
     description = params.get("description")
     prereqs = json.loads(params.get("prereqs"))
+    position = params.get("position")
     course = Course.query.filter_by(cid=cid).first()
 
     if course:
@@ -102,7 +104,7 @@ def put(cid) -> Tuple[str, int]:
             for p in course.prereqs:
                 p.delete()
 
-            course.update(name, instructor, description)
+            course.update(name, instructor, position, description)
             add_prereq(prereqs, cid)
 
             response = jsonify(message=f"Updated course {name} - {cid}")
@@ -250,6 +252,7 @@ def set_course_json(course: Course) -> Dict[str, Any]:
     return {
         "cid": course.cid,
         "name": course.name,
+        "position": course.position,
         "description": course.description,
         "instructor": course.instructor,
         "prereq": prereq_list,
