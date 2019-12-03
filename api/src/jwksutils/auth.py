@@ -2,9 +2,11 @@ import os
 from functools import wraps
 
 import jwt
+import requests
 from flask import request, redirect, url_for, abort, current_app
+from requests import HTTPError
 
-from src.jwksutils import rsa_pem_from_jwk, jwks
+from src.jwksutils import rsa_pem_from_jwk
 
 valid_audiences = ["c022a64b-aeb7-4b48-992c-a00b9956813b"]
 issuer = "https://login.microsoftonline.com/ccb6deed-bd29-4b38-8979-d72780f62d3b/v2.0"
@@ -29,10 +31,22 @@ def get_kid(token):
 
 
 def get_jwk(kid):
-    for jwk in jwks.public.get("keys"):
-        if jwk.get("kid") == kid:
-            return jwk
-    raise InvalidAuthorizationToken("kid not recognized")
+    try:
+        response = requests.get(
+            f"https://login.microsoftonline.com/{os.getenv('AZURE_AU_TENANT_ID')}/discovery/keys"
+        )
+        # If the response was successful, no Exception will be raised
+        response.raise_for_status()
+
+        for jwk in response.json().get("keys"):
+            if jwk.get("kid") == kid:
+                return jwk
+        raise InvalidAuthorizationToken("kid not recognized")
+
+    except HTTPError as http_err:
+        raise HTTPError(http_err)
+    except Exception as err:
+        raise Exception(err)
 
 
 def get_public_key(token):
