@@ -8,6 +8,7 @@ import * as apiPublic from '../lib/api-public.service';
 import { NextPageContext } from 'next';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import Modal from 'react-modal';
+import { CourseProps } from '../hoc/withCourseData';
 
 export interface AppPageCtx extends NextPageContext {
   apiPublic: any;
@@ -18,15 +19,18 @@ export interface AppPageProps {
   apiPublic: any;
   apiAuth: ApiAuthInterface;
   authProvider: any;
+  courses: CourseProps;
 }
 
-export default class MyApp extends App {
+export default class MyApp extends App<AppPageProps> {
   state = {
     authProvider: null,
     apiAuth: null,
     apiPublic: apiPublic,
+    courses: this.props.courses,
   };
 
+  static contextType = AppContext;
   static async getInitialProps({ Component, ctx }: any) {
     let pageProps = {};
     const res = await getCourses();

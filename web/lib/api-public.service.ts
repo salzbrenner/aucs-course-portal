@@ -1,11 +1,10 @@
 import axios, {
   AxiosInstance,
-  AxiosPromise,
   AxiosRequestConfig,
   AxiosResponse,
-  Method,
 } from 'axios';
-import { throwError } from 'rxjs';
+//TODO: switch to isomorphic api
+// so that dev still works on reloading with exported routes
 
 const API_URL = `http://127.0.0.1:5000/api`;
 
