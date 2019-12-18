@@ -245,9 +245,9 @@ def set_course_json(course: Course) -> Dict[str, Any]:
         else:
             prereq_list[p.req_group] = f"{p.req_id}"
 
-    qualities = get_quality_metrics(course)
-    time = get_time_metrics(course)
-    difficulty = get_difficulty_metrics(course)
+    qualities = get_metric(course, "quality")
+    time = get_metric(course, "time_spent")
+    difficulty = get_metric(course, "difficulties")
 
     return {
         "cid": course.cid,
@@ -262,47 +262,14 @@ def set_course_json(course: Course) -> Dict[str, Any]:
     }
 
 
-def get_quality_metrics(course: Course) -> Dict:
-
+def get_metric(course: Course, metric: str) -> Dict:
     total = 0
-    occurrences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
+    if metric == "time_spent":
+        occurrences = {0: 0, 1: 0, 2: 0, 3: 0}
+    else:
+        occurrences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
 
-    q: Quality
-    for q in course.quality:
-        total += 1
-        occurrences[q.rating] += 1
-
-    percentages = {}
-    if total:
-        percentages = {k: v / total for k, v in occurrences.items()}
-
-    return {"total": total, "occurrences": occurrences, "percentages": percentages}
-
-
-def get_time_metrics(course: Course) -> Dict:
-
-    total = 0
-    occurrences = {0: 0, 1: 0, 2: 0, 3: 0}
-
-    t: TimeSpent
-    for t in course.time_spent:
-        total += 1
-        occurrences[t.rating] += 1
-
-    percentages = {}
-    if total:
-        percentages = {k: v / total for k, v in occurrences.items()}
-
-    return {"total": total, "occurrences": occurrences, "percentages": percentages}
-
-
-def get_difficulty_metrics(course: Course) -> Dict:
-
-    total = 0
-    occurrences = {0: 0, 1: 0, 2: 0, 3: 0, 4: 0}
-
-    d: Difficulty
-    for d in course.difficulties:
+    for d in getattr(course, metric):
         total += 1
         occurrences[d.rating] += 1
 

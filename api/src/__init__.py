@@ -29,11 +29,8 @@ def create_app(config_name):
     from src.controller.user_controller import users
     from src.controller.prereq_controller import prereqs
 
-    # from src.controller.vote_controller import votes
-
     app.register_blueprint(courses, url_prefix="/api")
     app.register_blueprint(users, url_prefix="/api")
     app.register_blueprint(prereqs, url_prefix="/api")
-    # app.register_blueprint(votes, url_prefix="/api")
 
     return app
