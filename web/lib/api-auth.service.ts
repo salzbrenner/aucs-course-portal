@@ -38,6 +38,10 @@ export interface ApiAuthInterface {
     categories: VotingCategoriesInterface,
     type: 'post' | 'put'
   ) => Promise<AxiosResponse<any>>;
+  deleteVote: (
+    cid: number,
+    uid: string
+  ) => Promise<AxiosResponse<any>>;
 }
 
 class apiAuth implements ApiAuthInterface {
@@ -158,6 +162,18 @@ class apiAuth implements ApiAuthInterface {
       },
       null,
       bodyFormData
+    );
+  };
+
+  deleteVote: ApiAuthInterface['deleteVote'] = async (
+    cid,
+    uid
+  ): Promise<AxiosResponse<any>> => {
+    return this.makeAuthRequest(
+      `course/${cid}/${uid}`,
+      'delete',
+      {},
+      null
     );
   };
 

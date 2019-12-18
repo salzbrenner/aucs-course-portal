@@ -106,6 +106,10 @@ export default () => (
         color: ${colors.bodyColor};
       }
 
+      .link:hover {
+        cursor: pointer;
+      }
+
       .link--border {
         border: solid 1px ${colors.secondary};
         padding: 5px 10px;

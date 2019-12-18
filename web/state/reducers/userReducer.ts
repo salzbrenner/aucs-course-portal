@@ -21,7 +21,8 @@ export interface UserState {
 export type UserActionTypes =
   | 'SIGN_IN'
   | 'ASSIGN_ROLE'
-  | 'UPDATE_VOTE';
+  | 'UPDATE_VOTE'
+  | 'DELETE_VOTE';
 
 export const userActions: {
   [A in UserActionTypes]: UserActionTypes;
@@ -29,6 +30,7 @@ export const userActions: {
   SIGN_IN: 'SIGN_IN',
   ASSIGN_ROLE: 'ASSIGN_ROLE',
   UPDATE_VOTE: 'UPDATE_VOTE',
+  DELETE_VOTE: 'DELETE_VOTE',
 };
 
 export const userReducer = (
@@ -45,7 +47,7 @@ export const userReducer = (
       };
       break;
 
-    case userActions.UPDATE_VOTE:
+    case userActions.UPDATE_VOTE: {
       const {
         cid,
         quality,
@@ -65,6 +67,20 @@ export const userReducer = (
         },
       };
       break;
+    }
+
+    case userActions.DELETE_VOTE: {
+      const { cid } = action.payload;
+
+      const { votes } = state;
+      const { [cid]: toDelete, ...toKeep } = votes;
+
+      newState = {
+        ...state,
+        votes: toKeep,
+      };
+      break;
+    }
     default:
       break;
   }

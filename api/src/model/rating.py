@@ -4,7 +4,7 @@ from src import db
 
 class RatingBase(db.Model):
     """
-    This class defines the quality table
+    This class is a base for the ratings tables
     """
 
     __abstract__ = True

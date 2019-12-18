@@ -63,7 +63,6 @@ const Course = ({courseData,
   ];
 
   const [{ user }] = useAppContext();
-
   const [modalIsOpen, setModalState] = useState(false);
 
   const createMarkup = () => {

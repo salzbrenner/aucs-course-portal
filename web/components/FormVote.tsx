@@ -4,6 +4,7 @@ import { getCourse } from '../lib/api-public.service';
 import { AppContext } from '../state';
 import { coursesActions } from '../state/reducers/coursesReducer';
 import { userActions } from '../state/reducers/userReducer';
+import { colors } from './GlobalStyles';
 
 export interface VotingCategoriesInterface {
   quality: number | null;
@@ -99,10 +100,50 @@ class FormVote extends React.Component<
     }
   };
 
+  deleteHandler = async (event: any) => {
+    event.preventDefault();
+    const {
+      apiAuth,
+      cid,
+      uid,
+      closeModalHandler,
+    } = this.props;
+
+    await apiAuth.deleteVote(cid, uid);
+    const course = await getCourse(cid);
+
+    if (course.data) {
+      const [{}, dispatch] = this.context;
+
+      const {
+        qualities,
+        time: courseTimes,
+        difficulties,
+      } = course.data;
+
+      dispatch({
+        type: coursesActions.UPDATE_FEEDBACK,
+        payload: {
+          cid,
+          qualities,
+          time: courseTimes,
+          difficulties,
+        },
+      });
+
+      dispatch({
+        type: userActions.DELETE_VOTE,
+        payload: { cid },
+      });
+    }
+
+    closeModalHandler();
+  };
+
   render() {
     return (
       <div>
-        <form action="" onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit}>
           <div className={'radio-section'}>
             <p className={'radio-section-heading'}>
               Time commitment (weekly):
@@ -307,11 +348,23 @@ class FormVote extends React.Component<
               </label>
             </div>
           </div>
-          <input
-            type="submit"
-            value="Submit"
-            className={'button mt-30'}
-          />
+          <div className={'form-actions'}>
+            <input
+              type="submit"
+              value="Submit"
+              className={
+                'link link--border link--smaller-font'
+              }
+            />
+            {this.props.votes && (
+              <button
+                className={'link link--smaller-font delete'}
+                onClick={this.deleteHandler.bind(this)}
+              >
+                Remove rating
+              </button>
+            )}
+          </div>
         </form>
         <style jsx>{`
           .radio-section {
@@ -329,6 +382,16 @@ class FormVote extends React.Component<
           .form-check span {
             display: inline-block;
             margin-left: 10px;
+          }
+
+          .form-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+          }
+
+          .form-actions .delete {
+            color: ${colors.b};
           }
         `}</style>
       </div>

@@ -58,7 +58,7 @@ const withCourseData = <
       const courseContext: CourseProps =
         courses[courseData.cid];
       setDynamicCourse(courseContext);
-    }, [courses]);
+    });
 
     return (
       <MaxContainer>
