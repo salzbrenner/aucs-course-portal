@@ -2,19 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/instance/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/instance/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/controller/vote_controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/controller/vote_controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/rating.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/rating.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/web.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/web.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/FormVote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormVote.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/GlobalStyles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GlobalStyles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hoc/withCourseData.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/hoc/withCourseData.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/userReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/userReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -182,7 +174,8 @@
       <workItem from="1575345380378" duration="12106000" />
       <workItem from="1576306020059" duration="856000" />
       <workItem from="1576605084922" duration="1543000" />
-      <workItem from="1576641167040" duration="3718000" />
+      <workItem from="1576641167040" duration="5188000" />
+      <workItem from="1576694177284" duration="1505000" />
     </task>
     <servers />
   </component>

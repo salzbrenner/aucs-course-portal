@@ -46,6 +46,22 @@ const MainPageLayout: NextComponentType<
     });
   }, []);
 
+  const injectGA = () => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+    //@ts-ignore
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      //@ts-ignore
+      window.dataLayer.push(arguments);
+    }
+    //@ts-ignore
+    gtag('js', new Date());
+    //@ts-ignore
+    gtag('config', 'UA-89535667-5');
+  };
+
   return (
     <div>
       <Head>

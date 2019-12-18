@@ -9,6 +9,8 @@ import { NextPageContext } from 'next';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import Modal from 'react-modal';
 import { CourseProps } from '../hoc/withCourseData';
+import withGA from 'next-ga';
+import Router from 'next/router';
 
 export interface AppPageCtx extends NextPageContext {
   apiPublic: any;
@@ -22,7 +24,7 @@ export interface AppPageProps {
   courses: CourseProps;
 }
 
-export default class MyApp extends App<AppPageProps> {
+class MyApp extends App<AppPageProps> {
   state = {
     authProvider: null,
     apiAuth: null,
@@ -75,3 +77,5 @@ export default class MyApp extends App<AppPageProps> {
 }
 
 Modal.setAppElement('#__next');
+
+export default withGA('UA-89535667-5', Router)(MyApp);
