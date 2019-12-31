@@ -2,7 +2,10 @@ const { parsed: localEnv } = require('dotenv').config()
 const webpack = require('webpack')
 const withCSS = require('@zeit/next-css')
 // const fetch = require('isomorphic-unfetch');
-const API_URL = `http://127.0.0.1:5000/api`;
+const API_URL =
+    process.env.NODE_ENV === 'production'
+        ? process.env.API_PATH_PRODUCTION
+        : `http://127.0.0.1:5000/api`;
 const axios = require('axios');
 
 
@@ -10,6 +13,7 @@ module.exports = withCSS({
   exportPathMap: async function() {
     const paths = {
       '/': { page: '/' },
+      '/about': { page: '/about' },
     };
 
     //TODO: switch to isomorphic api

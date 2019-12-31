@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
-    "both": "next build && next export && serve out -p 3000"
+    "both": "next build && next export && serve out -p 3000",
+    "deploy": "next build && next export && netlify deploy"
   },
   "dependencies": {
     "@types/react-draft-wysiwyg": "^1.12.3",

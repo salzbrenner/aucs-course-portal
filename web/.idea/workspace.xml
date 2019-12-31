@@ -2,39 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../api/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/../api/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../api/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/instance/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/instance/config.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/38052c9e3378_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/430f42742650_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/af355807ee32_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/migrations/versions/fc286b00ab87_.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/run.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/run.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/__init__.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/course.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/course.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/rating.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/rating.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../api/src/model/user.py" beforeDir="false" afterPath="$PROJECT_DIR$/../api/src/model/user.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CourseMenu.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CourseMenu.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/components/CoursePopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CoursePopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/FormVote.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/FormVote.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/GlobalStyles.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/GlobalStyles.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/Header.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/PieChart.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/PieChart.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/layouts/main.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/layouts/main.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-auth.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-auth.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/api-public.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/api-public.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/process-response.utils.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/utils.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/_app.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/_app.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/course/[cid].tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/course/[cid].tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/apiReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/apiReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/coursePopupReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/coursePopupReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/coursesReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/coursesReducer.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/state/reducers/userReducer.ts" beforeDir="false" afterPath="$PROJECT_DIR$/state/reducers/userReducer.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/lib/auth-provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth-provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -207,7 +179,7 @@
       <workItem from="1576941992495" duration="4688000" />
       <workItem from="1577136944667" duration="1473000" />
       <workItem from="1577739463345" duration="9517000" />
-      <workItem from="1577802344981" duration="5354000" />
+      <workItem from="1577802344981" duration="8062000" />
     </task>
     <servers />
   </component>

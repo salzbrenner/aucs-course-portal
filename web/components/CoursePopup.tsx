@@ -29,7 +29,10 @@ class CoursePopup extends Component<CoursePopupProps> {
   }
 
   componentDidMount(): void {
-    const rect = this.container.current!.getBoundingClientRect() as DOMRect;
+    if (!this.container.current) {
+      return;
+    }
+    const rect = this.container.current.getBoundingClientRect() as DOMRect;
     if (
       this.props.x + rect.width >
       window.innerWidth - 300
@@ -61,6 +64,9 @@ class CoursePopup extends Component<CoursePopupProps> {
     const { courseId, x, y } = this.props;
     const course = courses[courseId];
 
+    if (!course) {
+      return null;
+    }
     const { qualities, difficulties, time, name } = course;
 
     const charts = [
