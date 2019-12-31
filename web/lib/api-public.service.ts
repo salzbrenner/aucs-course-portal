@@ -6,7 +6,10 @@ import axios, {
 //TODO: switch to isomorphic api
 // so that dev still works on reloading with exported routes
 
-const API_URL = `http://127.0.0.1:5000/api`;
+const API_URL =
+  process.env.NODE_ENV === 'production'
+    ? process.env.API_PATH_PRODUCTION
+    : `http://127.0.0.1:5000/api`;
 
 export const instance: AxiosInstance = axios.create({
   baseURL: API_URL,

@@ -1,9 +1,6 @@
-import {
-  AppAction,
-  AppActionType,
-} from '../context.interfaces';
+import { AppAction } from '../context.interfaces';
 import { CourseProps } from '../../hoc/withCourseData';
-import { userActions, UserState } from './userReducer';
+import { dLog } from '../../lib/utils';
 
 export interface CoursesState {
   [cid: number]: CourseProps;
@@ -85,7 +82,6 @@ export const coursesReducer = (
         time,
         difficulties,
       } = action.payload;
-      console.log('THIS IS PAYLOAD', action.payload);
       newState = {
         ...state,
         [cid]: {
@@ -102,13 +98,11 @@ export const coursesReducer = (
       newState = { ...keep };
       break;
 
-    // case coursesActions.VOTE_COURSE:
-
     default:
       break;
   }
 
-  console.log('COURSES_STATE', {
+  dLog('COURSES_STATE', {
     prevState: state,
     newState,
   });

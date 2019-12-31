@@ -1,4 +1,5 @@
 import { AppAction } from '../context.interfaces';
+import { dLog } from '../../lib/utils';
 
 export interface CoursePopupState {
   id: number | null;
@@ -47,7 +48,7 @@ export const coursePopupReducer = (
       break;
   }
 
-  console.log('COURSE_POPUP_STATE', {
+  dLog('COURSE_POPUP_STATE', {
     prevState: state,
     newState,
   });

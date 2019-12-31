@@ -42,6 +42,9 @@ export interface ApiAuthInterface {
     cid: number,
     uid: string
   ) => Promise<AxiosResponse<any>>;
+  deleteAccount: (
+    uid: string
+  ) => Promise<AxiosResponse<any>>;
 }
 
 class apiAuth implements ApiAuthInterface {
@@ -171,6 +174,17 @@ class apiAuth implements ApiAuthInterface {
   ): Promise<AxiosResponse<any>> => {
     return this.makeAuthRequest(
       `course/${cid}/${uid}`,
+      'delete',
+      {},
+      null
+    );
+  };
+
+  deleteAccount: ApiAuthInterface['deleteAccount'] = async (
+    uid
+  ): Promise<AxiosResponse<any>> => {
+    return this.makeAuthRequest(
+      `user/${uid}`,
       'delete',
       {},
       null

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { MsalAuthProvider } from 'react-aad-msal';
 import MSALLogin from './MSALLogin';
+
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import { useAppContext } from '../state';
 import Link from 'next/link';
-import { colors } from './GlobalStyles';
+import { breakpoints, colors } from './GlobalStyles';
 
 export interface HeaderInterface {
   authProvider: MsalAuthProvider;
@@ -16,6 +17,7 @@ const Header = ({
   apiAuth,
 }: HeaderInterface) => {
   const [{ user }] = useAppContext();
+
   return (
     <div className={`header`}>
       <div className={'logo'}>
@@ -30,31 +32,38 @@ const Header = ({
         <a className={'link'}>Home</a>
       </Link>
 
+      <Link href="/about">
+        <a className={'link'}>About</a>
+      </Link>
+
       {user && user.role > 0 && (
         <Link href="/admin">
           <a className={'link'}>Admin</a>
         </Link>
       )}
+
+      {user && user.name && (
+        <div className={'name'}>
+          <div className={'spacer'}>|</div>
+          <span className={'link'}>
+            Howdy, {user.name.split(' ')[0]}!
+          </span>
+        </div>
+      )}
+
       {authProvider && (
-        <div className={'spacer'}>
+        <div className={'msal-wrap'}>
           <MSALLogin
             authProvider={authProvider}
             apiAuth={apiAuth}
           />
         </div>
       )}
-      {user && user.name && (
-        <>
-          <div className={'spacer'}>|</div>
-          <span className={'link'}>
-            Howdy, {user.name.split(' ')[0]}!
-          </span>
-        </>
-      )}
 
       <style jsx>{`
         .header {
           display: flex;
+          flex-wrap: wrap;
           align-items: center;
           padding: 10px 20px;
           background: white;
@@ -71,6 +80,25 @@ const Header = ({
         .link {
           display: inline-block;
           margin-right: 20px;
+        }
+
+        .msal-wrap {
+        }
+
+        @media screen and (max-width: ${breakpoints.md}) {
+          .link {
+            font-size: 10px;
+          }
+
+          .name {
+            display: none;
+          }
+        }
+
+        @media screen and (min-width: ${breakpoints.md}) {
+          .msal-wrap {
+            margin-left: auto;
+          }
         }
       `}</style>
     </div>

@@ -1,14 +1,12 @@
 import React from 'react';
 import App from 'next/app';
 import { AppContext, AppProvider } from '../state';
-import { getCourses } from '../lib/api-public.service';
 import MainPageLayout from '../layouts/main';
 import { authProvider } from '../lib/auth-provider';
 import * as apiPublic from '../lib/api-public.service';
 import { NextPageContext } from 'next';
 import { ApiAuthInterface } from '../lib/api-auth.service';
 import Modal from 'react-modal';
-import { CourseProps } from '../hoc/withCourseData';
 import withGA from 'next-ga';
 import Router from 'next/router';
 
@@ -21,7 +19,6 @@ export interface AppPageProps {
   apiPublic: any;
   apiAuth: ApiAuthInterface;
   authProvider: any;
-  courses: CourseProps;
 }
 
 class MyApp extends App<AppPageProps> {
@@ -29,20 +26,22 @@ class MyApp extends App<AppPageProps> {
     authProvider: null,
     apiAuth: null,
     apiPublic: apiPublic,
-    courses: this.props.courses,
   };
 
   static contextType = AppContext;
   static async getInitialProps({ Component, ctx }: any) {
     let pageProps = {};
-    const res = await getCourses();
+
     ctx.apiPublic = apiPublic;
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    return { pageProps, courses: res.data, apiPublic };
+    return {
+      pageProps,
+      apiPublic,
+    };
   }
 
   async componentDidMount() {
@@ -58,13 +57,11 @@ class MyApp extends App<AppPageProps> {
   }
 
   render() {
-    const { Component, pageProps, courses } = this
-      .props as any;
+    const { Component, pageProps } = this.props;
     return (
       <>
         <AppProvider>
           <MainPageLayout
-            courses={courses}
             apiAuth={this.state.apiAuth!}
             authProvider={this.state.authProvider!}
           >

@@ -21,9 +21,6 @@ class Course(db.Model):
     time_spent = db.relationship("TimeSpent", backref="course", lazy=True)
     prereqs = db.relationship("Prereq", backref="course", lazy=True)
 
-    # time = db.relationship("TimeCommitment", backref="course", lazy=True)
-    # difficulty = db.relationship("Difficulty", backref="course", lazy=True)
-
     def __init__(self, cid, name, instructor, position, description=""):
         self.cid = cid
         self.description = description

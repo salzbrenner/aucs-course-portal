@@ -12,7 +12,7 @@ class User(db.Model):
 
     # internal_id = db.Column(db.Integer, primary_key=True)
     # sub from id.token claims from azure - used to identify user, and passed to client
-    id = db.Column(db.String(256), primary_key=True, unique=True)
+    id = db.Column(db.Text, primary_key=True, unique=True)
     email = db.Column(db.String(256), unique=True)
     created_at = db.Column(db.DateTime, nullable=False)
     # 1 is admin, 2 is super admin
@@ -34,7 +34,6 @@ class User(db.Model):
                     votes[x.cid] = {**votes[x.cid], r.get("label"): x.rating}
                 else:
                     votes[x.cid] = {r.get("label"): x.rating}
-                # votes[q.cid] = {"quality": q.rating}
 
         return {"id": self.id, "email": self.email, "role": self.role, "votes": votes}
 
@@ -59,6 +58,11 @@ class User(db.Model):
         Delete user from DB.
         :return:
         """
+        relationships = [self.qualities, self.difficulties, self.time_spent]
+        for rel in relationships:
+            for i in rel:
+                i.delete()
+
         db.session.delete(self)
         db.session.commit()
 
@@ -93,39 +97,3 @@ class User(db.Model):
         :return:
         """
         session.pop("current_user", None)
-
-    # @staticmethod
-    # def generate_token(user_id, minutes=50):
-    #     """
-    #     Creates access token
-    #     :param user_id: number
-    #     :param minutes: number
-    #     :return: string, encoded jwt
-    #     """
-    #     try:
-    #         # create payload with expiration
-    #         payload = {
-    #             'iat': datetime.utcnow(),
-    #             'exp': datetime.utcnow() + timedelta(minutes=minutes),
-    #             'sub': str(user_id),
-    #         }
-    #
-    #         return jwt.encode(payload,
-    #                           current_app.config.get('SECRET_API_KEY'),
-    #                           algorithm='HS256')
-    #     except Exception as e:
-    #         return str(e)
-
-    # @staticmethod
-    # def decode_token(token):
-    #     """
-    #     Decodes access token from authorization header
-    #     :param token: string
-    #     :return:
-    #     """
-    #     try:
-    #         return jwt.decode(token, current_app.config.get('SECRET_API_KEY'), algorithms=['HS256'])
-    #     except jwt.ExpiredSignatureError:
-    #         raise Exception('Expired token')
-    #     except jwt.InvalidTokenError:
-    #         raise Exception('Invalid token')

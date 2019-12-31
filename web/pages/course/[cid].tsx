@@ -2,19 +2,20 @@ import { CourseContainerProps } from '../../hoc/withCourseData';
 import withCourseData from '../../hoc/withCourseData';
 import { useAppContext } from '../../state';
 import Link from 'next/link';
-import * as React from 'react';
+import React from 'react';
 import PieChart from '../../components/PieChart';
 import {
   difficultyLabels,
   qualityLabels,
   timeChartLabels,
-} from '../../lib/process-response.utils';
+} from '../../lib/utils';
 import FormVote, {
   VotingCategoriesInterface,
 } from '../../components/FormVote';
 import { useState } from 'react';
 import Modal from 'react-modal';
 import { UserState } from '../../state/reducers/userReducer';
+import Head from "next/dist/next-server/lib/head";
 
 const customStyles = {
   overlay: {
@@ -109,6 +110,12 @@ const Course = ({courseData,
 
   return (
     <>
+      <Head>
+        <title key="title">{`${cid} - ${name}`} | Auburn Computer Science Online</title>
+        {description && <meta name="description" content={`Auburn computer science course ${cid} - ${name}`} key={'description'}/>}
+
+      </Head>
+
       <h1 className={'course-title'}>{`${cid} - ${name}`}</h1>
 
       <div className={'meta'}>
@@ -204,7 +211,6 @@ const Course = ({courseData,
               isOpen={modalIsOpen}
               onAfterOpen={afterOpenModal}
               onRequestClose={closeModal}
-              contentLabel="Example Modal"
               style={customStyles}
             >
               <FormVote

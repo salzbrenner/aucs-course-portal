@@ -7,26 +7,27 @@ export interface CourseMenuProps {
   courses: CourseProps[];
 }
 
-const CourseMenu = ({ courses }: CourseMenuProps) => {
-  const [{ courses: coursesState }] = useAppContext();
+const CourseMenu = () => {
+  const [{ courses }] = useAppContext();
 
   // for ssr
-  const currentCourses =
-    Object.values(coursesState).length > 0
-      ? Object.values(coursesState)
-      : courses;
+  // const currentCourses =
+  //   Object.values(coursesState).length > 0
+  //     ? Object.values(coursesState)
+  //     : courses;
 
   return (
     <>
-      {currentCourses
-        .sort((a, b) => {
-          return a.cid - b.cid;
-        })
-        .map(course => (
-          <div key={course.cid}>
-            <CourseLink {...course} />
-          </div>
-        ))}
+      {courses &&
+        Object.values(courses)
+          .sort((a, b) => {
+            return a.cid - b.cid;
+          })
+          .map(course => (
+            <div key={course.cid}>
+              <CourseLink {...course} />
+            </div>
+          ))}
     </>
   );
 };

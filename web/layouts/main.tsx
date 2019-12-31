@@ -13,31 +13,21 @@ import { ApiAuthInterface } from '../lib/api-auth.service';
 import Header from '../components/Header';
 import { useAppContext } from '../state';
 import { coursesActions } from '../state/reducers/coursesReducer';
-import {
-  default as apiPublic,
-  getCourses,
-} from '../lib/api-public.service';
+import { getCourses } from '../lib/api-public.service';
 import { useAsyncEffect } from '../lib/async-use-effect';
 
 const MainPageLayout: NextComponentType<
   {},
   {},
   {
-    courses: CourseProps[];
     apiAuth: ApiAuthInterface;
     authProvider: MsalAuthProvider;
   }
-> = ({ children, authProvider, apiAuth, courses }) => {
+> = ({ children, authProvider, apiAuth }) => {
   const [{}, dispatch] = useAppContext();
   const [sidebarOpen, toggleSidebar] = useState(false);
 
   useAsyncEffect(async () => {
-    // initial static population
-    dispatch({
-      type: coursesActions.POPULATE_COURSES,
-      payload: courses,
-    });
-
     // updated dynamic population
     const res = await getCourses();
     dispatch({
@@ -46,44 +36,32 @@ const MainPageLayout: NextComponentType<
     });
   }, []);
 
-  const injectGA = () => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-    //@ts-ignore
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      //@ts-ignore
-      window.dataLayer.push(arguments);
-    }
-    //@ts-ignore
-    gtag('js', new Date());
-    //@ts-ignore
-    gtag('config', 'UA-89535667-5');
-  };
-
   return (
     <div>
       <Head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1"
+          key="viewport"
         />
         <meta charSet="utf-8" />
 
         <link
           href="https://fonts.googleapis.com/css?family=IBM+Plex+Mono:400,700&display=swap"
           rel="stylesheet"
+          key="fonts"
         />
         <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css"
           type="text/css"
+          key="grid"
         />
         <link
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.1/normalize.css"
           type="text/css"
+          key="normalize"
         />
       </Head>
       <GlobalStyles />
@@ -114,7 +92,7 @@ const MainPageLayout: NextComponentType<
         >
           <Sidebar>
             <p className={'color-body-bg'}>Courses</p>
-            <CourseMenu courses={courses} />
+            <CourseMenu />
           </Sidebar>
         </div>
       </div>
@@ -183,6 +161,10 @@ const MainPageLayout: NextComponentType<
 
             .content {
               min-width: calc(100% - 300px);
+            }
+
+            .header-wrap {
+              width: calc(100% - 300px);
             }
           }
         `}

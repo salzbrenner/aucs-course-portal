@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 import { getCourses } from '../lib/api-public.service';
 import { NextPageContext } from 'next';
 import { AppPageProps } from './_app';
-import { AppContext } from '../state';
+import { AppContext, useAppContext } from '../state';
 import Graph2 from '../components/Graph2';
 import { breakpoints } from '../components/GlobalStyles';
+import Head from 'next/head';
 
 interface IndexProps extends AppPageProps {
   courses: any;
@@ -12,6 +13,7 @@ interface IndexProps extends AppPageProps {
 
 export default class index extends Component<IndexProps> {
   static contextType = AppContext;
+
   static async getInitialProps(ctx: NextPageContext) {
     const res = await getCourses();
     return { courses: res.data };
@@ -22,7 +24,7 @@ export default class index extends Component<IndexProps> {
     paths: this.processPaths(this.props.courses),
   };
 
-  componentDidMount(): void {
+  async componentDidMount() {
     // without this, graph path colors don't update
     this.setState({
       paths: this.processPaths(this.props.courses),
@@ -74,8 +76,21 @@ export default class index extends Component<IndexProps> {
 
     return (
       <div className={`graph-container`}>
+        <Head>
+          <title key="title">
+            Auburn Computer Science Online
+          </title>
+          <meta
+            name="description"
+            content={`Curriculum for the Auburn Online Computer Science program.`}
+            key={'description'}
+          />
+        </Head>
         <div className={`graph-container`}>
-          <Graph2 paths={paths} data={courses} />
+          <h1 className={'sr-only'}>
+            Auburn Computer Science Online Course Portal
+          </h1>
+          {paths && <Graph2 paths={paths} data={courses} />}
 
           <style jsx>{`
             .graph-container {

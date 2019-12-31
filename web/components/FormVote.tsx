@@ -5,6 +5,11 @@ import { AppContext } from '../state';
 import { coursesActions } from '../state/reducers/coursesReducer';
 import { userActions } from '../state/reducers/userReducer';
 import { colors } from './GlobalStyles';
+import {
+  difficultyLabels,
+  qualityLabels,
+  timeChartLabels,
+} from '../lib/utils';
 
 export interface VotingCategoriesInterface {
   quality: number | null;
@@ -160,7 +165,7 @@ class FormVote extends React.Component<
                   className="form-check-input"
                   required
                 />
-                <span>0-10</span>
+                <span>{timeChartLabels[0]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -173,7 +178,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>10-20</span>
+                <span>{timeChartLabels[1]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -186,7 +191,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>20-30</span>
+                <span>{timeChartLabels[2]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -199,7 +204,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>30+</span>
+                <span>{timeChartLabels[3]}</span>
               </label>
             </div>
           </div>
@@ -220,7 +225,7 @@ class FormVote extends React.Component<
                   className="form-check-input"
                   required
                 />
-                <span>It's a joke.</span>
+                <span>{difficultyLabels[0]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -233,7 +238,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Easy</span>
+                <span>{difficultyLabels[1]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -246,7 +251,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Average</span>
+                <span>{difficultyLabels[2]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -259,7 +264,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Difficult</span>
+                <span>{difficultyLabels[3]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -272,7 +277,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Extremely difficult</span>
+                <span>{difficultyLabels[4]}</span>
               </label>
             </div>
           </div>
@@ -292,7 +297,7 @@ class FormVote extends React.Component<
                   className="form-check-input"
                   required
                 />
-                <span>Abysmal</span>
+                <span>{qualityLabels[0]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -305,7 +310,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Bad</span>
+                <span>{qualityLabels[1]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -318,7 +323,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Average</span>
+                <span>{qualityLabels[2]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -331,7 +336,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Good</span>
+                <span>{qualityLabels[3]}</span>
               </label>
             </div>
             <div className="form-check">
@@ -344,7 +349,7 @@ class FormVote extends React.Component<
                   onChange={this.handleOptionChange}
                   className="form-check-input"
                 />
-                <span>Awesome!</span>
+                <span>{qualityLabels[4]}</span>
               </label>
             </div>
           </div>

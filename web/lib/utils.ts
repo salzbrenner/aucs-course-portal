@@ -2,7 +2,7 @@ import { VictoryPieProps } from 'victory';
 import { CourseMetricInterface } from '../hoc/withCourseData';
 
 export const qualityLabels = [
-  'Abysmal',
+  'Terrible',
   'Bad',
   'Average',
   'Good',
@@ -35,4 +35,10 @@ export const processMetric = (
       y: percentages[+key],
     };
   });
+};
+
+export const dLog = (...msg: any) => {
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(...msg);
+  }
 };

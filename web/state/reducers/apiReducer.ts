@@ -1,11 +1,5 @@
 import { AppAction } from '../context.interfaces';
 import { AxiosResponse } from 'axios';
-import {
-  getCourse,
-  getCourses,
-  getDefaultHeaders,
-  makeRequest,
-} from '../../lib/api-public.service';
 
 export interface ApiStateInterface {
   makeRequest: (
@@ -25,11 +19,4 @@ export const apiReducer = async (
   action: AppAction
 ) => {
   return state;
-};
-
-const apiPublic: ApiStateInterface = {
-  makeRequest,
-  getDefaultHeaders,
-  getCourses,
-  getCourse,
 };

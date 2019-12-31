@@ -4,7 +4,7 @@ import {
   difficultyLabels,
   qualityLabels,
   timeChartLabels,
-} from '../lib/process-response.utils';
+} from '../lib/utils';
 import PieChart from './PieChart';
 import { colors } from './GlobalStyles';
 

@@ -6,6 +6,7 @@ import {
   AppActionType,
 } from '../context.interfaces';
 import { VotingCategoriesInterface } from '../../components/FormVote';
+import { dLog } from '../../lib/utils';
 
 export interface UserState {
   name: null | string;
@@ -85,7 +86,7 @@ export const userReducer = (
       break;
   }
 
-  console.log('USER_STATE', {
+  dLog('USER_STATE ', {
     prevState: state,
     newState,
   });

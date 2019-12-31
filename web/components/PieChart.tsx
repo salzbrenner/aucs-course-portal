@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { VictoryLegend, VictoryPie } from 'victory';
 import { CourseMetricInterface } from '../hoc/withCourseData';
-import { processMetric } from '../lib/process-response.utils';
+import { processMetric } from '../lib/utils';
 import { colors, fonts } from './GlobalStyles';
 
 const PieChart = ({

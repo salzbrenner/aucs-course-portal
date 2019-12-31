@@ -27,7 +27,7 @@ class RatingBase(db.Model):
 
     @declared_attr
     def user_id(self):
-        return db.Column(db.String, db.ForeignKey("user.id"), primary_key=True)
+        return db.Column(db.String(256), db.ForeignKey("user.id"), primary_key=True)
 
     rating = db.Column(db.Integer, nullable=False)
 
