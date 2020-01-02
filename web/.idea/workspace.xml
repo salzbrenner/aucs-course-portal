@@ -3,10 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="c7eb9476-d76f-429f-9236-a35530dea1b2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/components/CoursePopup.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/CoursePopup.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/auth-provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/lib/auth-provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/next.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/MSALLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/MSALLogin.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/UserLogin.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/components/UserLogin.tsx" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -179,7 +177,8 @@
       <workItem from="1576941992495" duration="4688000" />
       <workItem from="1577136944667" duration="1473000" />
       <workItem from="1577739463345" duration="9517000" />
-      <workItem from="1577802344981" duration="8062000" />
+      <workItem from="1577802344981" duration="8606000" />
+      <workItem from="1577981600464" duration="1995000" />
     </task>
     <servers />
   </component>

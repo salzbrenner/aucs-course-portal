@@ -56,7 +56,7 @@ const UserLogin = ({
     );
     // failed JWT auth - they don't belong to Auburn
     if (
-      user.statusText.toLowerCase() === 'unauthorized' &&
+      user.status === 401 &&
       user.data.toLowerCase() === 'invalid jwt'
     ) {
       alert(
