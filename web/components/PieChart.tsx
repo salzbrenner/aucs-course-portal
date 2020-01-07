@@ -81,7 +81,7 @@ const PieChart = ({
                       //@ts-ignore
                       mutation: ({ style, datum }) => {
                         setInnerLabel(
-                          `${datum.y.toFixed(2) * 100}%`
+                          `${Math.round(datum.y * 100)}%`
                         );
                         return {
                           style: {
