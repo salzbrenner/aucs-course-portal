@@ -5,6 +5,10 @@ from flask_migrate import Migrate, MigrateCommand
 from src import db, create_app
 import pytest
 
+# $ flask db stamp head
+# $ flask db migrate
+# $ flask db upgrade
+
 app_settings = os.getenv("APP_SETTINGS")
 app = create_app(config_name=getattr(instance.config, app_settings))
 migrate = Migrate(app, db)
@@ -24,3 +28,5 @@ def test():
 
 if __name__ == "__main__":
     manager.run()
+
+
