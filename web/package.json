@@ -28,7 +28,7 @@
     "react": "^16.8.0",
     "react-aad-msal": "^1.0.4",
     "react-dom": "^16.8.0",
-    "react-draft-wysiwyg": "^1.13.2",
+    "react-draft-wysiwyg": "^1.14.6",
     "react-modal": "^3.11.1",
     "victory": "^33.1.1"
   },
