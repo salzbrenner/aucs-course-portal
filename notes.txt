@@ -1,0 +1,20 @@
+Api:
+
+
+// set up new db
+# flask db stamp head
+# flask db migrate
+# flask db upgrade
+
+// run locally and verify localhost:5000
+docker run --env-file .env -d -p 5000:5000 aucs-api 
+DATABASE_URL=postgresql://postgres@docker.for.mac.localhost/aucs_test
+
+// deployed following the getting started at
+https://devcenter.heroku.com/articles/container-registry-and-runtime
+
+// heroku uses docker file to build container, heroku overrides .env 
+// during build with it's own config vars
+
+Client:
+// just npm run deploy

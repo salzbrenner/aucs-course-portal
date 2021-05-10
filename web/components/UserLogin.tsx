@@ -50,11 +50,13 @@ const UserLogin = ({
       email,
       sub,
     } = accountInfo!.account.idTokenClaims;
+    console.log(name, email, sub)
 
     const user = await getUser(sub).catch(
       err => err.response
     );
     // failed JWT auth - they don't belong to Auburn
+    console.log(user)
     if (
       user.status === 401 &&
       user.data.toLowerCase() === 'invalid jwt'
@@ -62,7 +64,7 @@ const UserLogin = ({
       alert(
         'Logging in with Microsoft is limited to Auburn University members'
       );
-      logoutHandler();
+      // logoutHandler();
     }
     // doesn't exist, need to create
     else if (user.status === 404) {
